@@ -5,6 +5,7 @@
  */
 package controller;
 
+import cricketdto.UserDTO;
 import java.io.Serializable;
 import javax.annotation.ManagedBean;
 import javax.inject.Named;
@@ -19,10 +20,22 @@ import javax.enterprise.context.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class userBean implements Serializable{
-
-
+    
+    UserDTO u;
+    
     public userBean() { /*CONSTRUTOR VAZIO ESSENCIAL, POR CAUSA DE SER SERIALIZABLE*/
     
     }
+    
+    /*EXAMPLE OF GETTING VALUE FROM A USER THAT HAS LOGGED IN SYSTEM*/
+    public String myNameLogin(){
+        return (String)SessionContext.getInstance().getAttribute("cli");
+    }
+    
+    /*EXAMPLE OF SETTING AN ATTRIBUTE FROM AN USER IN SESSIONCONTEXT CLASS*/
+    public void addValue(){
+        SessionContext.getInstance().setAttribute("userName", u.getName()); /*u.getName--> is the value, setted in textbox, in frontend,--> u.Name--> applies get and set*/
+    }
+
     
 }
