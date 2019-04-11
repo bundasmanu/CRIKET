@@ -15,33 +15,73 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition template = "template.xhtml">
+            
+            <ui:define name = "introTitle">
+                
+                <h2>#{bundle.IntroSignInSignUp}</h2>
+                <div>
+                  <a href="#contentSection" class="btn-get-started scrollto">#{bundle.SignInSignUp}</a>
+                </div>
+            </ui:define>
+            
+            
+            
             <ui:define name = "containerTitle">
-                <h3>Services</h3>
+                <h3>#{bundle.SignInSignUp}</h3>
                 <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
             </ui:define>
 
             <ui:define name = "containerContent">
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-                    <div class="box">
-                      <div class="icon" style="background: #fceef3;"><i class="ion-ios-analytics-outline" style="color: #ff689b;"></i></div>
-                      <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-                      <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-                  <div class="box">
-                    <div class="icon" style="background: #fff0da;"><i class="ion-ios-bookmarks-outline" style="color: #e98e06;"></i></div>
-                    <h4 class="title"><a href="">Dolor Sitema</a></h4>
-                    <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-                  </div>
-                </div>
+                    
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                <div align="center">
+                                    
+                                    <h3>#{bundle.SignIn}</h3>
+                                    <h:form>
+                                        <h:outputText value="#{bundle.UserEmail}" /><br/>
+                                        <h:inputText id="username" value="#{sessionController.username}"></h:inputText><br/>
+                                        <br></br>
 
-                <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-                  <div class="box">
-                    <div class="icon" style="background: #e6fdfc;"><i class="ion-ios-paper-outline" style="color: #3fcdc7;"></i></div>
-                    <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-                    <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-                  </div>
+                                        <h:outputText value="#{bundle.UserPassword}" /><br/>
+                                        <h:inputSecret id="password" value="#{sessionController.password}"></h:inputSecret><br/>
+
+                                        <br/>
+
+                                        <h:messages />
+
+                                        <h:commandButton class ="btn btn-success" action="#{sessionController.processSignIn}" value="#{bundle.SignIn}"/>  
+                                    </h:form>
+                                </div>
+                                <h3>#{bundle.SignUp}</h3>
+                                <div align="center">
+                                    <h:form>
+
+                                        <h:outputText value="#{bundle.UserEmail}"/><br/>
+                                        <h:inputText value="#{sessionController.clientName}"/><br/>
+                                        <h:outputText value="#{bundle.UserFullName}"/><br/>
+                                        <h:inputText value="#{sessionController.clientName}"/><br/>
+                                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
+                                        <h:inputText value="#{sessionController.username}"/><br/>
+                                        <h:outputText value="#{bundle.UserPassword}"/><br/>
+                                        <h:inputSecret value="#{sessionController.password}"/><br/>
+                                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
+                                        <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
+                                        <h:outputText value="#{bundle.UserGender}"/><br/>
+                                        <h:inputText value="#{sessionController.clientName}"/><br/>
+                                        <br/><br/>
+                                        <h:messages />
+
+                                        <h:commandButton class ="btn btn-success" action="#{sessionController.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                                    </h:form>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>
                 </div>
             </ui:define>
         </ui:composition>
