@@ -19,7 +19,8 @@ public class SessionContext {
         if (instance == null){ 
             instance = new SessionContext(); 
         } 
-        return instance; } 
+        return instance;
+    } 
     
     private SessionContext(){
     } 
@@ -31,7 +32,7 @@ public class SessionContext {
             return FacesContext.getCurrentInstance().getExternalContext(); } 
     } 
     
-    public void encerrarSessao(){ 
+    public void closeSession(){ 
         currentExternalContext().invalidateSession(); 
     } 
     
