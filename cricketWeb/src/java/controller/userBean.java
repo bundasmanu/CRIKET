@@ -21,7 +21,7 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 public class userBean implements Serializable{
     
-    UserDTO u;
+    UserDTO u;  
     
     public userBean() { /*CONSTRUTOR VAZIO ESSENCIAL, POR CAUSA DE SER SERIALIZABLE*/
     
