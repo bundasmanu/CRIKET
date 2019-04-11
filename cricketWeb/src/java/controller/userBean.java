@@ -23,12 +23,12 @@ public class userBean implements Serializable{
     
     UserDTO u;  
     
-    public userBean() { /*CONSTRUTOR VAZIO ESSENCIAL, POR CAUSA DE SER SERIALIZABLE*/
-    
+    public userBean() {
+        //Do Nothing. We must create the constructor since the classe is serializable
     }
     
     /*EXAMPLE OF GETTING VALUE FROM A USER THAT HAS LOGGED IN SYSTEM*/
-    public String myNameLogin(){
+    public String myLoginName(){
         return (String)SessionContext.getInstance().getAttribute("cli");
     }
     
