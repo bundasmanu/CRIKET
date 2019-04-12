@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <ui:define name="title">TODO supply a title </ui:define>
+    </head>
+    <body>
+        <ui:composition template = "template.xhtml">
+            
+            
+            <ui:define name = "introContent">
+                
+                <h3>#{bundle.SignInSignUp}</h3>
+                <p> #{bundle.SignInSignUpDesc}</p>
+                
+                <h3>#{bundle.SignIn}</h3>
+                <br/>
+                <h:form>
+                    <h:outputText value="#{bundle.UserEmail}" /><br/>
+                    <h:inputText id="username" value="#{sessionController.username}"></h:inputText><br/>
+                    <br></br>
+
+                    <h:outputText value="#{bundle.UserPassword}" /><br/>
+                    <h:inputSecret id="password" value="#{sessionController.password}"></h:inputSecret><br/>
+
+                    <br/>
+
+                    <h:messages />
+
+                    <h:commandButton class ="btn btn-info" action="#{sessionController.processSignIn}" value="#{bundle.SignIn}"/>  
+                </h:form>
+                    
+                    
+                <h3>#{bundle.SignUp}</h3>
+                <br/>
+                <h:form>
+                    <h:outputText value="#{bundle.UserEmail}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <h:outputText value="#{bundle.UserFullName}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <h:outputText value="#{bundle.UserBirthDate}"/><br/>
+                    <h:inputText value="#{sessionController.username}"/><br/>
+                    <h:outputText value="#{bundle.UserPassword}"/><br/>
+                    <h:inputSecret value="#{sessionController.password}"/><br/>
+                    <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
+                    <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
+                    <h:outputText value="#{bundle.UserGender}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <br/><br/>
+                    <h:messages />
+                    <h:commandButton class ="btn btn-info" action="#{sessionController.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                </h:form>
+                    
+                
+                <h3>#{bundle.SignUp}</h3>
+                <br/>
+                <h:form>
+                    <h:outputText value="#{bundle.UserEmail}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <h:outputText value="#{bundle.UserFullName}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <h:outputText value="#{bundle.UserBirthDate}"/><br/>
+                    <h:inputText value="#{sessionController.username}"/><br/>
+                    <h:outputText value="#{bundle.UserPassword}"/><br/>
+                    <h:inputSecret value="#{sessionController.password}"/><br/>
+                    <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
+                    <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
+                    <h:outputText value="#{bundle.UserGender}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <br/><br/>
+                    <h:messages />
+                    <h:commandButton class ="btn btn-info" action="#{sessionController.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                </h:form>
+                
+                
+                <h3>#{bundle.SignUp}</h3>
+                <br/>
+                <h:form>
+                    <h:outputText value="#{bundle.UserEmail}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <h:outputText value="#{bundle.UserFullName}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <h:outputText value="#{bundle.UserBirthDate}"/><br/>
+                    <h:inputText value="#{sessionController.username}"/><br/>
+                    <h:outputText value="#{bundle.UserPassword}"/><br/>
+                    <h:inputSecret value="#{sessionController.password}"/><br/>
+                    <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
+                    <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
+                    <h:outputText value="#{bundle.UserGender}"/><br/>
+                    <h:inputText value="#{sessionController.clientName}"/><br/>
+                    <br/><br/>
+                    <h:messages />
+                    <h:commandButton class ="btn btn-info" action="#{sessionController.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                </h:form>
+                
+            </ui:define>
+            
+        </ui:composition>
+    </body>
+</html>

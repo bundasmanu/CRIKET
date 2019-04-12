@@ -16,6 +16,8 @@ and open the template in the editor.
     <body>
         <ui:composition template = "template.xhtml">
             
+            <!--
+            
             <ui:define name = "introTitle">
                 
                 <h2>#{bundle.IntroSignInSignUp}</h2>
@@ -24,64 +26,52 @@ and open the template in the editor.
                 </div>
             </ui:define>
             
-            
-            
             <ui:define name = "containerTitle">
                 <h3>#{bundle.SignInSignUp}</h3>
-                <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
+                <p> #{bundle.SignInSignUpDesc}</p>
             </ui:define>
+-->
 
             <ui:define name = "containerContent">
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
                     
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col-8">
-                                <div align="center">
-                                    
-                                    <h3>#{bundle.SignIn}</h3>
-                                    <h:form>
-                                        <h:outputText value="#{bundle.UserEmail}" /><br/>
-                                        <h:inputText id="username" value="#{sessionController.username}"></h:inputText><br/>
-                                        <br></br>
+                    <h3>#{bundle.SignIn}</h3>
+                    <h:form>
+                        <h:outputText value="#{bundle.UserEmail}" /><br/>
+                        <h:inputText id="username" value="#{sessionController.email}"></h:inputText><br/>
+                        <br></br>
 
-                                        <h:outputText value="#{bundle.UserPassword}" /><br/>
-                                        <h:inputSecret id="password" value="#{sessionController.password}"></h:inputSecret><br/>
+                        <h:outputText value="#{bundle.UserPassword}" /><br/>
+                        <h:inputSecret id="password" value="#{sessionController.password}"></h:inputSecret><br/>
 
-                                        <br/>
+                        <br/>
 
-                                        <h:messages />
+                        <h:messages />
 
-                                        <h:commandButton class ="btn btn-success" action="#{sessionController.processSignIn}" value="#{bundle.SignIn}"/>  
-                                    </h:form>
-                                </div>
-                                <h3>#{bundle.SignUp}</h3>
-                                <div align="center">
-                                    <h:form>
+                        <h:commandButton class ="btn btn-info" action="#{sessionController.processSignIn}" value="#{bundle.SignIn}"/>  
+                    </h:form>
+                    
+                    
+                    <h3>#{bundle.SignUp}</h3>
+                    <h:form>
+                        <h:outputText value="#{bundle.UserEmail}"/><br/>
+                        <h:inputText value="#{sessionController.email}"/><br/>
+                        <h:outputText value="#{bundle.UserFullName}"/><br/>
+                        <h:inputText value="#{sessionController.clientName}"/><br/>
+                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
+                        <!--<h:inputText value=""/><br/>-->
+                        <h:outputText value="#{bundle.UserPassword}"/><br/>
+                        <h:inputSecret value="#{sessionController.password}"/><br/>
+                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
+                        <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
+                        <h:outputText value="#{bundle.UserGender}"/><br/>
+                        <h:inputText value="#{sessionController.clientName}"/><br/>
+                        <br/><br/>
+                        <h:messages />
 
-                                        <h:outputText value="#{bundle.UserEmail}"/><br/>
-                                        <h:inputText value="#{sessionController.clientName}"/><br/>
-                                        <h:outputText value="#{bundle.UserFullName}"/><br/>
-                                        <h:inputText value="#{sessionController.clientName}"/><br/>
-                                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                                        <h:inputText value="#{sessionController.username}"/><br/>
-                                        <h:outputText value="#{bundle.UserPassword}"/><br/>
-                                        <h:inputSecret value="#{sessionController.password}"/><br/>
-                                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
-                                        <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
-                                        <h:outputText value="#{bundle.UserGender}"/><br/>
-                                        <h:inputText value="#{sessionController.clientName}"/><br/>
-                                        <br/><br/>
-                                        <h:messages />
-
-                                        <h:commandButton class ="btn btn-success" action="#{sessionController.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
-                                    </h:form>
-                                </div>
-                            </div>
-                            <div class="col-2"></div>
-                        </div>
-                    </div>
+                        <h:commandButton class ="btn btn-info" action="#{sessionController.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                    </h:form>
+                    
                 </div>
             </ui:define>
         </ui:composition>
