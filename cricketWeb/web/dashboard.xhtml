@@ -16,6 +16,8 @@ and open the template in the editor.
     <body>
         <ui:composition template = "template.xhtml">
             
+            <f:event listener="#{sessionController.validateIfLoggedUser}" type="preRenderView" />
+
             <ui:define name = "introTitle">
                 <h2>Hi <span>#username!</span></h2>
                 <div>

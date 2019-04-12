@@ -127,8 +127,27 @@ public class SessionController implements Serializable {
         
     }
     
+    public void validateIfLoggedUser(ComponentSystemEvent event){
+				
+	FacesContext fc = FacesContext.getCurrentInstance();
+	
+        String username = (String) fc.getExternalContext().getSessionMap().get("user");
+        
+        //TUserDTO userDTO = userManager.getTUserDTO(username);
+        
+        if(username == null)
+        {
+            ConfigurableNavigationHandler nav 
+		   = (ConfigurableNavigationHandler) 
+			fc.getApplication().getNavigationHandler();
+		
+		nav.performNavigation("/index");
+        }	
+    }	
+    
     public String processLogout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        this.isLogged = false;
         return "index?faces-redirect=true";
     }
 
