@@ -21,7 +21,8 @@ public class Bridge implements BridgeLocal {
     
     @EJB
     private cricketManagerLocal cricket;
-
+    
+    @Override
     public cricketManagerLocal getCricket() {
         return cricket;
     }

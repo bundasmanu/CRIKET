@@ -5,10 +5,12 @@
  */
 package controller;
 
+import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -40,12 +42,16 @@ public class SessionController implements Serializable {
     private String passwordConfirmation;
     private String email;
     private String clientName;
+    private Date birth;
+    private String gender;
     private Boolean isLogged;
     
     
     //@EJB
     //private UsersManagerLocal userManager;
     
+    @EJB
+    BridgeLocal bridge;
     
     public SessionController() {
         // do nothing
@@ -77,53 +83,41 @@ public class SessionController implements Serializable {
             //return "index?#contentSection";
         }
     }
-
-    public String processSignUp() {
-        String message;
-        boolean result;
-        
-        /*
-        
-        TUserDTO userDTO = new TUserDTO();
-        userDTO.setClientName(clientName);
-        userDTO.setUsername(username);
-        userDTO.setPassword(password);
-        userDTO.setUsertype(Config.CLIENT);
+    
+    public String process_SignUp(){
         
         FacesContext context = FacesContext.getCurrentInstance();
-        ResourceBundle bundle = context.getApplication().getResourceBundle(context, "Bundle.properties");
-            
-        if(!password.equals(passwordConfirmation))
-        {
-            //TODO: improve this message. Need to get this from Bundle.properties
-            //message = bundle.getString("ConfirmPasswordError");
-            
-            
-            message = "The password and the password confirmation are different.";
-            
-            Utils.throwMessage(message);
-            return "signup";
-        }
+        //SignInValue value = userManager.signIn(username, password);
         
-        result = userManager.signUp(userDTO);
+        boolean result = this.signUp();     
         
-        if(!result)
-        {
-            message = "Username already exists or passwords are different.";
-            Utils.throwMessage(message);
-            return "signup";
-
+        if(result){    
+            context.getExternalContext().getSessionMap().put("user", email);
+            this.isLogged = true;
+            return "dashboard?faces-redirect=true";
         }
         else
         {
-            message = "Sign up with sucess! Now you can sign in, after operator approval " + userDTO.getUsername() + ".";
-            Utils.throwMessage(message);
-            return "signin";
+            Utils.throwMessage("Ja existe este user");
+            
+            return "index";
+
+            //return "index?#contentSection";
         }
-        */
-        message = "System down.";
-        Utils.throwMessage(message);
-        return "index";
+        
+    }
+    
+    public boolean signUp(){
+        
+        try{
+            
+           return bridge.getCricket().signUp(clientName, password, email, gender, birth);
+            
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
         
     }
     
@@ -181,6 +175,22 @@ public class SessionController implements Serializable {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Boolean getIsLogged() {

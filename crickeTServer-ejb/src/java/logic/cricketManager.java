@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
@@ -29,5 +30,9 @@ public class cricketManager implements cricketManagerLocal {
     @EJB
     historyManagementLocal history;
     
+    @Override
+    public boolean signUp(String username, String pass, String email, String gender, Date birth){
+        return user.signUp(username, pass, email, gender, birth);
+    }
     
 }

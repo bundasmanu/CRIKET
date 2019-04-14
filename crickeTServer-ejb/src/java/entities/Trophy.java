@@ -27,9 +27,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Trophy.findAll", query = "SELECT t FROM Trophy t")
     , @NamedQuery(name = "Trophy.findByIdTrophy", query = "SELECT t FROM Trophy t WHERE t.idTrophy = :idTrophy")
-    , @NamedQuery(name = "Trophy.findByName", query = "SELECT t FROM Trophy t WHERE t.name = :name")
-    , @NamedQuery(name = "Trophy.findByDesc", query = "SELECT t FROM Trophy t WHERE t.desc = :desc")
-    , @NamedQuery(name = "Trophy.findByValue", query = "SELECT t FROM Trophy t WHERE t.value = :value")})
+    , @NamedQuery(name = "Trophy.findByNome", query = "SELECT t FROM Trophy t WHERE t.nome = :nome")
+    , @NamedQuery(name = "Trophy.findByDescript", query = "SELECT t FROM Trophy t WHERE t.descript = :descript")
+    , @NamedQuery(name = "Trophy.findByValor", query = "SELECT t FROM Trophy t WHERE t.valor = :valor")})
 public class Trophy implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,17 +39,17 @@ public class Trophy implements Serializable {
     @Column(name = "id_trophy")
     private Integer idTrophy;
     @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
-    @Column(name = "DESC")
-    private String desc;
+    @Column(name = "descript")
+    private String descript;
     @Basic(optional = false)
-    @Column(name = "value")
-    private int value;
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    @Column(name = "valor")
+    private int valor;
+    @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
     @ManyToOne(optional = false)
-    private User idUser;
+    private Utilizador idUtilizador;
 
     public Trophy() {
     }
@@ -58,11 +58,11 @@ public class Trophy implements Serializable {
         this.idTrophy = idTrophy;
     }
 
-    public Trophy(Integer idTrophy, String name, String desc, int value) {
+    public Trophy(Integer idTrophy, String nome, String descript, int valor) {
         this.idTrophy = idTrophy;
-        this.name = name;
-        this.desc = desc;
-        this.value = value;
+        this.nome = nome;
+        this.descript = descript;
+        this.valor = valor;
     }
 
     public Integer getIdTrophy() {
@@ -73,36 +73,36 @@ public class Trophy implements Serializable {
         this.idTrophy = idTrophy;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescript() {
+        return descript;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescript(String descript) {
+        this.descript = descript;
     }
 
-    public int getValue() {
-        return value;
+    public int getValor() {
+        return valor;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setValor(int valor) {
+        this.valor = valor;
     }
 
-    public User getIdUser() {
-        return idUser;
+    public Utilizador getIdUtilizador() {
+        return idUtilizador;
     }
 
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
+    public void setIdUtilizador(Utilizador idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.util.Date;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +14,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface userManagementLocal {
+    
+    boolean signUp(String username, String pass, String email, String gender, Date birth);
     
 }

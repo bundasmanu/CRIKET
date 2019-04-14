@@ -31,23 +31,23 @@ import javax.persistence.TemporalType;
  * @author gustavo
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "utilizador")
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = :idUser")
-    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-    , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
-    , @NamedQuery(name = "User.findByAge", query = "SELECT u FROM User u WHERE u.age = :age")
-    , @NamedQuery(name = "User.findByGenre", query = "SELECT u FROM User u WHERE u.genre = :genre")})
-public class User implements Serializable {
+    @NamedQuery(name = "Utilizador.findAll", query = "SELECT u FROM Utilizador u")
+    , @NamedQuery(name = "Utilizador.findByIdUtilizador", query = "SELECT u FROM Utilizador u WHERE u.idUtilizador = :idUtilizador")
+    , @NamedQuery(name = "Utilizador.findByEmail", query = "SELECT u FROM Utilizador u WHERE u.email = :email")
+    , @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password")
+    , @NamedQuery(name = "Utilizador.findByNome", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome")
+    , @NamedQuery(name = "Utilizador.findByAge", query = "SELECT u FROM Utilizador u WHERE u.age = :age")
+    , @NamedQuery(name = "Utilizador.findByGenre", query = "SELECT u FROM Utilizador u WHERE u.genre = :genre")})
+public class Utilizador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_user")
-    private Integer idUser;
+    @Column(name = "id_utilizador")
+    private Integer idUtilizador;
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
@@ -55,8 +55,8 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
     @Column(name = "age")
     @Temporal(TemporalType.DATE)
@@ -65,47 +65,55 @@ public class User implements Serializable {
     @Column(name = "genre")
     private String genre;
     @JoinTable(name = "dispoe", joinColumns = {
-        @JoinColumn(name = "id_user", referencedColumnName = "id_user")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")}, inverseJoinColumns = {
         @JoinColumn(name = "id_standard", referencedColumnName = "id_standard")})
     @ManyToMany
     private Collection<StandardGoal> standardGoalCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
     private Collection<Goal> goalCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
-    private Collection<History> historyCollection;
-    @OneToMany(mappedBy = "useIdUser")
-    private Collection<User> userCollection;
-    @JoinColumn(name = "use_id_user", referencedColumnName = "id_user")
-    @ManyToOne
-    private User useIdUser;
     @JoinColumn(name = "id_rank", referencedColumnName = "id_rank")
     @ManyToOne(optional = false)
-    private Rank idRank;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
+    private Ranking idRank;
+    @OneToMany(mappedBy = "useIdUtilizador")
+    private Collection<Utilizador> utilizadorCollection;
+    @JoinColumn(name = "use_id_utilizador", referencedColumnName = "id_utilizador")
+    @ManyToOne
+    private Utilizador useIdUtilizador;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
+    private Collection<History> historyCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
     private Collection<Trophy> trophyCollection;
 
-    public User() {
+    public Utilizador() {
     }
 
-    public User(Integer idUser) {
-        this.idUser = idUser;
+    public Utilizador(Integer idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
-    public User(Integer idUser, String email, String password, String name, Date age, String genre) {
-        this.idUser = idUser;
+    public Utilizador(Integer idUtilizador, String email, String password, String nome, Date age, String genre) {
+        this.idUtilizador = idUtilizador;
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.nome = nome;
+        this.age = age;
+        this.genre = genre;
+    }
+    
+    public Utilizador(String email, String password, String nome, Date age, String genre) {
+        this.email = email;
+        this.password = password;
+        this.nome = nome;
         this.age = age;
         this.genre = genre;
     }
 
-    public Integer getIdUser() {
-        return idUser;
+    public Integer getIdUtilizador() {
+        return idUtilizador;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setIdUtilizador(Integer idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
     public String getEmail() {
@@ -124,12 +132,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Date getAge() {
@@ -164,36 +172,36 @@ public class User implements Serializable {
         this.goalCollection = goalCollection;
     }
 
+    public Ranking getIdRank() {
+        return idRank;
+    }
+
+    public void setIdRank(Ranking idRank) {
+        this.idRank = idRank;
+    }
+
+    public Collection<Utilizador> getUtilizadorCollection() {
+        return utilizadorCollection;
+    }
+
+    public void setUtilizadorCollection(Collection<Utilizador> utilizadorCollection) {
+        this.utilizadorCollection = utilizadorCollection;
+    }
+
+    public Utilizador getUseIdUtilizador() {
+        return useIdUtilizador;
+    }
+
+    public void setUseIdUtilizador(Utilizador useIdUtilizador) {
+        this.useIdUtilizador = useIdUtilizador;
+    }
+
     public Collection<History> getHistoryCollection() {
         return historyCollection;
     }
 
     public void setHistoryCollection(Collection<History> historyCollection) {
         this.historyCollection = historyCollection;
-    }
-
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
-    }
-
-    public User getUseIdUser() {
-        return useIdUser;
-    }
-
-    public void setUseIdUser(User useIdUser) {
-        this.useIdUser = useIdUser;
-    }
-
-    public Rank getIdRank() {
-        return idRank;
-    }
-
-    public void setIdRank(Rank idRank) {
-        this.idRank = idRank;
     }
 
     public Collection<Trophy> getTrophyCollection() {
@@ -207,18 +215,18 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUser != null ? idUser.hashCode() : 0);
+        hash += (idUtilizador != null ? idUtilizador.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Utilizador)) {
             return false;
         }
-        User other = (User) object;
-        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
+        Utilizador other = (Utilizador) object;
+        if ((this.idUtilizador == null && other.idUtilizador != null) || (this.idUtilizador != null && !this.idUtilizador.equals(other.idUtilizador))) {
             return false;
         }
         return true;
@@ -226,7 +234,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.User[ idUser=" + idUser + " ]";
+        return "entities.Utilizador[ idUtilizador=" + idUtilizador + " ]";
     }
     
 }

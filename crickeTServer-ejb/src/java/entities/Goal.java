@@ -33,9 +33,9 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Goal.findAll", query = "SELECT g FROM Goal g")
     , @NamedQuery(name = "Goal.findByIdGoal", query = "SELECT g FROM Goal g WHERE g.idGoal = :idGoal")
-    , @NamedQuery(name = "Goal.findByName", query = "SELECT g FROM Goal g WHERE g.name = :name")
-    , @NamedQuery(name = "Goal.findByDesc", query = "SELECT g FROM Goal g WHERE g.desc = :desc")
-    , @NamedQuery(name = "Goal.findByType", query = "SELECT g FROM Goal g WHERE g.type = :type")
+    , @NamedQuery(name = "Goal.findByNome", query = "SELECT g FROM Goal g WHERE g.nome = :nome")
+    , @NamedQuery(name = "Goal.findByDescript", query = "SELECT g FROM Goal g WHERE g.descript = :descript")
+    , @NamedQuery(name = "Goal.findByTipo", query = "SELECT g FROM Goal g WHERE g.tipo = :tipo")
     , @NamedQuery(name = "Goal.findByStatus", query = "SELECT g FROM Goal g WHERE g.status = :status")
     , @NamedQuery(name = "Goal.findByFinaldate", query = "SELECT g FROM Goal g WHERE g.finaldate = :finaldate")
     , @NamedQuery(name = "Goal.findByTotalvalue", query = "SELECT g FROM Goal g WHERE g.totalvalue = :totalvalue")
@@ -53,14 +53,14 @@ public class Goal implements Serializable {
     @Column(name = "id_goal")
     private Integer idGoal;
     @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
-    @Column(name = "DESC")
-    private String desc;
+    @Column(name = "descript")
+    private String descript;
     @Basic(optional = false)
-    @Column(name = "type")
-    private String type;
+    @Column(name = "tipo")
+    private String tipo;
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
@@ -87,15 +87,15 @@ public class Goal implements Serializable {
     @Basic(optional = false)
     @Column(name = "flag_order")
     private int flagOrder;
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne(optional = false)
-    private User idUser;
     @JoinColumn(name = "id_category", referencedColumnName = "id_category")
     @ManyToOne(optional = false)
     private Category idCategory;
     @JoinColumn(name = "id_history", referencedColumnName = "id_history")
     @ManyToOne
     private History idHistory;
+    @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
+    @ManyToOne(optional = false)
+    private Utilizador idUtilizador;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGoal")
     private Collection<History> historyCollection;
 
@@ -106,11 +106,11 @@ public class Goal implements Serializable {
         this.idGoal = idGoal;
     }
 
-    public Goal(Integer idGoal, String name, String desc, String type, String status, Date finaldate, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
+    public Goal(Integer idGoal, String nome, String descript, String tipo, String status, Date finaldate, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
         this.idGoal = idGoal;
-        this.name = name;
-        this.desc = desc;
-        this.type = type;
+        this.nome = nome;
+        this.descript = descript;
+        this.tipo = tipo;
         this.status = status;
         this.finaldate = finaldate;
         this.totalvalue = totalvalue;
@@ -129,28 +129,28 @@ public class Goal implements Serializable {
         this.idGoal = idGoal;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescript() {
+        return descript;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescript(String descript) {
+        this.descript = descript;
     }
 
-    public String getType() {
-        return type;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getStatus() {
@@ -217,14 +217,6 @@ public class Goal implements Serializable {
         this.flagOrder = flagOrder;
     }
 
-    public User getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
-    }
-
     public Category getIdCategory() {
         return idCategory;
     }
@@ -239,6 +231,14 @@ public class Goal implements Serializable {
 
     public void setIdHistory(History idHistory) {
         this.idHistory = idHistory;
+    }
+
+    public Utilizador getIdUtilizador() {
+        return idUtilizador;
+    }
+
+    public void setIdUtilizador(Utilizador idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
     public Collection<History> getHistoryCollection() {

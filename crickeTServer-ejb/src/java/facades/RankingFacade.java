@@ -5,7 +5,7 @@
  */
 package facades;
 
-import entities.Rank;
+import entities.Ranking;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author gustavo
  */
 @Stateless
-public class RankFacade extends AbstractFacade<Rank> implements RankFacadeLocal {
+public class RankingFacade extends AbstractFacade<Ranking> implements RankingFacadeLocal {
 
     @PersistenceContext(unitName = "crickeTServer-ejbPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class RankFacade extends AbstractFacade<Rank> implements RankFacadeLocal 
         return em;
     }
 
-    public RankFacade() {
-        super(Rank.class);
+    public RankingFacade() {
+        super(Ranking.class);
     }
     
 }

@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "History.findAll", query = "SELECT h FROM History h")
     , @NamedQuery(name = "History.findByIdHistory", query = "SELECT h FROM History h WHERE h.idHistory = :idHistory")
-    , @NamedQuery(name = "History.findByType", query = "SELECT h FROM History h WHERE h.type = :type")})
+    , @NamedQuery(name = "History.findByTipo", query = "SELECT h FROM History h WHERE h.tipo = :tipo")})
 public class History implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,16 +39,16 @@ public class History implements Serializable {
     @Column(name = "id_history")
     private Integer idHistory;
     @Basic(optional = false)
-    @Column(name = "type")
-    private String type;
+    @Column(name = "tipo")
+    private String tipo;
     @OneToMany(mappedBy = "idHistory")
     private Collection<Goal> goalCollection;
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne(optional = false)
-    private User idUser;
     @JoinColumn(name = "id_goal", referencedColumnName = "id_goal")
     @ManyToOne(optional = false)
     private Goal idGoal;
+    @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
+    @ManyToOne(optional = false)
+    private Utilizador idUtilizador;
 
     public History() {
     }
@@ -57,9 +57,9 @@ public class History implements Serializable {
         this.idHistory = idHistory;
     }
 
-    public History(Integer idHistory, String type) {
+    public History(Integer idHistory, String tipo) {
         this.idHistory = idHistory;
-        this.type = type;
+        this.tipo = tipo;
     }
 
     public Integer getIdHistory() {
@@ -70,12 +70,12 @@ public class History implements Serializable {
         this.idHistory = idHistory;
     }
 
-    public String getType() {
-        return type;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Collection<Goal> getGoalCollection() {
@@ -86,20 +86,20 @@ public class History implements Serializable {
         this.goalCollection = goalCollection;
     }
 
-    public User getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
-    }
-
     public Goal getIdGoal() {
         return idGoal;
     }
 
     public void setIdGoal(Goal idGoal) {
         this.idGoal = idGoal;
+    }
+
+    public Utilizador getIdUtilizador() {
+        return idUtilizador;
+    }
+
+    public void setIdUtilizador(Utilizador idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
     @Override

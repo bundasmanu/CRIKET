@@ -5,7 +5,7 @@
  */
 package facades;
 
-import entities.Rank;
+import entities.Ranking;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author gustavo
  */
 @Local
-public interface RankFacadeLocal {
+public interface RankingFacadeLocal {
 
-    void create(Rank rank);
+    void create(Ranking ranking);
 
-    void edit(Rank rank);
+    void edit(Ranking ranking);
 
-    void remove(Rank rank);
+    void remove(Ranking ranking);
 
-    Rank find(Object id);
+    Ranking find(Object id);
 
-    List<Rank> findAll();
+    List<Ranking> findAll();
 
-    List<Rank> findRange(int[] range);
+    List<Ranking> findRange(int[] range);
 
     int count();
     

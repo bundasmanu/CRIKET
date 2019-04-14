@@ -5,7 +5,13 @@
  */
 package logic;
 
+import facades.RankingFacadeLocal;
+import facades.UtilizadorFacadeLocal;
+import java.util.Date;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import entities.*;
+import java.util.List;
 
 /**
  *
@@ -16,4 +22,46 @@ public class userManagement implements userManagementLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    
+    @EJB
+    UtilizadorFacadeLocal user;
+    
+    @EJB
+    RankingFacadeLocal ranks;
+    
+    @Override
+    public boolean signUp(String username, String pass, String email, String gender, Date birth){
+        
+        try{
+            
+            /*VERIFICAR PRIMEIRO SE JA EXISTE ALGUM USER, COM ESSE EMAIL*/
+            Utilizador x=user.findByEmail(email);
+            
+            if(x!=null){
+                return false;
+            }
+            
+            /*OBTENCAO DA PRIMEIRA INSTANCIA, PRIMEIRO NIVEL DO RANK*/
+            List<Ranking> r=ranks.findAll();
+            if(r.isEmpty()==true){
+                return false;
+            }
+            Ranking novo_ad=r.get(0);
+            
+            /*É CRIADA ENTAO UMA LINHA PARA O NOVO USER*/
+            
+            Utilizador newUser= new Utilizador(email, pass, username, birth, gender);
+            newUser.setIdRank(novo_ad);
+            
+            user.create(newUser);
+            
+            return true;
+        }
+        catch(Exception e){
+            System.out.println("Estoiro");
+            return false;
+        }
+        
+    }
+    
 }

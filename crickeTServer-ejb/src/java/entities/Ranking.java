@@ -24,14 +24,14 @@ import javax.persistence.Table;
  * @author gustavo
  */
 @Entity
-@Table(name = "rank")
+@Table(name = "ranking")
 @NamedQueries({
-    @NamedQuery(name = "Rank.findAll", query = "SELECT r FROM Rank r")
-    , @NamedQuery(name = "Rank.findByIdRank", query = "SELECT r FROM Rank r WHERE r.idRank = :idRank")
-    , @NamedQuery(name = "Rank.findByName", query = "SELECT r FROM Rank r WHERE r.name = :name")
-    , @NamedQuery(name = "Rank.findByDesc", query = "SELECT r FROM Rank r WHERE r.desc = :desc")
-    , @NamedQuery(name = "Rank.findByMinpoints", query = "SELECT r FROM Rank r WHERE r.minpoints = :minpoints")})
-public class Rank implements Serializable {
+    @NamedQuery(name = "Ranking.findAll", query = "SELECT r FROM Ranking r")
+    , @NamedQuery(name = "Ranking.findByIdRank", query = "SELECT r FROM Ranking r WHERE r.idRank = :idRank")
+    , @NamedQuery(name = "Ranking.findByNome", query = "SELECT r FROM Ranking r WHERE r.nome = :nome")
+    , @NamedQuery(name = "Ranking.findByDescript", query = "SELECT r FROM Ranking r WHERE r.descript = :descript")
+    , @NamedQuery(name = "Ranking.findByMinpoints", query = "SELECT r FROM Ranking r WHERE r.minpoints = :minpoints")})
+public class Ranking implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,28 +40,28 @@ public class Rank implements Serializable {
     @Column(name = "id_rank")
     private Integer idRank;
     @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
-    @Column(name = "DESC")
-    private String desc;
+    @Column(name = "descript")
+    private String descript;
     @Basic(optional = false)
     @Column(name = "minpoints")
     private int minpoints;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRank")
-    private Collection<User> userCollection;
+    private Collection<Utilizador> utilizadorCollection;
 
-    public Rank() {
+    public Ranking() {
     }
 
-    public Rank(Integer idRank) {
+    public Ranking(Integer idRank) {
         this.idRank = idRank;
     }
 
-    public Rank(Integer idRank, String name, String desc, int minpoints) {
+    public Ranking(Integer idRank, String nome, String descript, int minpoints) {
         this.idRank = idRank;
-        this.name = name;
-        this.desc = desc;
+        this.nome = nome;
+        this.descript = descript;
         this.minpoints = minpoints;
     }
 
@@ -73,20 +73,20 @@ public class Rank implements Serializable {
         this.idRank = idRank;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescript() {
+        return descript;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescript(String descript) {
+        this.descript = descript;
     }
 
     public int getMinpoints() {
@@ -97,12 +97,12 @@ public class Rank implements Serializable {
         this.minpoints = minpoints;
     }
 
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public Collection<Utilizador> getUtilizadorCollection() {
+        return utilizadorCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setUtilizadorCollection(Collection<Utilizador> utilizadorCollection) {
+        this.utilizadorCollection = utilizadorCollection;
     }
 
     @Override
@@ -115,10 +115,10 @@ public class Rank implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rank)) {
+        if (!(object instanceof Ranking)) {
             return false;
         }
-        Rank other = (Rank) object;
+        Ranking other = (Ranking) object;
         if ((this.idRank == null && other.idRank != null) || (this.idRank != null && !this.idRank.equals(other.idRank))) {
             return false;
         }
@@ -127,7 +127,7 @@ public class Rank implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Rank[ idRank=" + idRank + " ]";
+        return "entities.Ranking[ idRank=" + idRank + " ]";
     }
     
 }

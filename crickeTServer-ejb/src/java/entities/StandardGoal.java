@@ -27,9 +27,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "StandardGoal.findAll", query = "SELECT s FROM StandardGoal s")
     , @NamedQuery(name = "StandardGoal.findByIdStandard", query = "SELECT s FROM StandardGoal s WHERE s.idStandard = :idStandard")
-    , @NamedQuery(name = "StandardGoal.findByName", query = "SELECT s FROM StandardGoal s WHERE s.name = :name")
-    , @NamedQuery(name = "StandardGoal.findByDesc", query = "SELECT s FROM StandardGoal s WHERE s.desc = :desc")
-    , @NamedQuery(name = "StandardGoal.findByType", query = "SELECT s FROM StandardGoal s WHERE s.type = :type")
+    , @NamedQuery(name = "StandardGoal.findByNome", query = "SELECT s FROM StandardGoal s WHERE s.nome = :nome")
+    , @NamedQuery(name = "StandardGoal.findByDescript", query = "SELECT s FROM StandardGoal s WHERE s.descript = :descript")
+    , @NamedQuery(name = "StandardGoal.findByTipo", query = "SELECT s FROM StandardGoal s WHERE s.tipo = :tipo")
     , @NamedQuery(name = "StandardGoal.findByStatus", query = "SELECT s FROM StandardGoal s WHERE s.status = :status")
     , @NamedQuery(name = "StandardGoal.findByTotalvalue", query = "SELECT s FROM StandardGoal s WHERE s.totalvalue = :totalvalue")
     , @NamedQuery(name = "StandardGoal.findByFlagClickControl", query = "SELECT s FROM StandardGoal s WHERE s.flagClickControl = :flagClickControl")
@@ -43,14 +43,14 @@ public class StandardGoal implements Serializable {
     @Column(name = "id_standard")
     private Integer idStandard;
     @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
-    @Column(name = "DESC")
-    private String desc;
+    @Column(name = "descript")
+    private String descript;
     @Basic(optional = false)
-    @Column(name = "type")
-    private String type;
+    @Column(name = "tipo")
+    private String tipo;
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
@@ -64,7 +64,7 @@ public class StandardGoal implements Serializable {
     @Column(name = "flag_order")
     private int flagOrder;
     @ManyToMany(mappedBy = "standardGoalCollection")
-    private Collection<User> userCollection;
+    private Collection<Utilizador> utilizadorCollection;
 
     public StandardGoal() {
     }
@@ -73,11 +73,11 @@ public class StandardGoal implements Serializable {
         this.idStandard = idStandard;
     }
 
-    public StandardGoal(Integer idStandard, String name, String desc, String type, String status, int totalvalue, int flagClickControl, int flagOrder) {
+    public StandardGoal(Integer idStandard, String nome, String descript, String tipo, String status, int totalvalue, int flagClickControl, int flagOrder) {
         this.idStandard = idStandard;
-        this.name = name;
-        this.desc = desc;
-        this.type = type;
+        this.nome = nome;
+        this.descript = descript;
+        this.tipo = tipo;
         this.status = status;
         this.totalvalue = totalvalue;
         this.flagClickControl = flagClickControl;
@@ -92,28 +92,28 @@ public class StandardGoal implements Serializable {
         this.idStandard = idStandard;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescript() {
+        return descript;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescript(String descript) {
+        this.descript = descript;
     }
 
-    public String getType() {
-        return type;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getStatus() {
@@ -148,12 +148,12 @@ public class StandardGoal implements Serializable {
         this.flagOrder = flagOrder;
     }
 
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public Collection<Utilizador> getUtilizadorCollection() {
+        return utilizadorCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setUtilizadorCollection(Collection<Utilizador> utilizadorCollection) {
+        this.utilizadorCollection = utilizadorCollection;
     }
 
     @Override

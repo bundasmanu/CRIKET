@@ -28,8 +28,8 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
     , @NamedQuery(name = "Category.findByIdCategory", query = "SELECT c FROM Category c WHERE c.idCategory = :idCategory")
-    , @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")
-    , @NamedQuery(name = "Category.findByDesc", query = "SELECT c FROM Category c WHERE c.desc = :desc")})
+    , @NamedQuery(name = "Category.findByNome", query = "SELECT c FROM Category c WHERE c.nome = :nome")
+    , @NamedQuery(name = "Category.findByDescript", query = "SELECT c FROM Category c WHERE c.descript = :descript")})
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,11 +39,11 @@ public class Category implements Serializable {
     @Column(name = "id_category")
     private Integer idCategory;
     @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nome")
+    private String nome;
     @Basic(optional = false)
-    @Column(name = "DESC")
-    private String desc;
+    @Column(name = "descript")
+    private String descript;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategory")
     private Collection<Goal> goalCollection;
 
@@ -54,10 +54,10 @@ public class Category implements Serializable {
         this.idCategory = idCategory;
     }
 
-    public Category(Integer idCategory, String name, String desc) {
+    public Category(Integer idCategory, String nome, String descript) {
         this.idCategory = idCategory;
-        this.name = name;
-        this.desc = desc;
+        this.nome = nome;
+        this.descript = descript;
     }
 
     public Integer getIdCategory() {
@@ -68,20 +68,20 @@ public class Category implements Serializable {
         this.idCategory = idCategory;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescript() {
+        return descript;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescript(String descript) {
+        this.descript = descript;
     }
 
     public Collection<Goal> getGoalCollection() {

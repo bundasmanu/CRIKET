@@ -6,6 +6,7 @@
 package BridgeLogicController;
 
 import javax.ejb.Local;
+import logic.cricketManagerLocal;
 
 /**
  *
@@ -13,5 +14,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface BridgeLocal {
+ 
+    cricketManagerLocal getCricket();
     
 }
