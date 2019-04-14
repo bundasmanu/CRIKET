@@ -340,7 +340,7 @@ alter table "USER"
       on delete restrict on update restrict;
       
 create sequence sequence_user_seq;
-alter table USER alter id_user set default nextval('sequence_user_seq');
+alter table "USER" alter id_user set default nextval('sequence_user_seq');
 
 create sequence sequence_rank_seq;
 alter table RANK alter id_rank set default nextval('sequence_rank_seq');
