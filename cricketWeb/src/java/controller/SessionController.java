@@ -135,7 +135,7 @@ public class SessionController implements Serializable {
         
         //TUserDTO userDTO = userManager.getTUserDTO(username);
         
-        if(username == null)
+        if(username == null || username.isEmpty())
         {
             ConfigurableNavigationHandler nav 
 		   = (ConfigurableNavigationHandler) 
