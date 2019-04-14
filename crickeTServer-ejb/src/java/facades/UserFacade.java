@@ -9,6 +9,7 @@ import entities.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +29,20 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public UserFacade() {
         super(User.class);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        User verifica_encontrado=null;
+        try{
+            Query qu= this.em.createNamedQuery("User.findByEmail");
+            qu.setParameter("email", email);
+            verifica_encontrado=(User) qu.getSingleResult();
+        }catch(Exception e){
+            System.out.println(""+e.getMessage());
+            return null;
+        }
+        return verifica_encontrado;
+    }
+    
     
 }

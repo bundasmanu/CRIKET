@@ -28,6 +28,11 @@ public class cricketManager implements cricketManagerLocal {
     
     @EJB
     historyManagementLocal history;
+
+    @Override
+    public boolean validateLogin(String email, String pass) {
+       return this.user.validateLogin(email, pass);
+    }
     
     
 }

@@ -5,6 +5,8 @@
  */
 package logic;
 
+import facades.UserFacadeLocal;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface userManagementLocal {
+    
+    public boolean validateLogin(String email, String pass);
     
 }

@@ -23,7 +23,9 @@ public interface UserFacadeLocal {
     void remove(User user);
 
     User find(Object id);
-
+    
+    public User findByEmail(String email);
+    
     List<User> findAll();
 
     List<User> findRange(int[] range);

@@ -5,6 +5,9 @@
  */
 package logic;
 
+import entities.User;
+import facades.UserFacadeLocal;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
 /**
@@ -14,6 +17,25 @@ import javax.ejb.Singleton;
 @Singleton
 public class userManagement implements userManagementLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @EJB
+    UserFacadeLocal user;
+
+    @Override
+    public boolean validateLogin(String email, String pass) {
+        try {
+            //verify if the email of a specific user exists
+            User return_user = this.user.findByEmail(email);
+
+            //if not exist
+            if (return_user == null || (return_user != null && return_user.getPassword().equals(pass) == false)) {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
 }

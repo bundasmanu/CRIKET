@@ -13,5 +13,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface cricketManagerLocal {
-    
+     boolean validateLogin(String email,String pass);
 }
