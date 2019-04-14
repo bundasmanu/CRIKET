@@ -67,7 +67,8 @@ public class SessionController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         //SignInValue value = userManager.signIn(username, password);
         
-        boolean result = (email.equals("bruno") && password.equals("123"));
+        boolean result = this.bridge.getCricket().validateLogin(email, password);
+        
         
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);

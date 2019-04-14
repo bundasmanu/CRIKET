@@ -8,6 +8,8 @@ package logic;
 import facades.RankingFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.Date;
+import entities.*;
+import facades.*;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import entities.*;
@@ -63,5 +65,23 @@ public class userManagement implements userManagementLocal {
         }
         
     }
-    
+
+    @Override
+    public boolean validateLogin(String email, String pass) {
+        try {
+            //verify if the email of a specific user exists
+            Utilizador return_user = this.user.findByEmail(email);
+
+            //if not exist
+            if (return_user == null || (return_user != null && return_user.getPassword().equals(pass) == false)) {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
 }

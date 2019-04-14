@@ -6,6 +6,7 @@
 package logic;
 
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 
 /**
@@ -16,5 +17,6 @@ import javax.ejb.Local;
 public interface userManagementLocal {
     
     boolean signUp(String username, String pass, String email, String gender, Date birth);
+    boolean validateLogin(String email, String pass);
     
 }
