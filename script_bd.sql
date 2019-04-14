@@ -359,9 +359,4 @@ create sequence sequence_history_seq;
 alter table HISTORY alter id_history set default nextval('sequence_history_seq');
 
 create sequence sequence_trophy_seq;
-alter table TROPHY alter id_throphy set default nextval('sequence_trophy_seq');
-
-
-
-
-
+alter table TROPHY alter  ID_TROPHY  set default nextval('sequence_trophy_seq');
