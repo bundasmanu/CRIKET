@@ -37,7 +37,7 @@ drop table HISTORY;
 
 drop index RANK_PK;
 
-drop table RANK;
+drop table RANKING;
 
 drop index STANDARD_GOAL_PK;
 
@@ -53,17 +53,18 @@ drop index CONVERSAR_FK;
 
 drop index TEM_FK;
 
-drop index USER_PK;
+drop index UTILIZADOR_PK;
 
-drop table "USER";
+DROP TABLE "USER" CASCADE;
+drop table UTILIZADOR;
 
 /*==============================================================*/
 /* Table: CATEGORY                                              */
 /*==============================================================*/
 create table CATEGORY (
    ID_CATEGORY          SERIAL               not null,
-   NAME                 VARCHAR(1024)        not null,
-   "DESC"               VARCHAR(500)         not null,
+   nome                 VARCHAR(1024)        not null,
+   descript               VARCHAR(500)         not null,
    constraint PK_CATEGORY primary key (ID_CATEGORY)
 );
 
@@ -79,8 +80,8 @@ ID_CATEGORY
 /*==============================================================*/
 create table DISPOE (
    ID_STANDARD          INT4                 not null,
-   ID_USER              INT4                 not null,
-   constraint PK_DISPOE primary key (ID_STANDARD, ID_USER)
+   ID_UTILIZADOR              INT4                 not null,
+   constraint PK_DISPOE primary key (ID_STANDARD, ID_UTILIZADOR)
 );
 
 /*==============================================================*/
@@ -88,7 +89,7 @@ create table DISPOE (
 /*==============================================================*/
 create unique index DISPOE_PK on DISPOE (
 ID_STANDARD,
-ID_USER
+ID_UTILIZADOR
 );
 
 /*==============================================================*/
@@ -102,7 +103,7 @@ ID_STANDARD
 /* Index: DISPOE2_FK                                            */
 /*==============================================================*/
 create  index DISPOE2_FK on DISPOE (
-ID_USER
+ID_UTILIZADOR
 );
 
 /*==============================================================*/
@@ -110,12 +111,12 @@ ID_USER
 /*==============================================================*/
 create table GOAL (
    ID_GOAL              SERIAL               not null,
-   ID_USER              INT4                 not null,
+   ID_UTILIZADOR              INT4                 not null,
    ID_HISTORY           INT4                 null,
    ID_CATEGORY          INT4                 not null,
-   NAME                 VARCHAR(1024)        not null,
-   "DESC"               VARCHAR(500)         not null,
-   TYPE                 VARCHAR(1024)        not null,
+   nome                 VARCHAR(1024)        not null,
+   descript               VARCHAR(500)         not null,
+   tipo                 VARCHAR(1024)        not null,
    STATUS               VARCHAR(1024)        not null,
    FINALDATE            DATE                 not null,
    TOTALVALUE           INT4                 not null,
@@ -145,7 +146,7 @@ ID_HISTORY
 /* Index: CRIA_FK                                               */
 /*==============================================================*/
 create  index CRIA_FK on GOAL (
-ID_USER
+ID_UTILIZADOR
 );
 
 /*==============================================================*/
@@ -160,9 +161,9 @@ ID_CATEGORY
 /*==============================================================*/
 create table HISTORY (
    ID_HISTORY           SERIAL               not null,
-   ID_USER              INT4                 not null,
+   ID_UTILIZADOR              INT4                 not null,
    ID_GOAL              INT4                 not null,
-   TYPE                 VARCHAR(1024)        not null,
+   tipo                 VARCHAR(1024)        not null,
    constraint PK_HISTORY primary key (ID_HISTORY)
 );
 
@@ -177,7 +178,7 @@ ID_HISTORY
 /* Index: RECORDA_FK                                            */
 /*==============================================================*/
 create  index RECORDA_FK on HISTORY (
-ID_USER
+ID_UTILIZADOR
 );
 
 /*==============================================================*/
@@ -190,10 +191,10 @@ ID_GOAL
 /*==============================================================*/
 /* Table: RANK                                                  */
 /*==============================================================*/
-create table RANK (
+create table RANKING (
    ID_RANK              INT4                 not null,
-   NAME                 VARCHAR(1024)        not null,
-   "DESC"               VARCHAR(500)         not null,
+   nome                 VARCHAR(1024)        not null,
+   descript               VARCHAR(500)         not null,
    MINPOINTS            INT4                 not null,
    constraint PK_RANK primary key (ID_RANK)
 );
@@ -210,9 +211,9 @@ ID_RANK
 /*==============================================================*/
 create table STANDARD_GOAL (
    ID_STANDARD          SERIAL               not null,
-   NAME                 VARCHAR(1024)        not null,
-   "DESC"               VARCHAR(500)         not null,
-   TYPE                 VARCHAR(1024)        not null,
+   nome                 VARCHAR(1024)        not null,
+   descript               VARCHAR(500)         not null,
+   tipo                 VARCHAR(1024)        not null,
    STATUS               VARCHAR(1024)        not null,
    TOTALVALUE           INT4                 not null,
    FLAG_CLICK_CONTROL   INT4                 not null,
@@ -232,10 +233,10 @@ ID_STANDARD
 /*==============================================================*/
 create table TROPHY (
    ID_TROPHY            SERIAL               not null,
-   ID_USER              INT4                 not null,
-   NAME                 VARCHAR(1024)        not null,
-   "DESC"               VARCHAR(500)         not null,
-   VALUE                INT4                 not null,
+   ID_UTILIZADOR              INT4                 not null,
+   nome                 VARCHAR(1024)        not null,
+   descript               VARCHAR(500)         not null,
+   valor                INT4                 not null,
    constraint PK_TROPHY primary key (ID_TROPHY)
 );
 
@@ -250,43 +251,43 @@ ID_TROPHY
 /* Index: PREMIADO_FK                                           */
 /*==============================================================*/
 create  index PREMIADO_FK on TROPHY (
-ID_USER
+ID_UTILIZADOR
 );
 
 /*==============================================================*/
-/* Table: "USER"                                                */
+/* Table: "UTILIZADOR"                                                */
 /*==============================================================*/
-create table "USER" (
-   ID_USER              SERIAL               not null,
+create table UTILIZADOR (
+   ID_UTILIZADOR              SERIAL               not null,
    ID_RANK              INT4                 not null,
-   USE_ID_USER          INT4                 null,
+   USE_ID_UTILIZADOR          INT4                 null,
    EMAIL                VARCHAR(1024)        not null,
    PASSWORD             VARCHAR(500)         not null,
-   NAME                 VARCHAR(1024)        not null,
+   NOME                 VARCHAR(1024)        not null,
    AGE                  DATE                 not null,
    GENRE                VARCHAR(500)         not null,
-   constraint PK_USER primary key (ID_USER)
+   constraint PK_UTILIZADOR primary key (ID_UTILIZADOR)
 );
 
 /*==============================================================*/
-/* Index: USER_PK                                               */
+/* Index: UTILIZADOR_PK                                               */
 /*==============================================================*/
-create unique index USER_PK on "USER" (
-ID_USER
+create unique index UTILIZADOR_PK  on UTILIZADOR (
+ID_UTILIZADOR
 );
 
 /*==============================================================*/
 /* Index: TEM_FK                                                */
 /*==============================================================*/
-create  index TEM_FK on "USER" (
+create  index TEM_FK on UTILIZADOR  (
 ID_RANK
 );
 
 /*==============================================================*/
 /* Index: CONVERSAR_FK                                          */
 /*==============================================================*/
-create  index CONVERSAR_FK on "USER" (
-USE_ID_USER
+create  index CONVERSAR_FK on UTILIZADOR (
+USE_ID_UTILIZADOR 
 );
 
 alter table DISPOE
@@ -295,8 +296,8 @@ alter table DISPOE
       on delete restrict on update restrict;
 
 alter table DISPOE
-   add constraint FK_DISPOE_DISPOE2_USER foreign key (ID_USER)
-      references "USER" (ID_USER)
+   add constraint FK_DISPOE_DISPOE2_UTILIZADOR  foreign key (ID_UTILIZADOR)
+      references UTILIZADOR  (ID_UTILIZADOR )
       on delete restrict on update restrict;
 
 alter table GOAL
@@ -305,8 +306,8 @@ alter table GOAL
       on delete restrict on update restrict;
 
 alter table GOAL
-   add constraint FK_GOAL_CRIA_USER foreign key (ID_USER)
-      references "USER" (ID_USER)
+   add constraint FK_GOAL_CRIA_UTILIZADOR foreign key (ID_UTILIZADOR)
+      references UTILIZADOR (ID_UTILIZADOR)
       on delete restrict on update restrict;
 
 alter table GOAL
@@ -320,30 +321,30 @@ alter table HISTORY
       on delete restrict on update restrict;
 
 alter table HISTORY
-   add constraint FK_HISTORY_RECORDA_USER foreign key (ID_USER)
-      references "USER" (ID_USER)
+   add constraint FK_HISTORY_RECORDA_UTILIZADOR foreign key (ID_UTILIZADOR)
+      references UTILIZADOR (ID_UTILIZADOR)
       on delete restrict on update restrict;
 
 alter table TROPHY
-   add constraint FK_TROPHY_PREMIADO_USER foreign key (ID_USER)
-      references "USER" (ID_USER)
+   add constraint FK_TROPHY_PREMIADO_UTILIZADOR foreign key (ID_UTILIZADOR)
+      references UTILIZADOR (ID_UTILIZADOR)
       on delete restrict on update restrict;
 
-alter table "USER"
-   add constraint FK_USER_CONVERSAR_USER foreign key (USE_ID_USER)
-      references "USER" (ID_USER)
+alter table UTILIZADOR 
+   add constraint FK_UTILIZADOR_CONVERSAR_UTILIZADOR foreign key (USE_ID_UTILIZADOR)
+      references UTILIZADOR (ID_UTILIZADOR)
       on delete restrict on update restrict;
 
-alter table "USER"
-   add constraint FK_USER_TEM_RANK foreign key (ID_RANK)
-      references RANK (ID_RANK)
+alter table UTILIZADOR 
+   add constraint FK_UTILIZADOR_TEM_RANK foreign key (ID_RANK)
+      references RANKING (ID_RANK)
       on delete restrict on update restrict;
       
-create sequence sequence_user_seq;
-alter table "USER" alter id_user set default nextval('sequence_user_seq');
+create sequence sequence_UTILIZADOR_seq;
+alter table UTILIZADOR alter id_UTILIZADOR set default nextval('sequence_UTILIZADOR_seq');
 
 create sequence sequence_rank_seq;
-alter table RANK alter id_rank set default nextval('sequence_rank_seq');
+alter table RANKING alter id_rank set default nextval('sequence_rank_seq');
 
 create sequence sequence_standard_seq;
 alter table STANDARD_GOAL alter id_standard set default nextval('sequence_standard_seq');
