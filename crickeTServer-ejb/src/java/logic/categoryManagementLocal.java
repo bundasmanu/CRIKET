@@ -5,9 +5,6 @@
  */
 package logic;
 
-import java.time.LocalDate;
-import java.util.Date;
-import javax.ejb.EJB;
 import javax.ejb.Local;
 
 /**
@@ -15,9 +12,9 @@ import javax.ejb.Local;
  * @author gustavo
  */
 @Local
-public interface userManagementLocal {
+public interface categoryManagementLocal {
     
-    boolean signUp(String username, String pass, String email, String gender, Date birth);
-    boolean validateLogin(String email, String pass);
+    boolean createCategory(String name, String desc);
+    boolean removeCategory(String name);
     
 }

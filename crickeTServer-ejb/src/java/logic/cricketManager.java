@@ -30,6 +30,9 @@ public class cricketManager implements cricketManagerLocal {
     
     @EJB
     historyManagementLocal history;
+    
+    @EJB
+    categoryManagementLocal category;
 
     @Override
     public boolean validateLogin(String email, String pass) {
@@ -39,6 +42,16 @@ public class cricketManager implements cricketManagerLocal {
     @Override
     public boolean signUp(String username, String pass, String email, String gender, Date birth){
         return user.signUp(username, pass, email, gender, birth);
+    }
+    
+    @Override
+    public boolean createCategory(String name, String desc){
+        return this.category.createCategory(name, desc);
+    }
+    
+    @Override
+    public boolean removeCategory(String name){
+        return this.category.removeCategory(name);
     }
     
 }

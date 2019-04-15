@@ -9,6 +9,7 @@ import entities.Category;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,26 @@ public class CategoryFacade extends AbstractFacade<Category> implements Category
 
     public CategoryFacade() {
         super(Category.class);
+    }
+    
+    @Override
+    public Category findByName(String name){
+        
+        Category c=null;
+        try{
+            
+            Query qu= this.em.createNamedQuery("Category.findByNome");
+            qu.setParameter("nome", name);
+            /*SO PODE EXISTIR UMA COMPANHIA COM AQUELE NOME*/
+            c= (Category) qu.getSingleResult();
+            
+            return c;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
     }
     
 }

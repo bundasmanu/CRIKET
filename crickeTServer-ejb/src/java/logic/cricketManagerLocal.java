@@ -18,5 +18,10 @@ public interface cricketManagerLocal {
     
     boolean signUp(String username, String pass, String email, String gender, Date birth);
     
-     boolean validateLogin(String email,String pass);
+    boolean validateLogin(String email,String pass);
+    
+    boolean createCategory(String name, String desc);
+    
+    boolean removeCategory(String name);
+    
 }

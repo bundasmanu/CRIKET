@@ -59,6 +59,11 @@ public class Category implements Serializable {
         this.nome = nome;
         this.descript = descript;
     }
+    
+    public Category(String nome, String descript) {
+        this.nome = nome;
+        this.descript = descript;
+    }
 
     public Integer getIdCategory() {
         return idCategory;
