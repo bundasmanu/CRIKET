@@ -49,9 +49,7 @@ and open the template in the editor.
                         <h:outputText value="#{bundle.UserFullName}"/><br/>
                         <h:inputText value="#{sessionController.clientName}"/><br/>
                         <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                        <h:inputText value="#{sessionController.birth}">
-                            <f:convertDateTime pattern="dd/mm/yyyy"/>  
-                        </h:inputText>
+                        <h:inputText value="#{sessionController.birth}" styleClass = "form-control datepicker"></h:inputText>
                         <br/>
                         <h:outputText value="#{bundle.UserPassword}"/><br/>
                         <h:inputSecret value="#{sessionController.password}"/><br/>
@@ -63,7 +61,7 @@ and open the template in the editor.
                         <br/><br/>
                         <h:messages />
 
-                        <h:commandButton class ="btn btn-info" action="#{sessionController.process_SignUp()}" value="#{bundle.SignUp}"></h:commandButton>
+                        <h:commandButton class ="btn btn-info" action="#{sessionController.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton>
                     </h:form>
                     
                 </div>
