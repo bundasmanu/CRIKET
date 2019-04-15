@@ -109,8 +109,7 @@ public class SessionController implements Serializable {
         
         try{
             System.out.println("\n\n\n\n\n\n\n String: " + birthTmp);
-            
-            
+               
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             
             LocalDate localDate = LocalDate.parse(birthTmp, formatter);
