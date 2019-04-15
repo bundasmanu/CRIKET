@@ -8,6 +8,8 @@ package controller;
 import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -43,6 +45,8 @@ public class SessionController implements Serializable {
     private String email;
     private String clientName;
     private Date birth;
+    private String birthTmp; //temporary var... Just to receive the date from datepicker
+    private LocalDate birthLocalDate;
     private String gender;
     private Boolean isLogged;
     
@@ -78,17 +82,13 @@ public class SessionController implements Serializable {
         else
         {
             Utils.throwMessage("Wrong e-mail or password.");
-            
             return "index";
-
-            //return "index?#contentSection";
         }
     }
     
     public String process_SignUp(){
         
         FacesContext context = FacesContext.getCurrentInstance();
-        //SignInValue value = userManager.signIn(username, password);
         
         boolean result = this.signUp();     
         
@@ -99,11 +99,8 @@ public class SessionController implements Serializable {
         }
         else
         {
-            Utils.throwMessage("Ja existe este user");
-            
+            Utils.throwMessage("This user already exists.");
             return "index";
-
-            //return "index?#contentSection";
         }
         
     }
@@ -111,8 +108,16 @@ public class SessionController implements Serializable {
     public boolean signUp(){
         
         try{
+            System.out.println("\n\n\n\n\n\n\n String: " + birthTmp);
             
-           return bridge.getCricket().signUp(clientName, password, email, gender, birth);
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            
+            LocalDate localDate = LocalDate.parse(birthTmp, formatter);
+            System.out.println("\n\n\n\n\n\n\n LocalDate date: " + localDate);
+            
+            return true;
+//return bridge.getCricket().signUp(clientName, password, email, gender, birth);
             
         }
         catch(Exception e){
@@ -200,6 +205,14 @@ public class SessionController implements Serializable {
 
     public void setIsLogged(Boolean isLogged) {
         this.isLogged = isLogged;
+    }
+
+    public String getBirthTmp() {
+        return birthTmp;
+    }
+
+    public void setBirthTmp(String birthTmp) {
+        this.birthTmp = birthTmp;
     }
     
 }
