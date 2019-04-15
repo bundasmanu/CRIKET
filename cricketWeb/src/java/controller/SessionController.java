@@ -8,6 +8,7 @@ package controller;
 import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -108,17 +109,12 @@ public class SessionController implements Serializable {
     public boolean signUp(){
         
         try{
-            System.out.println("\n\n\n\n\n\n\n String: " + birthTmp);
+                       
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             
-            
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-            
-            LocalDate localDate = LocalDate.parse(birthTmp, formatter);
-            System.out.println("\n\n\n\n\n\n\n LocalDate date: " + localDate);
-            
-            return true;
-//return bridge.getCricket().signUp(clientName, password, email, gender, birth);
-            
+            this.birth = formatter.parse(this.birthTmp);
+            return bridge.getCricket().signUp(clientName, password, email, gender, birth);
+
         }
         catch(Exception e){
             System.out.println(e.getMessage());

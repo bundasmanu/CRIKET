@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.time.LocalDate;
 import java.util.Date;
 import javax.ejb.Local;
 

@@ -13,6 +13,7 @@ import facades.*;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import entities.*;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
