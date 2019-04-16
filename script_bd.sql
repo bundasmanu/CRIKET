@@ -243,7 +243,7 @@ alter table STANDARD_GOAL alter id_standard set default nextval('sequence_standa
 create sequence sequence_category_seq;
 alter table CATEGORY alter id_category set default nextval('sequence_category_seq');
 
-create sequence sequ\ence_goal_seq;
+create sequence sequence_goal_seq;
 alter table GOAL alter id_goal set default nextval('sequence_goal_seq');
 
 
