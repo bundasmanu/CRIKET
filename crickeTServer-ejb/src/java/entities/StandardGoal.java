@@ -6,14 +6,12 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,7 +31,14 @@ import javax.persistence.Table;
     , @NamedQuery(name = "StandardGoal.findByStatus", query = "SELECT s FROM StandardGoal s WHERE s.status = :status")
     , @NamedQuery(name = "StandardGoal.findByTotalvalue", query = "SELECT s FROM StandardGoal s WHERE s.totalvalue = :totalvalue")
     , @NamedQuery(name = "StandardGoal.findByFlagClickControl", query = "SELECT s FROM StandardGoal s WHERE s.flagClickControl = :flagClickControl")
-    , @NamedQuery(name = "StandardGoal.findByFlagOrder", query = "SELECT s FROM StandardGoal s WHERE s.flagOrder = :flagOrder")})
+    , @NamedQuery(name = "StandardGoal.findByFlagOrder", query = "SELECT s FROM StandardGoal s WHERE s.flagOrder = :flagOrder")
+    , @NamedQuery(name = "StandardGoal.findByMinweight", query = "SELECT s FROM StandardGoal s WHERE s.minweight = :minweight")
+    , @NamedQuery(name = "StandardGoal.findByMaxweight", query = "SELECT s FROM StandardGoal s WHERE s.maxweight = :maxweight")
+    , @NamedQuery(name = "StandardGoal.findByMinage", query = "SELECT s FROM StandardGoal s WHERE s.minage = :minage")
+    , @NamedQuery(name = "StandardGoal.findByMaxage", query = "SELECT s FROM StandardGoal s WHERE s.maxage = :maxage")
+    , @NamedQuery(name = "StandardGoal.findByMinheight", query = "SELECT s FROM StandardGoal s WHERE s.minheight = :minheight")
+    , @NamedQuery(name = "StandardGoal.findByMaxheight", query = "SELECT s FROM StandardGoal s WHERE s.maxheight = :maxheight")
+    , @NamedQuery(name = "StandardGoal.findByGenre", query = "SELECT s FROM StandardGoal s WHERE s.genre = :genre")})
 public class StandardGoal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,8 +68,27 @@ public class StandardGoal implements Serializable {
     @Basic(optional = false)
     @Column(name = "flag_order")
     private int flagOrder;
-    @ManyToMany(mappedBy = "standardGoalCollection")
-    private Collection<Utilizador> utilizadorCollection;
+    @Basic(optional = false)
+    @Column(name = "minweight")
+    private double minweight;
+    @Basic(optional = false)
+    @Column(name = "maxweight")
+    private double maxweight;
+    @Basic(optional = false)
+    @Column(name = "minage")
+    private int minage;
+    @Basic(optional = false)
+    @Column(name = "maxage")
+    private int maxage;
+    @Basic(optional = false)
+    @Column(name = "minheight")
+    private double minheight;
+    @Basic(optional = false)
+    @Column(name = "maxheight")
+    private double maxheight;
+    @Basic(optional = false)
+    @Column(name = "genre")
+    private String genre;
 
     public StandardGoal() {
     }
@@ -73,7 +97,7 @@ public class StandardGoal implements Serializable {
         this.idStandard = idStandard;
     }
 
-    public StandardGoal(Integer idStandard, String nome, String descript, String tipo, String status, int totalvalue, int flagClickControl, int flagOrder) {
+    public StandardGoal(Integer idStandard, String nome, String descript, String tipo, String status, int totalvalue, int flagClickControl, int flagOrder, double minweight, double maxweight, int minage, int maxage, double minheight, double maxheight, String genre) {
         this.idStandard = idStandard;
         this.nome = nome;
         this.descript = descript;
@@ -82,6 +106,13 @@ public class StandardGoal implements Serializable {
         this.totalvalue = totalvalue;
         this.flagClickControl = flagClickControl;
         this.flagOrder = flagOrder;
+        this.minweight = minweight;
+        this.maxweight = maxweight;
+        this.minage = minage;
+        this.maxage = maxage;
+        this.minheight = minheight;
+        this.maxheight = maxheight;
+        this.genre = genre;
     }
 
     public Integer getIdStandard() {
@@ -148,12 +179,60 @@ public class StandardGoal implements Serializable {
         this.flagOrder = flagOrder;
     }
 
-    public Collection<Utilizador> getUtilizadorCollection() {
-        return utilizadorCollection;
+    public double getMinweight() {
+        return minweight;
     }
 
-    public void setUtilizadorCollection(Collection<Utilizador> utilizadorCollection) {
-        this.utilizadorCollection = utilizadorCollection;
+    public void setMinweight(double minweight) {
+        this.minweight = minweight;
+    }
+
+    public double getMaxweight() {
+        return maxweight;
+    }
+
+    public void setMaxweight(double maxweight) {
+        this.maxweight = maxweight;
+    }
+
+    public int getMinage() {
+        return minage;
+    }
+
+    public void setMinage(int minage) {
+        this.minage = minage;
+    }
+
+    public int getMaxage() {
+        return maxage;
+    }
+
+    public void setMaxage(int maxage) {
+        this.maxage = maxage;
+    }
+
+    public double getMinheight() {
+        return minheight;
+    }
+
+    public void setMinheight(double minheight) {
+        this.minheight = minheight;
+    }
+
+    public double getMaxheight() {
+        return maxheight;
+    }
+
+    public void setMaxheight(double maxheight) {
+        this.maxheight = maxheight;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     @Override

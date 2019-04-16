@@ -39,23 +39,23 @@ public class CategoryBean implements Serializable{
     /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
     public String createCategory(){
         
-        try{
-            
-            /*TENTATIVA DE CRIAR UMA CATEGORIA*/
-            boolean return_create=this.bridge.getCricket().createCategory(this.name_c, this.desc_c);
-            
-            if(return_create==false){
-                return "index.xhtml";
-            }
-            
-            return "dashboard.xhtml";
-            
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return "index.xhtml";
-        }
-        
+//        try{
+//            
+//            /*TENTATIVA DE CRIAR UMA CATEGORIA*/
+//            boolean return_create=this.bridge.getCricket().createCategory(this.name_c, this.desc_c);
+//            
+//            if(return_create==false){
+//                return "index.xhtml";
+//            }
+//            
+//            return "dashboard.xhtml";
+//            
+//        }
+//        catch(Exception e){
+//            System.out.println(e.getMessage());
+//            return "index.xhtml";
+//        }
+        return "";
     }
     
     /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/

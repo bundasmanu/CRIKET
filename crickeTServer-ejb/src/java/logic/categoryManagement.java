@@ -6,7 +6,10 @@
 package logic;
 
 import entities.Category;
+import entities.Utilizador;
 import facades.CategoryFacadeLocal;
+import facades.UtilizadorFacadeLocal;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
@@ -23,21 +26,27 @@ public class categoryManagement implements categoryManagementLocal {
     @EJB
     CategoryFacadeLocal cat;
     
+    @EJB
+    UtilizadorFacadeLocal user;
+    
+    @EJB
+    BeginManagementLocal beg;
+    
     @Override
-    public boolean createCategory(String name, String desc){
+    public boolean createCategory(String name, String desc, String email){
         
         try{
+                    
+            Utilizador exist_user=this.user.findByEmail(email);
             
-            /*VERIFICAR INICIALMENTE SE NAO EXISTE NENHUM CATEGORIA COM AQUELE NOME*/
-            Category exist=this.cat.findByName(name);
-            
-            /*SE JA EXISTE RETORNA*/
-            if(exist!=null){
+            /*SE JA EXISTE A CATEGORIA, OU NAO EXISTE USER RETORNA*/
+            if(exist_user==null){
                 return false;
             }
             
             /*COMO A REFERENCIA PARA O OBJETO EXIST ESTA A NULL, POSSO PEGAR NELE*/
-            exist=new Category(name, desc);
+            Category exist=new Category(name, desc);
+            exist.setIdUser(exist_user);
             
             this.cat.create(exist);
             
@@ -71,6 +80,21 @@ public class categoryManagement implements categoryManagementLocal {
         catch(Exception e){
             System.out.println(e.getMessage());
             return false;
+        }
+        
+    }
+    
+    @Override
+    public void initializeCategories(String email){
+        
+        try{
+            
+                for(String j: this.beg.getLista_cat()){
+                    this.createCategory(j, "", email);
+                }          
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         
     }

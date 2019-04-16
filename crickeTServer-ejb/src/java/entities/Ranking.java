@@ -70,12 +70,7 @@ public class Ranking implements Serializable {
         this.descript = descript;
         this.minpoints = minpoints;
     }
-    
-    public Ranking(String nome, int minpoints) {
-        this.nome = nome;
-        this.minpoints = minpoints;
-    }
-    
+
     public Integer getIdRank() {
         return idRank;
     }

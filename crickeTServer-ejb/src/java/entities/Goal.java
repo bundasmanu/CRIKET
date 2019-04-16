@@ -6,10 +6,8 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -90,14 +87,6 @@ public class Goal implements Serializable {
     @JoinColumn(name = "id_category", referencedColumnName = "id_category")
     @ManyToOne(optional = false)
     private Category idCategory;
-    @JoinColumn(name = "id_history", referencedColumnName = "id_history")
-    @ManyToOne
-    private History idHistory;
-    @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
-    @ManyToOne(optional = false)
-    private Utilizador idUtilizador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGoal")
-    private Collection<History> historyCollection;
 
     public Goal() {
     }
@@ -223,30 +212,6 @@ public class Goal implements Serializable {
 
     public void setIdCategory(Category idCategory) {
         this.idCategory = idCategory;
-    }
-
-    public History getIdHistory() {
-        return idHistory;
-    }
-
-    public void setIdHistory(History idHistory) {
-        this.idHistory = idHistory;
-    }
-
-    public Utilizador getIdUtilizador() {
-        return idUtilizador;
-    }
-
-    public void setIdUtilizador(Utilizador idUtilizador) {
-        this.idUtilizador = idUtilizador;
-    }
-
-    public Collection<History> getHistoryCollection() {
-        return historyCollection;
-    }
-
-    public void setHistoryCollection(Collection<History> historyCollection) {
-        this.historyCollection = historyCollection;
     }
 
     @Override

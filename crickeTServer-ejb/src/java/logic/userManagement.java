@@ -32,6 +32,9 @@ public class userManagement implements userManagementLocal {
     @EJB
     RankingFacadeLocal ranks;
     
+    @EJB
+    categoryManagementLocal cat;
+    
     @Override
     public boolean signUp(String username, String pass, String email, String gender, Date birth){
         
@@ -55,8 +58,11 @@ public class userManagement implements userManagementLocal {
             
             Utilizador newUser= new Utilizador(email, pass, username, birth, gender);
             newUser.setIdRank(novo_ad);
-            
+                    
             user.create(newUser);
+            
+            /*SE CHEGAR AQUI É PORQUE CRIOU USER, ENTAO BASTA CHAMAR A CRIACAO DE ENTIDADES GENERICAS PARA UM USER*/
+            this.cat.initializeCategories(email);
             
             return true;
         }

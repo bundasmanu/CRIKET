@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -17,8 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,7 +32,7 @@ import javax.persistence.TemporalType;
 @Table(name = "utilizador")
 @NamedQueries({
     @NamedQuery(name = "Utilizador.findAll", query = "SELECT u FROM Utilizador u")
-    , @NamedQuery(name = "Utilizador.findByIdUtilizador", query = "SELECT u FROM Utilizador u WHERE u.idUtilizador = :idUtilizador")
+    , @NamedQuery(name = "Utilizador.findByIdUser", query = "SELECT u FROM Utilizador u WHERE u.idUser = :idUser")
     , @NamedQuery(name = "Utilizador.findByEmail", query = "SELECT u FROM Utilizador u WHERE u.email = :email")
     , @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password")
     , @NamedQuery(name = "Utilizador.findByNome", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome")
@@ -47,8 +44,8 @@ public class Utilizador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_utilizador")
-    private Integer idUtilizador;
+    @Column(name = "id_user")
+    private Integer idUser;
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
@@ -65,35 +62,28 @@ public class Utilizador implements Serializable {
     @Basic(optional = false)
     @Column(name = "genre")
     private String genre;
-    @JoinTable(name = "dispoe", joinColumns = {
-        @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_standard", referencedColumnName = "id_standard")})
-    @ManyToMany
-    private Collection<StandardGoal> standardGoalCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
-    private Collection<Goal> goalCollection;
     @JoinColumn(name = "id_rank", referencedColumnName = "id_rank")
     @ManyToOne(optional = false)
     private Ranking idRank;
-    @OneToMany(mappedBy = "useIdUtilizador")
+    @OneToMany(mappedBy = "utiIdUser")
     private Collection<Utilizador> utilizadorCollection;
-    @JoinColumn(name = "use_id_utilizador", referencedColumnName = "id_utilizador")
+    @JoinColumn(name = "uti_id_user", referencedColumnName = "id_user")
     @ManyToOne
-    private Utilizador useIdUtilizador;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
-    private Collection<History> historyCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
+    private Utilizador utiIdUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
+    private Collection<Category> categoryCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
     private Collection<Trophy> trophyCollection;
 
     public Utilizador() {
     }
 
-    public Utilizador(Integer idUtilizador) {
-        this.idUtilizador = idUtilizador;
+    public Utilizador(Integer idUser) {
+        this.idUser = idUser;
     }
 
-    public Utilizador(Integer idUtilizador, String email, String password, String nome, Date age, String genre) {
-        this.idUtilizador = idUtilizador;
+    public Utilizador(Integer idUser, String email, String password, String nome, Date age, String genre) {
+        this.idUser = idUser;
         this.email = email;
         this.password = password;
         this.nome = nome;
@@ -109,12 +99,12 @@ public class Utilizador implements Serializable {
         this.genre = genre;
     }
 
-    public Integer getIdUtilizador() {
-        return idUtilizador;
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public void setIdUtilizador(Integer idUtilizador) {
-        this.idUtilizador = idUtilizador;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public String getEmail() {
@@ -157,22 +147,6 @@ public class Utilizador implements Serializable {
         this.genre = genre;
     }
 
-    public Collection<StandardGoal> getStandardGoalCollection() {
-        return standardGoalCollection;
-    }
-
-    public void setStandardGoalCollection(Collection<StandardGoal> standardGoalCollection) {
-        this.standardGoalCollection = standardGoalCollection;
-    }
-
-    public Collection<Goal> getGoalCollection() {
-        return goalCollection;
-    }
-
-    public void setGoalCollection(Collection<Goal> goalCollection) {
-        this.goalCollection = goalCollection;
-    }
-
     public Ranking getIdRank() {
         return idRank;
     }
@@ -189,20 +163,20 @@ public class Utilizador implements Serializable {
         this.utilizadorCollection = utilizadorCollection;
     }
 
-    public Utilizador getUseIdUtilizador() {
-        return useIdUtilizador;
+    public Utilizador getUtiIdUser() {
+        return utiIdUser;
     }
 
-    public void setUseIdUtilizador(Utilizador useIdUtilizador) {
-        this.useIdUtilizador = useIdUtilizador;
+    public void setUtiIdUser(Utilizador utiIdUser) {
+        this.utiIdUser = utiIdUser;
     }
 
-    public Collection<History> getHistoryCollection() {
-        return historyCollection;
+    public Collection<Category> getCategoryCollection() {
+        return categoryCollection;
     }
 
-    public void setHistoryCollection(Collection<History> historyCollection) {
-        this.historyCollection = historyCollection;
+    public void setCategoryCollection(Collection<Category> categoryCollection) {
+        this.categoryCollection = categoryCollection;
     }
 
     public Collection<Trophy> getTrophyCollection() {
@@ -216,7 +190,7 @@ public class Utilizador implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUtilizador != null ? idUtilizador.hashCode() : 0);
+        hash += (idUser != null ? idUser.hashCode() : 0);
         return hash;
     }
 
@@ -227,7 +201,7 @@ public class Utilizador implements Serializable {
             return false;
         }
         Utilizador other = (Utilizador) object;
-        if ((this.idUtilizador == null && other.idUtilizador != null) || (this.idUtilizador != null && !this.idUtilizador.equals(other.idUtilizador))) {
+        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
             return false;
         }
         return true;
@@ -235,7 +209,7 @@ public class Utilizador implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Utilizador[ idUtilizador=" + idUtilizador + " ]";
+        return "entities.Utilizador[ idUser=" + idUser + " ]";
     }
     
 }

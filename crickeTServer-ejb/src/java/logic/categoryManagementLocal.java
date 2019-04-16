@@ -14,7 +14,8 @@ import javax.ejb.Local;
 @Local
 public interface categoryManagementLocal {
     
-    boolean createCategory(String name, String desc);
+    boolean createCategory(String name, String desc, String email);
     boolean removeCategory(String name);
+    void initializeCategories(String email);
     
 }

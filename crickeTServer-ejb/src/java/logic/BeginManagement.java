@@ -50,10 +50,9 @@ public class BeginManagement implements BeginManagementLocal {
     public void postConstruct(){
         lista_cat=Arrays.asList("Saude","Desporto");
         lista_rank=Arrays.asList("Beginner","Amador","Intermedio","Profissional","Expert");
-        lista_points_Rank=Arrays.asList(0,100,200,500,100);
+        lista_points_Rank=Arrays.asList(0,100,200,500,1000);
         cat=new ArrayList<Category>();
         rank=new ArrayList<Ranking>();
-        this.initializeCategories();
         this.initializeRankings();
     }
     
@@ -66,9 +65,11 @@ public class BeginManagement implements BeginManagementLocal {
             List<Ranking> ret_rank=this.r.findMultipleNames(lista_rank);
             
             /*SE NAO EXISTIREM VALORES ADICIONA LA DENTRO*/
+            int w=0;
             if(ret_rank==null){
                 for(String j: lista_rank){
-                    this.catL.createCategory(j, "");
+                    this.rankL.createRanking(j, this.lista_points_Rank.get(w));
+                    w++;
                 }
             }
             else {
@@ -94,42 +95,9 @@ public class BeginManagement implements BeginManagementLocal {
         }
  
     }
-    
-    @Override
-    public void initializeCategories(){
-        
-        try{
-            
-            /*VERIFICA SE AS CATEGORIAS SAUDE E DESPORTO, ESTAO LA*/
-            /*VERIFICA SE AINDA NAO EXISTEM DADOS NA TABELA RANKING*/
-            List<Category> ret_cat=this.c.findMultipleNames(lista_cat);
-            
-            /*SE NAO EXISTIREM VALORES ADICIONA LA DENTRO*/
-            if(ret_cat==null){
-                for(String j: lista_cat){
-                    this.catL.createCategory(j, "");
-                }
-            }
-            else {
-                int x = 0;
-                for (String j : lista_cat) {
-                    for (Category e : ret_cat) {
-                        if (e.getNome().equals(j) == true) {
-                            x++;
-                        }
-                    }
-                    if (x == 0) {/*NAO ENCONTROU, ADICIONA NA BD*/
-                        this.catL.createCategory(j, "");
-                    } else {/*SE ENCONTROU, ENTAO COLOCA O X=0*/
-                        x = 0;
-                    }
-                }
-            }
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        
+    public List<String> getLista_cat() {
+        return lista_cat;
     }
     
 }

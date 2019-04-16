@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,6 +48,9 @@ public class Category implements Serializable {
     private String descript;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategory")
     private Collection<Goal> goalCollection;
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    @ManyToOne(optional = false)
+    private Utilizador idUser;
 
     public Category() {
     }
@@ -95,6 +100,14 @@ public class Category implements Serializable {
 
     public void setGoalCollection(Collection<Goal> goalCollection) {
         this.goalCollection = goalCollection;
+    }
+
+    public Utilizador getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Utilizador idUser) {
+        this.idUser = idUser;
     }
 
     @Override

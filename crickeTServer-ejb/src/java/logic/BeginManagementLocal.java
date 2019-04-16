@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface BeginManagementLocal {
     
-    void initializeCategories();
     void initializeRankings();
+    List<String> getLista_cat();
     
 }

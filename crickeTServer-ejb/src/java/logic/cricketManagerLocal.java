@@ -20,7 +20,7 @@ public interface cricketManagerLocal {
     
     boolean validateLogin(String email,String pass);
     
-    boolean createCategory(String name, String desc);
+    boolean createCategory(String name, String desc, String email);
     
     boolean removeCategory(String name);
     

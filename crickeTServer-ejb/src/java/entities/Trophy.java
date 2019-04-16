@@ -47,9 +47,9 @@ public class Trophy implements Serializable {
     @Basic(optional = false)
     @Column(name = "valor")
     private int valor;
-    @JoinColumn(name = "id_utilizador", referencedColumnName = "id_utilizador")
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne(optional = false)
-    private Utilizador idUtilizador;
+    private Utilizador idUser;
 
     public Trophy() {
     }
@@ -97,12 +97,12 @@ public class Trophy implements Serializable {
         this.valor = valor;
     }
 
-    public Utilizador getIdUtilizador() {
-        return idUtilizador;
+    public Utilizador getIdUser() {
+        return idUser;
     }
 
-    public void setIdUtilizador(Utilizador idUtilizador) {
-        this.idUtilizador = idUtilizador;
+    public void setIdUser(Utilizador idUser) {
+        this.idUser = idUser;
     }
 
     @Override

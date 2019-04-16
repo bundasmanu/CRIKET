@@ -45,8 +45,8 @@ public class cricketManager implements cricketManagerLocal {
     }
     
     @Override
-    public boolean createCategory(String name, String desc){
-        return this.category.createCategory(name, desc);
+    public boolean createCategory(String name, String desc,String email){
+        return this.category.createCategory(name, desc,email);
     }
     
     @Override
