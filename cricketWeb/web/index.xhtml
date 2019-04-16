@@ -10,10 +10,11 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <head>
+    <h:head>
+
         <ui:define name="title">TODO supply a title </ui:define>
-    </head>
-    <body>
+    </h:head>
+    <h:body>
         <ui:composition template = "template.xhtml">
             
             <ui:define name = "containerTitle">
@@ -23,50 +24,56 @@ and open the template in the editor.
 
 
             <ui:define name = "containerContent">
+                
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-                    
+                
                     <h3>#{bundle.SignIn}</h3>
                     <h:form>
+                        
+                        <h:messages></h:messages>
+                        
                         <h:outputText value="#{bundle.UserEmail}" /><br/>
-                        <h:inputText id="username" value="#{sessionController.email}"></h:inputText><br/>
+                        <h:inputText id="username" value="#{sessionBean.email}"></h:inputText><br/>
                         <br></br>
 
                         <h:outputText value="#{bundle.UserPassword}" /><br/>
-                        <h:inputSecret id="password" value="#{sessionController.password}"></h:inputSecret><br/>
+                        <h:inputSecret id="password" value="#{sessionBean.password}"></h:inputSecret><br/>
 
                         <br/>
 
-                        <h:messages />
-
-                        <h:commandButton class ="btn btn-info" action="#{sessionController.processSignIn}" value="#{bundle.SignIn}"/>  
+                        <h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/>  
                     </h:form>
                     
+                    <hr/>
                     
                     <h3>#{bundle.SignUp}</h3>
                     <h:form>
-                        <h:outputText value="#{bundle.UserEmail}"/><br/>
-                        <h:inputText value="#{sessionController.email}"/><br/>
-                        <h:outputText value="#{bundle.UserFullName}"/><br/>
-                        <h:inputText value="#{sessionController.clientName}"/><br/>
-                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                        <h:inputText value="#{sessionController.birthTmp}" styleClass = "form-control datepicker">                         
-                        </h:inputText>
-                        <br/>
-                        <h:outputText value="#{bundle.UserPassword}"/><br/>
-                        <h:inputSecret value="#{sessionController.password}"/><br/>
-                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
-                        <h:inputSecret value="#{sessionController.passwordConfirmation}"/><br/>
-                        <h:outputText value="#{bundle.UserGender}"/><br/>
-                        <h:inputText value="#{sessionController.gender}">
-                        </h:inputText><br/>
-                        <br/><br/>
+                        
                         <h:messages />
-
-                        <h:commandButton class ="btn btn-info" action="#{sessionController.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                        
+                        <h:outputText value="#{bundle.UserEmail}"/><br/>
+                        <h:inputText value="#{sessionBean.email}" required="true"/><br/>
+                        <h:outputText value="#{bundle.UserFullName}"/><br/>
+                        <h:inputText value="#{sessionBean.clientName}" required="true"/><br/>
+                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
+                        <h:inputText value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                        <h:outputText value="#{bundle.UserPassword}"/><br/>
+                        <h:inputSecret value="#{sessionBean.password}" required="true" /><br/>
+                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
+                        <h:inputSecret value="#{sessionBean.passwordConfirmation}" required="true" /><br/>
+                        <h:outputText value="#{bundle.UserGender}"/><br/>
+                        
+                        <h:selectOneRadio value="#{sessionBean.gender}" required="true" class="radio">
+                                <f:selectItem itemValue="MAN" itemLabel="Masculino" />
+                                <f:selectItem itemValue="WOMAN" itemLabel="Feminino" />
+                        </h:selectOneRadio>
+                        <br/>
+                        <br/>
+                        <h:commandButton class ="btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton>
                     </h:form>
                     
                 </div>
             </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>
