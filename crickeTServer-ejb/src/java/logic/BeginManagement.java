@@ -40,7 +40,6 @@ public class BeginManagement implements BeginManagementLocal {
     @EJB
     rankingManagementLocal rankL;
             
-    List<Category> cat=null;
     List<Ranking> rank=null;
     List<String> lista_cat=null;
     List<String> lista_rank=null;
@@ -51,7 +50,6 @@ public class BeginManagement implements BeginManagementLocal {
         lista_cat=Arrays.asList("Saude","Desporto");
         lista_rank=Arrays.asList("Beginner","Amador","Intermedio","Profissional","Expert");
         lista_points_Rank=Arrays.asList(0,100,200,500,1000);
-        cat=new ArrayList<Category>();
         rank=new ArrayList<Ranking>();
         this.initializeRankings();
     }
@@ -96,6 +94,7 @@ public class BeginManagement implements BeginManagementLocal {
  
     }
 
+    @Override
     public List<String> getLista_cat() {
         return lista_cat;
     }

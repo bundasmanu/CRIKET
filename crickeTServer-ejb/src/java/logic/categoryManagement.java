@@ -44,6 +44,13 @@ public class categoryManagement implements categoryManagementLocal {
                 return false;
             }
             
+            /*VERIFICAR SE O USER TEM JA UMA CATEGORIA CRIADA COM AQUELE NOME, SE JA TIVER RETORNA LOGO*/
+            for(Category c :exist_user.getCategoryCollection()){
+                if(c.getNome().equals(name)==true){
+                    return false;
+                }
+            }
+            
             /*COMO A REFERENCIA PARA O OBJETO EXIST ESTA A NULL, POSSO PEGAR NELE*/
             Category exist=new Category(name, desc);
             exist.setIdUser(exist_user); 
