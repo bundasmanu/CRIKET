@@ -35,9 +35,9 @@ import utils.Utils;
  * @author bruno
  */
 
-@Named("sessionController")
+@Named("sessionBean")
 @SessionScoped
-public class SessionController implements Serializable {
+public class SessionBean implements Serializable {
 
     private static final long serialVersionUID = 1094801825228386363L;
 	
@@ -51,7 +51,7 @@ public class SessionController implements Serializable {
     @EJB
     private BridgeLocal bridge;
     
-    public SessionController() {
+    public SessionBean() {
         // do nothing
     }
     
