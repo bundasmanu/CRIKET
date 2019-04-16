@@ -9,7 +9,7 @@ import facades.RankingFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.Date;
 import entities.*;
-import facades.*;
+import facades.*; 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import entities.*;
