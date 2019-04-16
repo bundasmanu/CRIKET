@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <head>
         <ui:define name="title">TODO supply a title </ui:define>
     </head>
@@ -27,16 +28,21 @@ and open the template in the editor.
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
 
                 <h3>#{bundle.GoalListTitle}</h3>
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>
-                <div id="demo" class="collapse panel panel-default">
-                    
-                    <br></br>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="email" type="text" class="form-control" name="email" placeholder="Email"></input>
-                    </div>
-                    <br></br>
+                <p> #{bundle.GoalListDesc}</p>
 
+                
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#filters">#{bundle.GoalListFiltersButton}</button>
+                <div id="filters" class="collapse panel panel-default">
+                    <h:form>
+                        <br></br>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><img src="https://img.icons8.com/color/24/000000/search.png"></img></span>
+                            </div>
+                            <h:inputText class="form-control" a:placeholder="#{bundle.FilterGoalName}"></h:inputText>
+                        </div>
+                        <br></br>
+                    </h:form>           
                 </div>
             </ui:define>
 

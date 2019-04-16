@@ -130,6 +130,23 @@ public class SessionBean implements Serializable {
         }	
     }
     
+    //used before render the html page...
+    //if user is logged and want go to "index" return to dashboard
+    public void validateIfUserIsLogged(ComponentSystemEvent event){			
+	FacesContext fc = FacesContext.getCurrentInstance();
+	
+        String username = (String) fc.getExternalContext().getSessionMap().get("user");
+        
+        if(username != null)
+        {
+            ConfigurableNavigationHandler nav 
+		   = (ConfigurableNavigationHandler) 
+			fc.getApplication().getNavigationHandler();
+		
+		nav.performNavigation("/dashboard");
+        }	
+    }
+    
     public Boolean getIsLogged() {
         FacesContext fc = FacesContext.getCurrentInstance();
         String username = (String) fc.getExternalContext().getSessionMap().get("user");
