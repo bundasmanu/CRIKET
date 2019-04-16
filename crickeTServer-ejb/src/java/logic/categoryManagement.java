@@ -46,7 +46,7 @@ public class categoryManagement implements categoryManagementLocal {
             
             /*COMO A REFERENCIA PARA O OBJETO EXIST ESTA A NULL, POSSO PEGAR NELE*/
             Category exist=new Category(name, desc);
-            exist.setIdUser(exist_user);
+            exist.setIdUser(exist_user); 
             
             this.cat.create(exist);
             
