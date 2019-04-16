@@ -22,7 +22,7 @@ public class GoalBean implements Serializable{
     
     
     public GoalBean() {
-        
-        
     }
+    
+    
 }
