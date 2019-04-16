@@ -27,6 +27,10 @@ public interface RankingFacadeLocal {
     List<Ranking> findAll();
 
     List<Ranking> findRange(int[] range);
+    
+    Ranking findByName(String name);
+    
+    List<Ranking> findMultipleNames(List<String> x);
 
     int count();
     
