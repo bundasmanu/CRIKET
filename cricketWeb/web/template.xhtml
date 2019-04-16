@@ -33,12 +33,11 @@
         <!-- Main Stylesheet File -->
         <link href="resources/css/style.css" rel="stylesheet"></link>
 
-        <!-- =======================================================
-          Theme Name: Rapid
-          Theme URL: https://bootstrapmade.com/rapid-multipurpose-bootstrap-business-template/
-          Author: BootstrapMade.com
-          License: https://bootstrapmade.com/license/
-        ======================================================= -->
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> </link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
         
     </h:head>
     <h:body>
@@ -81,9 +80,11 @@
                                             <li><a href="#">Drop Down 5</a></li>
                                           </ul>
                                         </li>
-                                        <li><a href="#footer">Contact Us</a></li>
-                                        
-                                        <li><h:commandLink class="dropdown-item" action="#{sessionController.processLogout}" value="Logout"></h:commandLink></li>
+                                        <li><a href="#footer">Contact Us</a></li>                                        
+                                        <li><h:commandLink action="#{sessionController.processLogout}">
+                                                <span class="glyphicon glyphicon-off"></span>
+                                            </h:commandLink>
+                                        </li>
                                         
                                     </ul>
                                 </nav><!-- .main-nav -->
