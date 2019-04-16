@@ -1,6 +1,7 @@
 //For calendar
 $(".datepicker").datepicker({
-    inline: true,
-    showWeek: true,
-    firstDay: 1
+    dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "1960:2030"
 });

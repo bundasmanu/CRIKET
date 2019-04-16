@@ -45,39 +45,25 @@ public class SessionController implements Serializable {
     private String passwordConfirmation;
     private String email;
     private String clientName;
-    private Date birth;
-    private String birthTmp; //temporary var... Just to receive the date from datepicker
-    private LocalDate birthLocalDate;
+    private String birthTmp;
     private String gender;
-    private Boolean isLogged;
-    
-    
-    //@EJB
-    //private UsersManagerLocal userManager;
     
     @EJB
-    BridgeLocal bridge;
+    private BridgeLocal bridge;
     
     public SessionController() {
         // do nothing
     }
     
-    @PostConstruct
-    private void init() {
-        isLogged = false;
-    }
     
     public String processSignIn() {
         
         FacesContext context = FacesContext.getCurrentInstance();
-        //SignInValue value = userManager.signIn(username, password);
         
         boolean result = this.bridge.getCricket().validateLogin(email, password);
         
-        
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
-            this.isLogged = true;
             return "dashboard?faces-redirect=true";
         }
         else
@@ -90,12 +76,11 @@ public class SessionController implements Serializable {
     public String process_SignUp(){
         
         FacesContext context = FacesContext.getCurrentInstance();
-        
+    
         boolean result = this.signUp();     
         
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
-            this.isLogged = true;
             return "dashboard?faces-redirect=true";
         }
         else
@@ -103,33 +88,37 @@ public class SessionController implements Serializable {
             Utils.throwMessage("This user already exists.");
             return "index";
         }
-        
     }
     
     public boolean signUp(){
         
-        try{
-                       
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try{              
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+            Date birth = formatter.parse(this.birthTmp);
             
-            this.birth = formatter.parse(this.birthTmp);
-            return bridge.getCricket().signUp(clientName, password, email, gender, birth);
+            /*
+            System.out.println("\n\n\n\n\n ---------");
+            System.out.println("" + email);
+            System.out.println("" + clientName);
+            System.out.println("" + password);
+            System.out.println("" + birthTmp);
+            System.out.println("" + birth);
+            System.out.println("" + gender);
+            */
 
+            return bridge.getCricket().signUp(clientName, password, email, gender, birth);
         }
         catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
-        
     }
     
-    public void validateIfLoggedUser(ComponentSystemEvent event){
-				
+    //used before render the html page...
+    public void validateIfLoggedUser(ComponentSystemEvent event){			
 	FacesContext fc = FacesContext.getCurrentInstance();
 	
         String username = (String) fc.getExternalContext().getSessionMap().get("user");
-        
-        //TUserDTO userDTO = userManager.getTUserDTO(username);
         
         if(username == null || username.isEmpty())
         {
@@ -139,11 +128,20 @@ public class SessionController implements Serializable {
 		
 		nav.performNavigation("/index");
         }	
-    }	
+    }
+    
+    public Boolean getIsLogged() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        String username = (String) fc.getExternalContext().getSessionMap().get("user");
+        
+        if(username == null)
+            return false;
+        
+        return !username.isEmpty();
+    }
     
     public String processLogout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        this.isLogged = false;
         return "index?faces-redirect=true";
     }
 
@@ -179,28 +177,12 @@ public class SessionController implements Serializable {
         this.clientName = clientName;
     }
 
-    public Date getBirth() {
-        return birth;
-    }
-
     public String getGender() {
         return gender;
     }
 
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public Boolean getIsLogged() {
-        return isLogged;
-    }
-
-    public void setIsLogged(Boolean isLogged) {
-        this.isLogged = isLogged;
     }
 
     public String getBirthTmp() {
