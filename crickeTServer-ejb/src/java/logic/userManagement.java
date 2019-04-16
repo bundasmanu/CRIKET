@@ -79,7 +79,7 @@ public class userManagement implements userManagementLocal {
             }
 
         } catch (Exception e) {
-            System.out.println("" + e.getMessage());
+            System.out.println("" + e.getMessage()); 
             return false;
         }
         return true;
