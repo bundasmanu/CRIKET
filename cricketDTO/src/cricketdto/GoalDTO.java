@@ -23,7 +23,7 @@ public class GoalDTO implements Serializable{
     int totalValue;
     int finalValue;
     boolean favorite;
-    Date logDate;/*PARA QUE ERA ISTO??*/
+    Date logDate;/*PARA QUE ERA ISTO?? - sempre que criamos um objetivo esta data e' preenchida com a data em q foi criado*/
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
     int flag_order;/*ORDEM DA FLAG--> JA NAO ME LEMBRO MUITO BEM DISTO*/
     
