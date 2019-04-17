@@ -6,9 +6,12 @@
 package logic;
 
 import cricketdto.CategoryDTO;
+import cricketdto.GoalDTO;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
+import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 
 /**
@@ -26,6 +29,10 @@ public interface cricketManagerLocal {
     
     boolean removeCategory(String name);
     
+    List<GoalDTO> selectAllGoalsFromAnUser(String email);
+    
+    @Asynchronous
+    Future<Integer> getNextValueFromGoalOrder(String email);
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
     
 }

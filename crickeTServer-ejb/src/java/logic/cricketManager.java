@@ -6,9 +6,12 @@
 package logic;
 
 import cricketdto.CategoryDTO;
+import cricketdto.GoalDTO;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
@@ -59,6 +62,17 @@ public class cricketManager implements cricketManagerLocal {
     @Override
     public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
         return this.category.getAllCategoriesFromLoggedUser(emailOfLoggedUser);
+    }
+    
+    @Override
+    public List<GoalDTO> selectAllGoalsFromAnUser(String email){
+        return this.goal.selectAllGoalsFromAnUser(email);
+    }
+    
+    @Asynchronous
+    @Override
+    public Future<Integer> getNextValueFromGoalOrder(String email){
+        return this.user.getNextValueFromGoalOrder(email);
     }
     
 }
