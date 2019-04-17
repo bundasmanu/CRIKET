@@ -11,7 +11,10 @@ import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import BridgeLogicController.*;
+import cricketdto.CategoryDTO;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -79,6 +82,14 @@ public class CategoryBean implements Serializable{
         }
         
     }
+    
+    
+        public List<CategoryDTO> getAllCategoriesFromLoggedUser() 
+        {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            String emailOfLoggedUser = (String) fc.getExternalContext().getSessionMap().get("user");
+            return bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
+        }
     
     
     

@@ -135,9 +135,9 @@ public class SessionBean implements Serializable {
     public void validateIfUserIsLogged(ComponentSystemEvent event){			
 	FacesContext fc = FacesContext.getCurrentInstance();
 	
-        String username = (String) fc.getExternalContext().getSessionMap().get("user");
+        String email = (String) fc.getExternalContext().getSessionMap().get("user");
         
-        if(username != null)
+        if(email != null)
         {
             ConfigurableNavigationHandler nav 
 		   = (ConfigurableNavigationHandler) 

@@ -46,8 +46,9 @@ and open the template in the editor.
                             
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.categoryDTO.nome}" required="true" class="radio">
-                                <f:selectItem itemValue="Healthy" itemLabel="Healthy"/>
-                                <f:selectItem itemValue="Sport" itemLabel="Sport" />
+                                <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="category"
+                                            itemValue="#{category}"
+                                            itemLabel="#{category.nome}"/>
                             </h:selectOneMenu>
                             <br/>
                             <h:outputText value="#{bundle.GoalStatus}"/><br/>

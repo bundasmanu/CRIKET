@@ -5,8 +5,10 @@
  */
 package logic;
 
+import cricketdto.CategoryDTO;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
@@ -52,6 +54,11 @@ public class cricketManager implements cricketManagerLocal {
     @Override
     public boolean removeCategory(String name){
         return this.category.removeCategory(name);
+    }
+
+    @Override
+    public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
+        return this.category.getAllCategoriesFromLoggedUser(emailOfLoggedUser);
     }
     
 }

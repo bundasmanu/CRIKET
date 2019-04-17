@@ -5,10 +5,12 @@
  */
 package logic;
 
+import cricketdto.CategoryDTO;
 import entities.Category;
 import entities.Utilizador;
 import facades.CategoryFacadeLocal;
 import facades.UtilizadorFacadeLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -104,6 +106,24 @@ public class categoryManagement implements categoryManagementLocal {
             System.out.println(e.getMessage());
         }
         
+    }
+
+    @Override
+    public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
+        
+        List<CategoryDTO> categoryDTOList = new ArrayList();
+        
+        Utilizador user=this.user.findByEmail(emailOfLoggedUser);
+        
+        if(user==null){
+            return new ArrayList<>();
+        }
+
+        for(Category categoryTmp :user.getCategoryCollection()){
+            categoryDTOList.add(DTOFactory.getCategoryDTO(categoryTmp));
+        }
+        
+        return categoryDTOList;
     }
     
 }

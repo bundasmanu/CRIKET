@@ -5,8 +5,10 @@
  */
 package logic;
 
+import cricketdto.CategoryDTO;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -23,5 +25,7 @@ public interface cricketManagerLocal {
     boolean createCategory(String name, String desc, String email);
     
     boolean removeCategory(String name);
+    
+    List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
     
 }
