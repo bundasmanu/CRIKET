@@ -49,7 +49,7 @@ and open the template in the editor.
                                 <f:selectItem itemValue="Healthy" itemLabel="Healthy"/>
                                 <f:selectItem itemValue="Sport" itemLabel="Sport" />
                             </h:selectOneMenu>
-                            
+                            <br/>
                             <h:outputText value="#{bundle.GoalStatus}"/><br/>
                             <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
                                 <f:selectItem  itemValue="Concluido" itemLabel="Concluido" />
@@ -59,11 +59,13 @@ and open the template in the editor.
                             <h:outputText value="#{bundle.GoalStartDate}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.logDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
                             
-                            <h:outputText value="#{bundle.GoalFinalDate}"/><br/>
-                            <h:inputText value="#{goalBean.goalDTOTemp.finalDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                            <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
+                            <h:inputText  value="#{goalBean.goalDTOTemp.finalDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
                             
+                           
                             <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
-                            <h:inputText value="#{goalBean.goalDTOTemp.totalValue}"></h:inputText><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size=""></h:inputText><br/>
+                       
                         
                             <h:outputText value="#{bundle.GoalFavorite}"/><br/>
                             <h:selectOneRadio value="#{goalBean.goalDTOTemp.favorite}" required="true" class="radio">
