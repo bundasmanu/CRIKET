@@ -39,7 +39,7 @@ public class categoryManagement implements categoryManagementLocal {
     public boolean createCategory(String name, String desc, String email){
         
         try{
-                    
+                     
             Utilizador exist_user=this.user.findByEmail(email);
             
             /*SE JA EXISTE A CATEGORIA, OU NAO EXISTE USER RETORNA*/
