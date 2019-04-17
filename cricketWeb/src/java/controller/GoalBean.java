@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.Date; 
 import java.util.List;
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import utils.Utils;
 
 @Named(value = "goalBean")
 @ManagedBean
@@ -26,7 +28,13 @@ public class GoalBean implements Serializable{
     @EJB
     BridgeLocal bridge;
     
+    private GoalDTO goalDTOTemp;
     
+    @PostConstruct
+    private void init() {
+        this.goalDTOTemp = new GoalDTO();
+    }
+  
     public GoalBean() {
     }
     
@@ -53,6 +61,37 @@ public class GoalBean implements Serializable{
             return new ArrayList();
         }
     }
+    
+    public String processAddGoal()
+    {
+        boolean result = false;
+        
+        System.out.println("" + goalDTOTemp);
+        
+        
+        result = true; //to remove
+        
+        if(result)
+        {
+            Utils.throwMessage("Success Adding the New Goal");
+            return "dashboard";
+        }
+        else
+        {
+            Utils.throwMessage("Error");
+            return "dashboard";
+        }
+        
+    }
+
+    public GoalDTO getGoalDTOTemp() {
+        return goalDTOTemp;
+    }
+
+    public void setGoalDTOTemp(GoalDTO goalDTOTemp) {
+        this.goalDTOTemp = goalDTOTemp;
+    }
+    
     
     
 }

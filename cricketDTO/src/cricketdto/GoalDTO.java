@@ -26,6 +26,7 @@ public class GoalDTO implements Serializable{
     Date logDate;/*PARA QUE ERA ISTO?? - sempre que criamos um objetivo esta data e' preenchida com a data em q foi criado*/
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
     int flag_order;/*ORDEM DA FLAG--> JA NAO ME LEMBRO MUITO BEM DISTO*/
+    CategoryDTO categoryDTO;
     
     public GoalDTO(){
         
@@ -125,6 +126,14 @@ public class GoalDTO implements Serializable{
 
     public void setFlag_order(int flag_order) {
         this.flag_order = flag_order;
+    }
+
+    public CategoryDTO getCategoryDTO() {
+        return categoryDTO;
+    }
+
+    public void setCategoryDTO(CategoryDTO categoryDTO) {
+        this.categoryDTO = categoryDTO;
     }
     
 }
