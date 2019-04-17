@@ -5,6 +5,7 @@
  */
 package logic;
 
+import cricketdto.GoalDTO;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +14,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface goalManagementLocal {
-    
+    public boolean CreateGoal(GoalDTO new_goal);
 }

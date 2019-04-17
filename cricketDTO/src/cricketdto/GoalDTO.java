@@ -22,6 +22,7 @@ public class GoalDTO implements Serializable{
     Date finalDate;
     int totalValue;
     int finalValue;
+    int currentValue;
     boolean favorite;
     Date logDate;/*PARA QUE ERA ISTO?? - sempre que criamos um objetivo esta data e' preenchida com a data em q foi criado*/
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
@@ -63,10 +64,22 @@ public class GoalDTO implements Serializable{
     public int getFinalValue() {
         return finalValue;
     }
+    
+    public int getCurrentValue(){
+        return currentValue;
+    }
+    
+    
 
     public boolean isFavorite() {
         return favorite;
     }
+    
+    public boolean getFavorite(){
+        return favorite;
+    }
+    
+   
 
     public Date getLogDate() {
         return logDate;
@@ -99,6 +112,10 @@ public class GoalDTO implements Serializable{
     public void setStatus(String status) {
         this.status = status;
     }
+    
+     public void setCurrentValue(int c_v){
+         this.currentValue=c_v;
+     }
 
     public void setFinalDate(Date finalDate) {
         this.finalDate = finalDate;

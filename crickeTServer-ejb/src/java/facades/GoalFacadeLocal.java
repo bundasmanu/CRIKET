@@ -23,6 +23,8 @@ public interface GoalFacadeLocal {
     void remove(Goal goal);
 
     Goal find(Object id);
+    
+    Goal findByName(String name_goal);
 
     List<Goal> findAll();
 

@@ -9,6 +9,7 @@ import BridgeLogicController.BridgeLocal;
 import Utils.Config;
 import cricketdto.GoalDTO;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class GoalBean implements Serializable{
     BridgeLocal bridge;
     
     private GoalDTO goalDTOTemp;
+    String date_create_goal;
     
     @PostConstruct
     private void init() {
@@ -62,9 +64,12 @@ public class GoalBean implements Serializable{
         }
     }
     
-    public String processAddGoal()
+    public String processAddGoal() throws ParseException
     {
         boolean result = false;
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+        Date date_of_create_goal = formatter.parse(this.date_create_goal);
         
         System.out.println("" + goalDTOTemp);
         

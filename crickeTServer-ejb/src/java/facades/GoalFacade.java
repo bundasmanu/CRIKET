@@ -9,6 +9,7 @@ import entities.Goal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,20 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
 
     public GoalFacade() {
         super(Goal.class);
+    }
+
+    @Override
+    public Goal findByName(String name_goal) {
+        Goal verifica_encontrado=null;
+        try{
+            Query qu= this.em.createNamedQuery("Goal.findByNome");
+            qu.setParameter("nome", name_goal);
+            verifica_encontrado=(Goal) qu.getSingleResult();
+        }catch(Exception e){
+            System.out.println(""+e.getMessage());
+            return null;
+        }
+        return verifica_encontrado;
     }
     
 }
