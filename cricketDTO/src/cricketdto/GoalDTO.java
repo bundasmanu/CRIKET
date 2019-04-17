@@ -67,6 +67,12 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     public boolean isFavorite() {
         return favorite;
     }
+    
+    public boolean getFavorite(){
+        return favorite;
+    }
+    
+   
 
     public Date getLogDate() {
         return logDate;
@@ -99,6 +105,10 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+     public void setCurrentValue(int c_v){
+         this.currentValue=c_v;
+     }
 
     public void setFinalDate(Date finalDate) {
         this.finalDate = finalDate;
@@ -106,10 +116,6 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
 
     public void setTotalValue(int totalValue) {
         this.totalValue = totalValue;
-    }
-
-    public void setCurrentValue(int currentValue) {
-        this.currentValue = currentValue;
     }
 
     public void setFavorite(boolean favorite) {

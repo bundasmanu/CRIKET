@@ -45,25 +45,36 @@ and open the template in the editor.
                             </h:selectOneRadio>
                             
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
-
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.categoryDTO.nome}" required="true" class="radio">
+                                <f:selectItem itemValue="Healthy" itemLabel="Healthy"/>
+                                <f:selectItem itemValue="Sport" itemLabel="Sport" />
+                            </h:selectOneMenu>
+                            <br/>
+                            <h:outputText value="#{bundle.GoalStatus}"/><br/>
+                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
+                                <f:selectItem  itemValue="Concluido" itemLabel="Concluido" />
+                                <f:selectItem itemValue="Nao concluido" itemLabel="Nao concluido" />
+                            </h:selectOneRadio>
                             
-                            <h:outputText value="#{bundle.UserFullName}"/><br/>
-                            <h:inputText value="#{sessionBean.clientName}" required="true"/><br/>
-                            <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                            <h:inputText value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
-                            <h:outputText value="#{bundle.UserPassword}"/><br/>
-                            <h:inputSecret value="#{sessionBean.password}" required="true" /><br/>
-                            <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
-                            <h:inputSecret value="#{sessionBean.passwordConfirmation}" required="true" /><br/>
-                            <h:outputText value="#{bundle.UserGender}"/><br/>
-
-                            <h:selectOneRadio value="#{sessionBean.gender}" required="true" class="radio">
-                                    <f:selectItem itemValue="MAN" itemLabel="Masculino" />
-                                    <f:selectItem itemValue="WOMAN" itemLabel="Feminino" />
+                            <h:outputText value="#{bundle.GoalStartDate}"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.logDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                            
+                            <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
+                            <h:inputText  value="#{goalBean.goalDTOTemp.finalDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                            
+                           
+                            <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size=""></h:inputText><br/>
+                       
+                        
+                            <h:outputText value="#{bundle.GoalFavorite}"/><br/>
+                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.favorite}" required="true" class="radio">
+                                <f:selectItem  itemValue="Favorite" itemLabel="Favorite" />
+                                <f:selectItem itemValue="Not Favorite" itemLabel="Not Favorite" />
                             </h:selectOneRadio>
                             <br/>
                             <br/>
-                            <h:commandButton class ="btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                            <h:commandButton class ="btn btn-info" action="#{sessionBean.processAddGoal}" value="#{bundle.AddGoal}"></h:commandButton>
                         </h:form>
                     </div>
                     <div class="col-1"></div>
