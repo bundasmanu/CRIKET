@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -27,6 +28,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import utils.Utils;
 
@@ -51,6 +53,9 @@ public class SessionBean implements Serializable {
     @EJB
     private BridgeLocal bridge;
     
+    @Inject
+    private GoalBean goal;
+    
     public SessionBean() {
         // do nothing
     }
@@ -64,6 +69,11 @@ public class SessionBean implements Serializable {
         
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
+            
+            /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
+            goal.nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
+            
+            
             return "dashboard?faces-redirect=true";
         }
         else

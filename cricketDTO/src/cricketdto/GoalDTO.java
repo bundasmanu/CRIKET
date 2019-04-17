@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author gustavo
  */
-public class GoalDTO implements Serializable{
+public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     
     int id_goal;
     String name;
@@ -21,7 +21,7 @@ public class GoalDTO implements Serializable{
     String status;
     Date finalDate;
     int totalValue;
-    int finalValue;
+    int currentValue;
     boolean favorite;
     Date logDate;/*PARA QUE ERA ISTO?? - sempre que criamos um objetivo esta data e' preenchida com a data em q foi criado*/
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
@@ -60,8 +60,8 @@ public class GoalDTO implements Serializable{
         return totalValue;
     }
 
-    public int getFinalValue() {
-        return finalValue;
+    public int getCurrentValue() {
+        return currentValue;
     }
 
     public boolean isFavorite() {
@@ -108,8 +108,8 @@ public class GoalDTO implements Serializable{
         this.totalValue = totalValue;
     }
 
-    public void setFinalValue(int finalValue) {
-        this.finalValue = finalValue;
+    public void setCurrentValue(int currentValue) {
+        this.currentValue = currentValue;
     }
 
     public void setFavorite(boolean favorite) {
@@ -134,6 +134,17 @@ public class GoalDTO implements Serializable{
 
     public void setCategoryDTO(CategoryDTO categoryDTO) {
         this.categoryDTO = categoryDTO;
+    }
+    
+    /*COMPARACAO COM BASE NA FLAG DE ORDEM*/
+    @Override
+    public int compareTo(GoalDTO obj){
+        
+        Integer a= (Integer) this.getFlag_order();
+        Integer b= (Integer) obj.getFlag_order();
+        
+        return a.compareTo(b);
+        
     }
     
 }

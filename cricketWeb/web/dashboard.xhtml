@@ -84,8 +84,8 @@ and open the template in the editor.
                                         <div class="col-3">
                                             <div class="progress">
                                                 <!-- TODO: the style must be for example "70%", "30%", etc... Not working... -->
-                                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="#{ (goalTmp.finalValue / goalTmp.totalValue) * 100 } %">
-                                                    #{ (goalTmp.finalValue / goalTmp.totalValue) * 100 } %
+                                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="#{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %">
+                                                    #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %
                                                 </div>
                                             </div>
                                         </div>

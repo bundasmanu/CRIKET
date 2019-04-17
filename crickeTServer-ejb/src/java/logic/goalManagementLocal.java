@@ -5,6 +5,8 @@
  */
 package logic;
 
+import cricketdto.GoalDTO;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface goalManagementLocal {
+    
+    List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
 }

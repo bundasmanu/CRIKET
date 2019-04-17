@@ -14,7 +14,13 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import entities.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Future;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 
 /**
  *
@@ -89,6 +95,47 @@ public class userManagement implements userManagementLocal {
             return false;
         }
         return true;
+    }
+    
+    @Asynchronous
+    public Future<Integer> getNextValueFromGoalOrder(String email){
+        
+        try{
+            
+            /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+            Utilizador exist=this.user.findByEmail(email);
+            
+            if(exist==null){
+                return new AsyncResult<>(-1);
+            }
+            
+            Collection<Category> catCollect=exist.getCategoryCollection();
+            
+            if(catCollect.isEmpty()==true){
+                return new AsyncResult<>(1);/*SENAO EXISTIR NENHUM OBJETIVO, O PRIMEIRO VALOR DE ORDEM DO OBJETIVO É 1*/
+            }
+            
+            /*PERCORRER ARRAYLIST E VERIFICAR QUAL O ELEMENTO MÁXIMO DE ORDEM*/
+            List<Integer> OrderValues=new ArrayList<Integer>();
+            for(Category c : catCollect){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
+                        OrderValues.add(g.getFlagOrder());
+                    }
+                }
+            }
+            
+            /*OBTENCAO DO VALOR MAXIMO DE GOAL*/
+            Integer maxV = Collections.max(OrderValues);
+            
+            return new AsyncResult<>(maxV+1);
+            
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return new AsyncResult<>(-1);
+        }
+        
     }
 
 }
