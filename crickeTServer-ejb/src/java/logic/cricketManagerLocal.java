@@ -27,7 +27,7 @@ public interface cricketManagerLocal {
     
     boolean createCategory(String name, String desc, String email);
     
-    boolean removeCategory(String name);
+    boolean removeCategory(String email, String name);
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     

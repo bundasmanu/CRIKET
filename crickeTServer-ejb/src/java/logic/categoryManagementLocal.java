@@ -17,7 +17,7 @@ import javax.ejb.Local;
 public interface categoryManagementLocal {
     
     boolean createCategory(String name, String desc, String email);
-    boolean removeCategory(String name);
+    boolean removeCategory(String email, String name);
     void initializeCategories(String email);
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
 }

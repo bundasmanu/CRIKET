@@ -15,6 +15,7 @@ import cricketdto.CategoryDTO;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -35,6 +36,8 @@ public class CategoryBean implements Serializable{
     @EJB
     BridgeLocal bridge;
     
+    @Inject
+    SessionBean s;
     
     public CategoryBean() {
     }
@@ -67,7 +70,7 @@ public class CategoryBean implements Serializable{
         try{
             
             /*TENTATIVA DE REMOVER UMA CATEGORIA*/
-            boolean return_remove=this.bridge.getCricket().removeCategory(this.name_c);
+            boolean return_remove=this.bridge.getCricket().removeCategory(s.getEmail(),this.name_c);
             
             if(return_remove==false){
                 return "index.xhtml";
