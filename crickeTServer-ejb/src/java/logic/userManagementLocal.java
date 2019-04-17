@@ -7,6 +7,8 @@ package logic;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.concurrent.Future;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 
@@ -19,5 +21,8 @@ public interface userManagementLocal {
     
     boolean signUp(String username, String pass, String email, String gender, Date birth);
     boolean validateLogin(String email, String pass);
+    
+    @Asynchronous
+    public Future<Integer> getNextValueFromGoalOrder(String email);
     
 }

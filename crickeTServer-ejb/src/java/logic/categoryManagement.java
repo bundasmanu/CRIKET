@@ -7,13 +7,14 @@ package logic;
 
 import cricketdto.CategoryDTO;
 import entities.Category;
+import entities.DTOFactory;
 import entities.Utilizador;
 import facades.CategoryFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
+import javax.ejb.Singleton; 
 
 /**
  *

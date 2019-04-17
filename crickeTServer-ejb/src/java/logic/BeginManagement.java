@@ -47,7 +47,7 @@ public class BeginManagement implements BeginManagementLocal {
     
     @PostConstruct
     public void postConstruct(){
-        lista_cat=Arrays.asList("Saude","Desporto");
+        lista_cat=Arrays.asList("Health","Sports");
         lista_rank=Arrays.asList("Beginner","Amador","Intermedio","Profissional","Expert");
         lista_points_Rank=Arrays.asList(0,100,200,500,1000);
         rank=new ArrayList<Ranking>();
