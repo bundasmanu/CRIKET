@@ -11,7 +11,7 @@ import facades.CategoryFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
+import javax.ejb.Singleton; 
 
 /**
  *
