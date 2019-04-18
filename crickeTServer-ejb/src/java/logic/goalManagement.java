@@ -146,7 +146,7 @@ public class goalManagement implements goalManagementLocal {
             goal.setTotalvalue(editGoalDTO.getTotalValue());
             
             this.goal.edit(goal);
-            
+             
             return true;
         } catch (Exception e) {
             System.out.println("Mensagem: " + e.getMessage());
