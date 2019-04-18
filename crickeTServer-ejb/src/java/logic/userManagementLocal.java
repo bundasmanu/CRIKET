@@ -5,8 +5,11 @@
  */
 package logic;
 
+import cricketdto.CategoryDTO;
+import entities.Category;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Future;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;

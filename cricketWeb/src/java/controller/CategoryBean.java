@@ -22,7 +22,6 @@ import javax.inject.Inject;
  * @author gustavo
  */
 @Named(value = "categoryBean")
-@ManagedBean
 @SessionScoped
 public class CategoryBean implements Serializable{
 
@@ -40,6 +39,10 @@ public class CategoryBean implements Serializable{
     SessionBean s;
     
     public CategoryBean() {
+    }
+    
+    public CategoryDTO findCategoryDTOById(Integer id){
+        return bridge.getCricket().findCategoryDTOById(id);
     }
     
     /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
@@ -87,12 +90,14 @@ public class CategoryBean implements Serializable{
     }
     
     
-        public List<CategoryDTO> getAllCategoriesFromLoggedUser() 
-        {
-            FacesContext fc = FacesContext.getCurrentInstance();
-            String emailOfLoggedUser = (String) fc.getExternalContext().getSessionMap().get("user");
-            return bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
-        }
+    public List<CategoryDTO> getAllCategoriesFromLoggedUser() 
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        String emailOfLoggedUser = (String) fc.getExternalContext().getSessionMap().get("user");
+        
+        List<CategoryDTO> list = bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
+        return list;
+    }
     
     
     

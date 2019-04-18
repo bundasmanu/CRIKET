@@ -35,4 +35,8 @@ public interface cricketManagerLocal {
     Future<Integer> getNextValueFromGoalOrder(String email);
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
     
+    CategoryDTO findCategoryDTOById(Integer id);
+    
+    boolean addGoal(GoalDTO goalDTO);
+    
 }

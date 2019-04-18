@@ -11,10 +11,13 @@ import cricketdto.GoalDTO;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date; 
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -37,7 +40,7 @@ public class GoalBean implements Serializable{
     @Inject
     SessionBean su;
     
-    String date_create_goal;
+    String finalDateGoalTmp;
     
     @PostConstruct
     private void init() {
@@ -78,29 +81,43 @@ public class GoalBean implements Serializable{
         }
     }
     
-    public String processAddGoal() throws ParseException
+    public String processAddGoal()
     {
         boolean result = false;
+           
+        try {
         
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
-        Date date_of_create_goal = formatter.parse(this.date_create_goal);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+            Date finalDateGoal;
+            finalDateGoal = formatter.parse(this.finalDateGoalTmp);
+            
+            goalDTOTemp.setFinalDate(finalDateGoal);
+            
+            Date logDate = Date.from(Instant.now());
+            goalDTOTemp.setLogDate(logDate);
+            
         
-        System.out.println("" + goalDTOTemp);
-        
-        
-        result = true; //to remove
-        
-        if(result)
-        {
-            Utils.throwMessage("Success Adding the New Goal");
-            return "dashboard";
-        }
-        else
-        {
+            System.out.println("" + goalDTOTemp);
+
+
+            result = bridge.getCricket().addGoal(goalDTOTemp);
+
+            if(result)
+            {
+                //Utils.throwMessage("Success Adding the New Goal");
+                return "dashboard?faces-redirect=true";
+            }
+            else
+            {
+                Utils.throwMessage("Error");
+                return "createGoal";
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(GoalBean.class.getName()).log(Level.SEVERE, null, ex);
             Utils.throwMessage("Error");
-            return "dashboard";
+            return "createGoal";
         }
-        
     }
 
     public GoalDTO getGoalDTOTemp() {
@@ -110,7 +127,13 @@ public class GoalBean implements Serializable{
     public void setGoalDTOTemp(GoalDTO goalDTOTemp) {
         this.goalDTOTemp = goalDTOTemp;
     }
-    
-    
+
+    public String getFinalDateGoalTmp() {
+        return finalDateGoalTmp;
+    }
+
+    public void setFinalDateGoalTmp(String finalDateGoalTmp) {
+        this.finalDateGoalTmp = finalDateGoalTmp;
+    }
     
 }

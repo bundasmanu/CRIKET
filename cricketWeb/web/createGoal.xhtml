@@ -44,12 +44,14 @@ and open the template in the editor.
                                 <f:selectItem itemValue="NEGATIVE" itemLabel="Negative" />
                             </h:selectOneRadio>
                             
+                            
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
-                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.categoryDTO.nome}" required="true" class="radio">
-                                <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="category"
-                                            itemValue="#{category}"
-                                            itemLabel="#{category.nome}"/>
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.categoryDTO}" converter="categoryDTOConverter">
+                                <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryDTO"
+                                               itemValue="#{categoryDTO}"
+                                               itemLabel="#{categoryDTO.nome}"/>
                             </h:selectOneMenu>
+                            
                             <br/>
                             <h:outputText value="#{bundle.GoalStatus}"/><br/>
                             <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
@@ -57,11 +59,8 @@ and open the template in the editor.
                                 <f:selectItem itemValue="Nao concluido" itemLabel="Nao concluido" />
                             </h:selectOneRadio>
                             
-                            <h:outputText value="#{bundle.GoalStartDate}"/><br/>
-                            <h:inputText value="#{goalBean.goalDTOTemp.logDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
-                            
                             <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
-                            <h:inputText  value="#{goalBean.goalDTOTemp.finalDate}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                            <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
                             
                            
                             <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
@@ -75,7 +74,7 @@ and open the template in the editor.
                             </h:selectOneRadio>
                             <br/>
                             <br/>
-                            <h:commandButton class ="btn btn-info" action="#{sessionBean.processAddGoal}" value="#{bundle.AddGoal}"></h:commandButton>
+                            <h:commandButton class ="btn btn-info" action="#{goalBean.processAddGoal}" value="#{bundle.AddGoal}"></h:commandButton>
                         </h:form>
                     </div>
                     <div class="col-1"></div>

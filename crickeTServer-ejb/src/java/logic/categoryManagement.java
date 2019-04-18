@@ -95,6 +95,9 @@ public class categoryManagement implements categoryManagementLocal {
             /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
             this.user.edit(a);
             
+            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
+            this.user.edit(a);
+            
             return true;
         }
         catch(Exception e){
@@ -109,9 +112,9 @@ public class categoryManagement implements categoryManagementLocal {
         
         try{
             
-                for(String j: this.beg.getLista_cat()){
-                    this.createCategory(j, "", email);
-                }          
+            for(String j: this.beg.getLista_cat()){
+                this.createCategory(j, "", email);
+            }          
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -122,19 +125,49 @@ public class categoryManagement implements categoryManagementLocal {
     @Override
     public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
         
-        List<CategoryDTO> categoryDTOList = new ArrayList();
-        
-        Utilizador user=this.user.findByEmail(emailOfLoggedUser);
-        
-        if(user==null){
-            return new ArrayList<>();
+               try{
+            
+            /*VERIFICAR PRIMEIRO SE EXISTE O UTILIZADOR*/
+            Utilizador u=this.user.findByEmail(emailOfLoggedUser);
+            
+            if(u==null){
+                return null;
+            }
+            
+            List<CategoryDTO> listaCategorias=new ArrayList<CategoryDTO>();
+            
+            if(u.getCategoryCollection().isEmpty()==true){
+                return null;
+            }
+            
+            for(Category c : u.getCategoryCollection()){
+                /*LA DENTRO JA FAZ O SET DOS GOALS*/
+                CategoryDTO x=DTOFactory.getCategoryDTO(c);
+            }
+            
+            return listaCategorias;
         }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
 
-        for(Category categoryTmp :user.getCategoryCollection()){
-            categoryDTOList.add(DTOFactory.getCategoryDTO(categoryTmp));
-        }
+    @Override
+    public CategoryDTO findCategoryDTOById(Integer id) {
+        Category category = cat.find(id);
         
-        return categoryDTOList;
+        if(category == null)
+            return null;
+        
+        return DTOFactory.getCategoryDTO(category);
+    }
+
+    @Override
+    public Category findCategoryById(Integer id) {
+        Category category = cat.find(id);
+        return category;
     }
     
 }

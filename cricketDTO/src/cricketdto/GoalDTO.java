@@ -7,6 +7,7 @@ package cricketdto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -152,5 +153,83 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         return a.compareTo(b);
         
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.id_goal;
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.desc);
+        hash = 59 * hash + Objects.hashCode(this.type);
+        hash = 59 * hash + Objects.hashCode(this.status);
+        hash = 59 * hash + Objects.hashCode(this.finalDate);
+        hash = 59 * hash + this.totalValue;
+        hash = 59 * hash + this.currentValue;
+        hash = 59 * hash + (this.favorite ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.logDate);
+        hash = 59 * hash + this.flagClick;
+        hash = 59 * hash + this.flag_order;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GoalDTO other = (GoalDTO) obj;
+        if (this.id_goal != other.id_goal) {
+            return false;
+        }
+        if (this.totalValue != other.totalValue) {
+            return false;
+        }
+        if (this.currentValue != other.currentValue) {
+            return false;
+        }
+        if (this.favorite != other.favorite) {
+            return false;
+        }
+        if (this.flagClick != other.flagClick) {
+            return false;
+        }
+        if (this.flag_order != other.flag_order) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.desc, other.desc)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
+        if (!Objects.equals(this.finalDate, other.finalDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.logDate, other.logDate)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+
+    
+    @Override
+    public String toString() {
+        return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", type=" + type + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + ", categoryDTO=" + categoryDTO + '}';
+    }
+    
     
 }
