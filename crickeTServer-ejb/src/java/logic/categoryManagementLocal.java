@@ -19,6 +19,7 @@ public interface categoryManagementLocal {
     
     boolean createCategory(String name, String desc, String email);
     boolean removeCategory(String email, String name);
+    boolean editCategory(String email, CategoryDTO c);/*NO MAXIMO SO PODE SER ALTERADA DESCRICAO E O NOME DA CATEGORIA*/
     void initializeCategories(String email);
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
     public CategoryDTO findCategoryDTOById(Integer id);

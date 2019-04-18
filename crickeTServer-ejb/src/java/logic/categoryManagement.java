@@ -41,7 +41,7 @@ public class categoryManagement implements categoryManagementLocal {
         try{
                      
             Utilizador exist_user=this.user.findByEmail(email);
-            
+                 
             /*SE JA EXISTE A CATEGORIA, OU NAO EXISTE USER RETORNA*/
             if(exist_user==null){
                 return false;
@@ -59,6 +59,8 @@ public class categoryManagement implements categoryManagementLocal {
             exist.setIdUser(exist_user); 
             
             this.cat.create(exist);
+            /*PARA APARECER AS CATEGORIAS DE SEGUIDA*/
+            this.user.edit(exist_user);
             
             return true;
         }
@@ -95,8 +97,47 @@ public class categoryManagement implements categoryManagementLocal {
             /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
             this.user.edit(a);
             
-            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
-            this.user.edit(a);
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+    }
+    
+    @Override
+    public boolean editCategory(String email, CategoryDTO c){
+        
+        try{
+            
+            /*VERIFICAR INICIALMENTE SE O UTILIZADOR EXISTE*/
+            Utilizador a=this.user.findByEmail(email);
+            
+            if(a==null){
+                return false;
+            }
+            
+            /*CASO A CATEGORIA SEJA NULL, SAI*/
+            if(c==null){
+                return false;
+            }
+            
+            Category ca=this.cat.find(c.getIdCategory());
+            
+            if(ca==null){
+                return false;
+            }
+            
+            if(ca.getDescript().equals(c.getDescript())==false){
+                ca.setDescript(c.getDescript());
+            }
+            
+            if(ca.getNome().equals(c.getNome())==false){
+                ca.setNome(c.getNome());
+            }
+            
+            this.cat.edit(ca);
             
             return true;
         }
@@ -125,19 +166,33 @@ public class categoryManagement implements categoryManagementLocal {
     @Override
     public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
         
-        List<CategoryDTO> categoryDTOList = new ArrayList();
-        
-        Utilizador user=this.user.findByEmail(emailOfLoggedUser);
-        
-        if(user==null){
-            return new ArrayList<>();
+               try{
+            
+            /*VERIFICAR PRIMEIRO SE EXISTE O UTILIZADOR*/
+            Utilizador u=this.user.findByEmail(emailOfLoggedUser);
+            
+            if(u==null){
+                return null;
+            }
+            
+            List<CategoryDTO> listaCategorias=new ArrayList<CategoryDTO>();
+            
+            if(u.getCategoryCollection().isEmpty()==true){
+                return null;
+            }
+            
+            for(Category c : u.getCategoryCollection()){
+                /*LA DENTRO JA FAZ O SET DOS GOALS*/
+                CategoryDTO x=DTOFactory.getCategoryDTO(c);
+            }
+            
+            return listaCategorias;
         }
-
-        for(Category categoryTmp :user.getCategoryCollection()){
-            categoryDTOList.add(DTOFactory.getCategoryDTO(categoryTmp));
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
         }
         
-        return categoryDTOList;
     }
 
     @Override

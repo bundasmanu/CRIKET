@@ -8,6 +8,8 @@ package entities;
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
 import cricketdto.UserDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DTOFactory{
@@ -31,6 +33,13 @@ public class DTOFactory{
             categoryDTO.setDescript(category.getDescript());
             categoryDTO.setIdCategory(category.getIdCategory());
             categoryDTO.setIdUser(getUserDTO(category.getIdUser()));
+            
+            List<GoalDTO> goalsCat=new ArrayList<GoalDTO>();
+            for(Goal g : category.getGoalCollection()){
+                goalsCat.add(getGoalDTO(g));
+            }
+            
+            categoryDTO.setGoals(goalsCat);
             
             return categoryDTO;
             

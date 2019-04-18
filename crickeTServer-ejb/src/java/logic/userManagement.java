@@ -5,6 +5,7 @@
  */
 package logic;
 
+import cricketdto.CategoryDTO;
 import facades.RankingFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.Date;
@@ -98,6 +99,7 @@ public class userManagement implements userManagementLocal {
     }
     
     @Asynchronous
+    @Override
     public Future<Integer> getNextValueFromGoalOrder(String email){
         
         try{

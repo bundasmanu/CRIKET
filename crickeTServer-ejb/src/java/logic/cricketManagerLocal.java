@@ -37,7 +37,6 @@ public interface cricketManagerLocal {
     
     CategoryDTO findCategoryDTOById(Integer id);
     
-    
     boolean addGoal(GoalDTO goalDTO);
     
     boolean editGoal(GoalDTO goalDTO);

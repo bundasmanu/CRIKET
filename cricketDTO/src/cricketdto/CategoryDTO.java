@@ -7,6 +7,7 @@ package cricketdto;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,7 @@ public class CategoryDTO implements Serializable{
     private String nome;
     private String descript;
     private UserDTO idUser;
+    private List<GoalDTO> goals;
 
     public CategoryDTO() {
     }
@@ -53,6 +55,14 @@ public class CategoryDTO implements Serializable{
 
     public void setIdUser(UserDTO idUser) {
         this.idUser = idUser;
+    }
+
+    public List<GoalDTO> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(List<GoalDTO> goals) {
+        this.goals = goals;
     }
 
     @Override
