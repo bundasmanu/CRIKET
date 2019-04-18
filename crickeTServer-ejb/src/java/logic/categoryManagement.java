@@ -99,9 +99,9 @@ public class categoryManagement implements categoryManagementLocal {
         
         try{
             
-                for(String j: this.beg.getLista_cat()){
-                    this.createCategory(j, "", email);
-                }          
+            for(String j: this.beg.getLista_cat()){
+                this.createCategory(j, "", email);
+            }          
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -125,6 +125,22 @@ public class categoryManagement implements categoryManagementLocal {
         }
         
         return categoryDTOList;
+    }
+
+    @Override
+    public CategoryDTO findCategoryDTOById(Integer id) {
+        Category category = cat.find(id);
+        
+        if(category == null)
+            return null;
+        
+        return DTOFactory.getCategoryDTO(category);
+    }
+
+    @Override
+    public Category findCategoryById(Integer id) {
+        Category category = cat.find(id);
+        return category;
     }
     
 }

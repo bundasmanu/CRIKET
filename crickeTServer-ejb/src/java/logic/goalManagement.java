@@ -45,6 +45,11 @@ public class goalManagement implements goalManagementLocal {
     @EJB
     UtilizadorFacadeLocal ut;
     
+    @EJB
+    categoryManagementLocal categoryManagement;
+    
+    
+    
     private DTOFactory dt= new DTOFactory();
     
     @Override
@@ -80,35 +85,35 @@ public class goalManagement implements goalManagementLocal {
     }
     
     @Override
-    public boolean CreateGoal(GoalDTO new_goal) {
+    public boolean createGoal(GoalDTO newGoalDTO) {
 
         try {
             
             //verify if this goal exists with the same name
-            Goal g = this.goal.findByName(new_goal.getName());
+            Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
 
-            if (g != null) {
+            if (goalTmp != null) {
                 return false;
             }
 
-            //initially, the value of the goal in the creation is 0
-            int atual_value = 0;
-            g.setCurrentvalue(atual_value);
-
-            if (new_goal.getType().equals(Config.POSITIVE)) {
-                //if goal doesn't exist, so let's create an instance of the entity Goal
-                g = new Goal(new_goal.getId_goal(), new_goal.getName(), new_goal.getDesc(), new_goal.getType(), new_goal.getStatus(),
-                        new_goal.getFinalDate(), new_goal.getTotalValue(), new_goal.getCurrentValue(),
-                        new_goal.getFavorite(), new_goal.getLogDate(), new_goal.getFlagClick(), new_goal.getFlag_order());
-            } else if (new_goal.getType().equals(Config.NEGATIVE)) {
-                //if goal doesn't exist, so let's create an instance of the entity Goal
-                g = new Goal(new_goal.getId_goal(), new_goal.getName(), new_goal.getDesc(), new_goal.getType(), new_goal.getStatus(),
-                        new_goal.getFinalDate(), new_goal.getTotalValue(), new_goal.getCurrentValue(),
-                        new_goal.getFavorite(), new_goal.getLogDate(), new_goal.getFlagClick(), new_goal.getFlag_order());
-            }
+            Goal newGoal = new Goal();
+            newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
+            newGoal.setDescript(newGoalDTO.getDesc());
+            newGoal.setFavorite(newGoalDTO.getFavorite());
+            newGoal.setFinaldate(newGoalDTO.getFinalDate());
+            newGoal.setLogdate(newGoalDTO.getLogDate());
+            newGoal.setFlagClickControl(newGoalDTO.getFlagClick());
+            newGoal.setFlagOrder(newGoalDTO.getFlag_order());
+            newGoal.setNome(newGoalDTO.getName());
+            newGoal.setStatus(newGoalDTO.getStatus());
+            newGoal.setTipo(newGoalDTO.getType());
+            newGoal.setTotalvalue(newGoalDTO.getTotalValue());
+            
+            Category categoryTmp = categoryManagement.findCategoryById(newGoalDTO.getCategoryDTO().getIdCategory());
+            newGoal.setIdCategory(categoryTmp);
 
             //persist on database the respective goal
-            this.goal.create(g);
+            this.goal.create(newGoal);
 
         } catch (Exception e) {
             System.out.println("" + e.getMessage());

@@ -28,51 +28,61 @@ public class cricketManager implements cricketManagerLocal {
     /*INJECCAO DE DEPENDENCIAS PARA OS EJB QUE IRAO CONTER A LOGICA*/
     
     @EJB
-    userManagementLocal user;
+    userManagementLocal userManager;
     
     @EJB
-    goalManagementLocal goal;
+    goalManagementLocal goalManager;
     
     @EJB
-    historyManagementLocal history;
+    historyManagementLocal historyManager;
     
     @EJB
-    categoryManagementLocal category;
+    categoryManagementLocal categoryManager;
 
     @Override
     public boolean validateLogin(String email, String pass) {
-       return this.user.validateLogin(email, pass);
+       return this.userManager.validateLogin(email, pass);
     }
     
     @Override
     public boolean signUp(String username, String pass, String email, String gender, Date birth){
-        return user.signUp(username, pass, email, gender, birth);
+        return userManager.signUp(username, pass, email, gender, birth);
     }
     
     @Override
     public boolean createCategory(String name, String desc,String email){
-        return this.category.createCategory(name, desc,email);
+        return this.categoryManager.createCategory(name, desc,email);
     }
     
     @Override
     public boolean removeCategory(String name){
-        return this.category.removeCategory(name);
+        return this.categoryManager.removeCategory(name);
     }
 
     @Override
     public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
-        return this.category.getAllCategoriesFromLoggedUser(emailOfLoggedUser);
+        return this.categoryManager.getAllCategoriesFromLoggedUser(emailOfLoggedUser);
     }
     
     @Override
     public List<GoalDTO> selectAllGoalsFromAnUser(String email){
-        return this.goal.selectAllGoalsFromAnUser(email);
+        return this.goalManager.selectAllGoalsFromAnUser(email);
     }
     
     @Asynchronous
     @Override
     public Future<Integer> getNextValueFromGoalOrder(String email){
-        return this.user.getNextValueFromGoalOrder(email);
+        return this.userManager.getNextValueFromGoalOrder(email);
+    }
+
+    @Override
+    public CategoryDTO findCategoryDTOById(Integer id) {
+        return this.categoryManager.findCategoryDTOById(id);
+    }
+
+    @Override
+    public boolean addGoal(GoalDTO goalDTO) {
+        return this.goalManager.createGoal(goalDTO);
     }
     
 }

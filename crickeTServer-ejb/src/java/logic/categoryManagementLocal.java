@@ -6,6 +6,7 @@
 package logic;
 
 import cricketdto.CategoryDTO;
+import entities.Category;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -20,4 +21,7 @@ public interface categoryManagementLocal {
     boolean removeCategory(String name);
     void initializeCategories(String email);
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
+    public CategoryDTO findCategoryDTOById(Integer id);
+    public Category findCategoryById(Integer id);
+
 }
