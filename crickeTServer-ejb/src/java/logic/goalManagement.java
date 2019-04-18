@@ -128,7 +128,7 @@ public class goalManagement implements goalManagementLocal {
 
             if (goal != null) {
                 return false;
-            }
+            } 
 
             goal.setCurrentvalue(editGoalDTO.getCurrentValue());
             goal.setDescript(editGoalDTO.getDesc());
