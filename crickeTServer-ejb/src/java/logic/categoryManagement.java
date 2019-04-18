@@ -95,6 +95,9 @@ public class categoryManagement implements categoryManagementLocal {
             /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
             this.user.edit(a);
             
+            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
+            this.user.edit(a);
+            
             return true;
         }
         catch(Exception e){
