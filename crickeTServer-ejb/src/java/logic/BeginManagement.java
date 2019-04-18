@@ -57,7 +57,7 @@ public class BeginManagement implements BeginManagementLocal {
     @Override
     public void initializeRankings(){
         
-        try{
+        try{ 
             
             /*VERIFICA SE AINDA NAO EXISTEM DADOS NA TABELA RANKING*/
             List<Ranking> ret_rank=this.r.findMultipleNames(lista_rank);

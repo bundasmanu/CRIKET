@@ -113,11 +113,13 @@ public class goalManagement implements goalManagementLocal {
 
             //persist on database the respective goal
             this.goal.create(newGoal);
+            
+            return true;
 
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
             return false;
         }
-        return true;
+        
     }
 }

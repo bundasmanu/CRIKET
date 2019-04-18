@@ -104,19 +104,19 @@ public class GoalBean implements Serializable{
 
             if(result)
             {
-                Utils.throwMessage("Success Adding the New Goal");
-                return "dashboard";
+                //Utils.throwMessage("Success Adding the New Goal");
+                return "dashboard?faces-redirect=true";
             }
             else
             {
                 Utils.throwMessage("Error");
-                return "dashboard";
+                return "createGoal";
             }
 
         } catch (ParseException ex) {
             Logger.getLogger(GoalBean.class.getName()).log(Level.SEVERE, null, ex);
             Utils.throwMessage("Error");
-            return "dashboard";
+            return "createGoal";
         }
     }
 

@@ -55,8 +55,8 @@ public class cricketManager implements cricketManagerLocal {
     }
     
     @Override
-    public boolean removeCategory(String name){
-        return this.categoryManager.removeCategory(name);
+    public boolean removeCategory(String email, String name){
+        return this.categoryManager.removeCategory(email,name);
     }
 
     @Override

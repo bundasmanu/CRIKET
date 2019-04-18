@@ -39,7 +39,7 @@ public class categoryManagement implements categoryManagementLocal {
     public boolean createCategory(String name, String desc, String email){
         
         try{
-                    
+                     
             Utilizador exist_user=this.user.findByEmail(email);
             
             /*SE JA EXISTE A CATEGORIA, OU NAO EXISTE USER RETORNA*/
@@ -70,9 +70,16 @@ public class categoryManagement implements categoryManagementLocal {
     }
     
     @Override
-    public boolean removeCategory(String name){
+    public boolean removeCategory(String email, String name){
         
         try{
+            
+            /*USER VERIFICAR SE O USER EXISTE*/
+            Utilizador a=this.user.findByEmail(email);
+            
+            if(a==null){
+                return false;
+            }
             
             /*VERIFICAR SE EXISTE ALGUMA CATEGORIA A ELIMINAR COM AQUELE NOME*/
             Category c=this.cat.findByName(name);
@@ -84,6 +91,9 @@ public class categoryManagement implements categoryManagementLocal {
             
             /*REMOVE A CATEGORIA DA TABELA, E APAGA CONSEQUENTEMENTE OS SEUS OBJETIVOS, DEVIDO AO ATRIBUTO CASCADE, DEFINIDO NA COLECÇÃO DE OBJETIVOS*/
             this.cat.remove(c);
+            
+            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
+            this.user.edit(a);
             
             return true;
         }
