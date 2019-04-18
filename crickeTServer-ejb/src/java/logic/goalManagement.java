@@ -159,5 +159,32 @@ public class goalManagement implements goalManagementLocal {
             return false;
         }
     }
+    
+    @Override
+    public boolean removeGoal(String email, Integer id) {
+        try {
+            //find user
+            Utilizador u = this.ut.findByEmail(email);
+            if (u == null) {
+                return false;
+            }
+
+            //find goal by id
+            Goal g = this.goal.find(id);
+
+            if (g == null) {
+                return false;
+            }
+
+            //remove the goal
+            this.goal.remove(g);
+            return true;
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+            return false;
+        }
+
+    }
+
 
 }

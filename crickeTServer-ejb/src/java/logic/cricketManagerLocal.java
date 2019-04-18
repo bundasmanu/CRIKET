@@ -41,6 +41,8 @@ public interface cricketManagerLocal {
     
     boolean editGoal(GoalDTO goalDTO);
     
+    boolean removeGoal(String email,Integer id);
+    
     
     
 }
