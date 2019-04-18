@@ -59,6 +59,8 @@ public class categoryManagement implements categoryManagementLocal {
             exist.setIdUser(exist_user); 
             
             this.cat.create(exist);
+            /*PARA APARECER AS CATEGORIAS DE SEGUIDA*/
+            this.user.edit(exist_user);
             
             return true;
         }
@@ -95,8 +97,47 @@ public class categoryManagement implements categoryManagementLocal {
             /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
             this.user.edit(a);
             
-            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
-            this.user.edit(a);
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+    }
+    
+    @Override
+    public boolean editCategory(String email, CategoryDTO c){
+        
+        try{
+            
+            /*VERIFICAR INICIALMENTE SE O UTILIZADOR EXISTE*/
+            Utilizador a=this.user.findByEmail(email);
+            
+            if(a==null){
+                return false;
+            }
+            
+            /*CASO A CATEGORIA SEJA NULL, SAI*/
+            if(c==null){
+                return false;
+            }
+            
+            Category ca=this.cat.find(c.getIdCategory());
+            
+            if(ca==null){
+                return false;
+            }
+            
+            if(ca.getDescript().equals(c.getDescript())==false){
+                ca.setDescript(c.getDescript());
+            }
+            
+            if(ca.getNome().equals(c.getNome())==false){
+                ca.setNome(c.getNome());
+            }
+            
+            this.cat.edit(ca);
             
             return true;
         }
