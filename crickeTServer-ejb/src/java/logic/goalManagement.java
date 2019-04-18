@@ -41,49 +41,46 @@ public class goalManagement implements goalManagementLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
     @EJB
     UtilizadorFacadeLocal ut;
-    
+
     @EJB
     categoryManagementLocal categoryManagement;
-    
-    
-    
-    private DTOFactory dt= new DTOFactory();
-    
+
+    private DTOFactory dt = new DTOFactory();
+
     @Override
-    public List<GoalDTO> selectAllGoalsFromAnUser(String email){
-        
+    public List<GoalDTO> selectAllGoalsFromAnUser(String email) {
+
         /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
-        Utilizador u=this.ut.findByEmail(email);
-        
-        if(u==null){
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
             return null;
         }
-        
+
         /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
         Collection<Category> catUser = u.getCategoryCollection();
 
-        List<GoalDTO> retorno_goals_user=new ArrayList<GoalDTO>();
-        
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
         if (catUser.isEmpty() != true) {
             for (Category x : catUser) {
                 if (x.getGoalCollection().isEmpty() != true) {
-                    for(Goal g : x.getGoalCollection()){
-                        GoalDTO gt=dt.getGoalDTO(g);
+                    for (Goal g : x.getGoalCollection()) {
+                        GoalDTO gt = dt.getGoalDTO(g);
                         retorno_goals_user.add(gt);
                     }
                 }
             }
         }
-        
+
         /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
         Collections.sort(retorno_goals_user);
-        
+
         return retorno_goals_user;
     }
-    
+
     @Override
     public boolean createGoal(GoalDTO newGoalDTO) {
 
@@ -94,7 +91,7 @@ public class goalManagement implements goalManagementLocal {
             if (goalTmp != null) {
                 return false;
             }
-            
+
             Goal newGoal = new Goal();
             newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
             newGoal.setDescript(newGoalDTO.getDesc());
@@ -107,19 +104,55 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setStatus(newGoalDTO.getStatus());
             newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
-            
+
             Category categoryTmp = categoryManagement.findCategoryById(newGoalDTO.getCategoryDTO().getIdCategory());
             newGoal.setIdCategory(categoryTmp);
 
             //persist on database the respective goal
             this.goal.create(newGoal);
-            
+
             return true;
 
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
             return false;
         }
-        
+
     }
+
+    @Override
+    public boolean editGoal(GoalDTO editGoalDTO) {
+
+        try {
+            Goal goal = this.goal.findByName(editGoalDTO.getName());
+
+            if (goal != null) {
+                return false;
+            }
+
+            goal.setCurrentvalue(editGoalDTO.getCurrentValue());
+            goal.setDescript(editGoalDTO.getDesc());
+            goal.setFavorite(editGoalDTO.getFavorite());
+            goal.setFinaldate(editGoalDTO.getFinalDate());
+            goal.setFlagClickControl(editGoalDTO.getFlagClick());
+            goal.setFlagOrder(editGoalDTO.getFlag_order());
+            Category idcategory = categoryManagement.findCategoryById(editGoalDTO.getCategoryDTO().getIdCategory());
+            goal.setIdCategory(idcategory);
+            goal.setIdGoal(editGoalDTO.getId_goal());
+            goal.setLogdate(editGoalDTO.getLogDate());
+            goal.setNome(editGoalDTO.getName());
+            goal.setStatus(editGoalDTO.getStatus());
+            goal.setTipo(editGoalDTO.getType());
+            goal.setTotalvalue(editGoalDTO.getTotalValue());
+            
+            this.goal.edit(goal);
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Mensagem: " + e.getMessage());
+
+            return false;
+        }
+    }
+
 }

@@ -19,4 +19,6 @@ public interface goalManagementLocal {
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
     boolean createGoal(GoalDTO newGoalDTO);
+    
+    boolean editGoal(GoalDTO editGoalDTO);
 }

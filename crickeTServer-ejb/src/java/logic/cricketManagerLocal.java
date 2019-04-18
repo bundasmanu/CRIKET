@@ -40,4 +40,8 @@ public interface cricketManagerLocal {
     
     boolean addGoal(GoalDTO goalDTO);
     
+    boolean editGoal(GoalDTO goalDTO);
+    
+    
+    
 }
