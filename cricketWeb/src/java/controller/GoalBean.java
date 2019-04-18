@@ -90,7 +90,7 @@ public class GoalBean implements Serializable{
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date finalDateGoal;
             finalDateGoal = formatter.parse(this.finalDateGoalTmp);
-            
+             
             goalDTOTemp.setFinalDate(finalDateGoal);
             
             Date logDate = Date.from(Instant.now());
