@@ -88,14 +88,13 @@ public class goalManagement implements goalManagementLocal {
     public boolean createGoal(GoalDTO newGoalDTO) {
 
         try {
-            
             //verify if this goal exists with the same name
             Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
 
             if (goalTmp != null) {
                 return false;
             }
-
+            
             Goal newGoal = new Goal();
             newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
             newGoal.setDescript(newGoalDTO.getDesc());
