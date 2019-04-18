@@ -218,7 +218,7 @@ public class goalManagement implements goalManagementLocal {
             }
             
             /*SE TENHO CATEGORIAS, MAS NAO TENHO GOALS, RETORNA 1*/
-            if(goals.isEmpty()==true){
+            if(goals.isEmpty()==true){  
                 return new AsyncResult<>(1);
             }
             
