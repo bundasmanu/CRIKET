@@ -36,6 +36,7 @@ public class GoalBean implements Serializable{
     
     @Inject
     SessionBean su;
+    
     String date_create_goal;
     
     @PostConstruct

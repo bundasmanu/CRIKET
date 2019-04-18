@@ -41,7 +41,7 @@ public class categoryManagement implements categoryManagementLocal {
         try{
                      
             Utilizador exist_user=this.user.findByEmail(email);
-            
+                 
             /*SE JA EXISTE A CATEGORIA, OU NAO EXISTE USER RETORNA*/
             if(exist_user==null){
                 return false;
