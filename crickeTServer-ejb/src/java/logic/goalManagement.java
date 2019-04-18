@@ -124,7 +124,7 @@ public class goalManagement implements goalManagementLocal {
     public boolean editGoal(GoalDTO editGoalDTO) {
 
         try {
-            Goal goal = this.goal.findByName(editGoalDTO.getName());
+            Goal goal = this.goal.find(editGoalDTO.getId_goal());
 
             if (goal != null) {
                 return false;
