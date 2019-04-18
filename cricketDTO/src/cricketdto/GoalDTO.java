@@ -27,7 +27,7 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     Date logDate;/*PARA QUE ERA ISTO?? - sempre que criamos um objetivo esta data e' preenchida com a data em q foi criado*/
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
     int flag_order;/*ORDEM DA FLAG--> JA NAO ME LEMBRO MUITO BEM DISTO*/
-    CategoryDTO categoryDTO;
+    int idCategory;
     
     public GoalDTO(){
         
@@ -135,12 +135,12 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         this.flag_order = flag_order;
     }
 
-    public CategoryDTO getCategoryDTO() {
-        return categoryDTO;
+    public int getIdCategory() {
+        return idCategory;
     }
 
-    public void setCategoryDTO(CategoryDTO categoryDTO) {
-        this.categoryDTO = categoryDTO;
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
     
     /*COMPARACAO COM BASE NA FLAG DE ORDEM*/
@@ -223,13 +223,9 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         return true;
     }
 
-    
-
-    
     @Override
     public String toString() {
-        return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", type=" + type + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + ", categoryDTO=" + categoryDTO + '}';
+        return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", type=" + type + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
     }
-    
-    
+
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import Utils.Config;
 import cricketdto.GoalDTO;
 import entities.Goal;
+import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -48,7 +49,8 @@ public class goalManagement implements goalManagementLocal {
     @EJB
     categoryManagementLocal categoryManagement;
     
-    
+    @EJB
+    CategoryFacadeLocal ca;
     
     private DTOFactory dt= new DTOFactory();
     
@@ -90,8 +92,9 @@ public class goalManagement implements goalManagementLocal {
         try {
             //verify if this goal exists with the same name
             Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
-
-            if (goalTmp != null) {
+            Category cTmp=this.ca.find(newGoalDTO.getIdCategory());
+            
+            if (goalTmp != null || cTmp==null) {
                 return false;
             }
             
@@ -108,8 +111,7 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
             
-            Category categoryTmp = categoryManagement.findCategoryById(newGoalDTO.getCategoryDTO().getIdCategory());
-            newGoal.setIdCategory(categoryTmp);
+            newGoal.setIdCategory(cTmp);
 
             //persist on database the respective goal
             this.goal.create(newGoal);
