@@ -73,6 +73,7 @@ public class SessionBean implements Serializable {
             /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
             goal.nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
             
+            goal.idGoal=this.bridge.getCricket().getNextValueGoal(email);
             
             return "dashboard?faces-redirect=true";
         }

@@ -43,6 +43,6 @@ public interface cricketManagerLocal {
     
     boolean removeGoal(String email,Integer id);
     
-    
+    Future<Integer> getNextValueGoal(String email);
     
 }

@@ -92,5 +92,11 @@ public class cricketManager implements cricketManagerLocal {
     public boolean removeGoal(String email, Integer id) {
         return this.goalManager.removeGoal(email, id);
     }
-
+    
+    @Asynchronous
+    @Override
+    public Future<Integer> getNextValueGoal(String email){
+        return this.goalManager.getNextValueGoal(email);
+    }
+    
 }

@@ -69,7 +69,7 @@ and open the template in the editor.
 
                 <c:if test="#{not empty goalBean.allGoals}">
                     <div class="container">
-                        <ui:repeat value="#{goalBean.allGoals}" var="goalTmp">
+                        <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
                             <div class="row p-3 mb-2 bg-light text-dark">
                                 <div class="col-1"></div>
                                 <div class="col-10">
@@ -99,8 +99,8 @@ and open the template in the editor.
 
 
                                             </div>
-                                            <h:form id="x">
-                                                <h:commandLink id="d" value="Remover" action="#{goalBean.processRemoveGoal()}"/>
+                                            <h:form id="x" >
+                                                <h:commandLink id="d" value="Remover" action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}"/>
                                             </h:form>
                                         
                                     </div>

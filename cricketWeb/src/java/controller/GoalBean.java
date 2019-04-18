@@ -16,11 +16,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date; 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.ejb.AsyncResult;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -40,6 +44,7 @@ public class GoalBean implements Serializable{
     
     private GoalDTO goalDTOTemp;
     Future<Integer> nextValueOrderGoal;
+    Future<Integer> idGoal;
     
     @Inject
     SessionBean su;
@@ -105,9 +110,14 @@ public class GoalBean implements Serializable{
 
 
             result = bridge.getCricket().addGoal(goalDTOTemp);
+            
 
             if(result)
             {
+                
+                /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
+                this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());
+                
                 //Utils.throwMessage("Success Adding the New Goal");
                 return "dashboard?faces-redirect=true";
             }
@@ -124,7 +134,7 @@ public class GoalBean implements Serializable{
         }
     }
     
-    public String processRemoveGoal() {
+    public String processRemoveGoal(int idGoalSelected) throws InterruptedException, ExecutionException{
         boolean result = false;
 
         System.out.println("" + goalDTOTemp);
@@ -132,10 +142,12 @@ public class GoalBean implements Serializable{
         //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
         //depois mudo isto para o método do getidgoal().
         //vou ver como faço o reload para ele remover automaticamente 
-        result = bridge.getCricket().removeGoal(this.su.getEmail(), 2);
-        if (result) {
+        result = bridge.getCricket().removeGoal(this.su.getEmail(), idGoalSelected);
+        if (result) {           
+
             //Utils.throwMessage("Success Adding the New Goal");
             return "/index.xhtml?faces-redirect=true?";
+            
         } else {
             Utils.throwMessage("Error");
             return "removeGoal";

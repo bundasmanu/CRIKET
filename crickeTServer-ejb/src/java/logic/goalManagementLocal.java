@@ -7,6 +7,7 @@ package logic;
 
 import cricketdto.GoalDTO;
 import java.util.List;
+import java.util.concurrent.Future;
 import javax.ejb.Local;
 
 /**
@@ -22,5 +23,8 @@ public interface goalManagementLocal {
     
     boolean editGoal(GoalDTO editGoalDTO);
     
-    public boolean removeGoal(String email, Integer id);
+    boolean removeGoal(String email, Integer id);
+    
+    Future<Integer> getNextValueGoal(String email);
+    
 }
