@@ -19,6 +19,7 @@ import java.util.List;
 import Utils.Config;
 import cricketdto.GoalDTO;
 import entities.Goal;
+import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,9 +47,12 @@ public class goalManagement implements goalManagementLocal {
 
     @EJB
     categoryManagementLocal categoryManagement;
-
-    private DTOFactory dt = new DTOFactory();
-
+    
+    @EJB
+    CategoryFacadeLocal ca;
+    
+    private DTOFactory dt= new DTOFactory();
+    
     @Override
     public List<GoalDTO> selectAllGoalsFromAnUser(String email) {
 
@@ -87,8 +91,9 @@ public class goalManagement implements goalManagementLocal {
         try {
             //verify if this goal exists with the same name
             Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
-
-            if (goalTmp != null) {
+            Category cTmp=this.ca.find(newGoalDTO.getIdCategory());
+            
+            if (goalTmp != null || cTmp==null) {
                 return false;
             }
 
@@ -104,9 +109,8 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setStatus(newGoalDTO.getStatus());
             newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
-
-            Category categoryTmp = categoryManagement.findCategoryById(newGoalDTO.getCategoryDTO().getIdCategory());
-            newGoal.setIdCategory(categoryTmp);
+            
+            newGoal.setIdCategory(cTmp);
 
             //persist on database the respective goal
             this.goal.create(newGoal);
@@ -125,8 +129,10 @@ public class goalManagement implements goalManagementLocal {
 
         try {
             Goal goal = this.goal.find(editGoalDTO.getId_goal());
-
-            if (goal != null) {
+            
+            Category cat=this.ca.find(editGoalDTO.getIdCategory());
+            
+            if (goal != null && cat!=null) {
                 return false;
             } 
 
@@ -136,15 +142,14 @@ public class goalManagement implements goalManagementLocal {
             goal.setFinaldate(editGoalDTO.getFinalDate());
             goal.setFlagClickControl(editGoalDTO.getFlagClick());
             goal.setFlagOrder(editGoalDTO.getFlag_order());
-            Category idcategory = categoryManagement.findCategoryById(editGoalDTO.getCategoryDTO().getIdCategory());
-            goal.setIdCategory(idcategory);
+            goal.setIdCategory(cat);
             goal.setIdGoal(editGoalDTO.getId_goal());
             goal.setLogdate(editGoalDTO.getLogDate());
             goal.setNome(editGoalDTO.getName());
             goal.setStatus(editGoalDTO.getStatus());
             goal.setTipo(editGoalDTO.getType());
             goal.setTotalvalue(editGoalDTO.getTotalValue());
-            
+
             this.goal.edit(goal);
              
             return true;
@@ -154,5 +159,32 @@ public class goalManagement implements goalManagementLocal {
             return false;
         }
     }
+    
+    @Override
+    public boolean removeGoal(String email, Integer id) {
+        try {
+            //find user
+            Utilizador u = this.ut.findByEmail(email);
+            if (u == null) {
+                return false;
+            }
+
+            //find goal by id
+            Goal g = this.goal.find(id);
+
+            if (g == null) {
+                return false;
+            }
+
+            //remove the goal
+            this.goal.remove(g);
+            return true;
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+            return false;
+        }
+
+    }
+
 
 }

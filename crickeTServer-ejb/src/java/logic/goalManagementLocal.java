@@ -21,4 +21,6 @@ public interface goalManagementLocal {
     boolean createGoal(GoalDTO newGoalDTO);
     
     boolean editGoal(GoalDTO editGoalDTO);
+    
+    public boolean removeGoal(String email, Integer id);
 }

@@ -8,6 +8,7 @@ package controller;
 import BridgeLogicController.BridgeLocal;
 import Utils.Config;
 import cricketdto.GoalDTO;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,8 +23,11 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import utils.Utils;
 
 @Named(value = "goalBean")
@@ -118,6 +122,30 @@ public class GoalBean implements Serializable{
             Utils.throwMessage("Error");
             return "createGoal";
         }
+    }
+    
+    public String processRemoveGoal() {
+        boolean result = false;
+
+        System.out.println("" + goalDTOTemp);
+        
+        //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
+        //depois mudo isto para o método do getidgoal().
+        //vou ver como faço o reload para ele remover automaticamente 
+        result = bridge.getCricket().removeGoal(this.su.getEmail(), 2);
+        if (result) {
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/index.xhtml?faces-redirect=true?";
+        } else {
+            Utils.throwMessage("Error");
+            return "removeGoal";
+        }
+
+    }
+    
+     public void reload() throws IOException{
+         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 
     public GoalDTO getGoalDTOTemp() {
