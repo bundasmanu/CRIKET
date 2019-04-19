@@ -85,7 +85,6 @@ public class GoalBean implements Serializable{
             Date logDate = Date.from(Instant.now());
             goalDTOTemp.setLogDate(logDate);
             
-            goalDTOTemp.setType("RECORRENT");
             System.out.println("\n\n\nnextValueOrderGoal: " + nextValueOrderGoal);
 
             //define the value of the flag_order

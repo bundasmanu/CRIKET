@@ -117,7 +117,6 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setFlagOrder(newGoalDTO.getFlag_order());
             newGoal.setNome(newGoalDTO.getName());
             newGoal.setStatus(newGoalDTO.getStatus());
-            newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
             newGoal.setFrequency(newGoalDTO.getFrequency());
             newGoal.setIdCategory(categoryTmp);
@@ -162,7 +161,6 @@ public class goalManagement implements goalManagementLocal {
             goal.setLogdate(editGoalDTO.getLogDate());
             goal.setNome(editGoalDTO.getName());
             goal.setStatus(editGoalDTO.getStatus());
-            goal.setTipo(editGoalDTO.getType());
             goal.setTotalvalue(editGoalDTO.getTotalValue());
 
             this.goal.edit(goal);

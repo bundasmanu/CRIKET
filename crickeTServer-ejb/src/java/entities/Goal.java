@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Goal.findByNome", query = "SELECT g FROM Goal g WHERE g.nome = :nome")
     , @NamedQuery(name = "Goal.findByDescript", query = "SELECT g FROM Goal g WHERE g.descript = :descript")
     , @NamedQuery(name = "Goal.findByFrequency", query = "SELECT g FROM Goal g WHERE g.frequency = :frequency")
-    , @NamedQuery(name = "Goal.findByTipo", query = "SELECT g FROM Goal g WHERE g.tipo = :tipo")
     , @NamedQuery(name = "Goal.findByStatus", query = "SELECT g FROM Goal g WHERE g.status = :status")
     , @NamedQuery(name = "Goal.findByFinaldate", query = "SELECT g FROM Goal g WHERE g.finaldate = :finaldate")
     , @NamedQuery(name = "Goal.findByTotalvalue", query = "SELECT g FROM Goal g WHERE g.totalvalue = :totalvalue")
@@ -62,12 +61,8 @@ public class Goal implements Serializable {
     @Column(name = "frequency")
     private String frequency;
     @Basic(optional = false)
-    @Column(name = "tipo")
-    private String tipo;
-    @Basic(optional = false)
     @Column(name = "status")
     private String status;
-    @Basic(optional = true)
     @Column(name = "finaldate")
     @Temporal(TemporalType.DATE)
     private Date finaldate;
@@ -101,14 +96,12 @@ public class Goal implements Serializable {
         this.idGoal = idGoal;
     }
 
-    public Goal(Integer idGoal, String nome, String descript, String frequency, String tipo, String status, Date finaldate, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
+    public Goal(Integer idGoal, String nome, String descript, String frequency, String status, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
         this.idGoal = idGoal;
         this.nome = nome;
         this.descript = descript;
         this.frequency = frequency;
-        this.tipo = tipo;
         this.status = status;
-        this.finaldate = finaldate;
         this.totalvalue = totalvalue;
         this.currentvalue = currentvalue;
         this.favorite = favorite;
@@ -147,14 +140,6 @@ public class Goal implements Serializable {
 
     public void setFrequency(String frequency) {
         this.frequency = frequency;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getStatus() {
