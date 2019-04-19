@@ -93,13 +93,21 @@ public class goalManagement implements goalManagementLocal {
 
         try {
             //verify if this goal exists with the same name
-            Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
             Category cTmp = this.ca.find(newGoalDTO.getIdCategory());
+            
 
-            if (goalTmp != null || cTmp == null) {
+            if (cTmp == null) {
                 return false;
             }
-
+            
+            if(cTmp.getGoalCollection().isEmpty()==false){
+                for(Goal g : cTmp.getGoalCollection()){
+                    if(g.getNome().equals(newGoalDTO.getName())==true){
+                        return false;
+                    }
+                }
+            }
+            
             Goal newGoal = new Goal();
             newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
             newGoal.setDescript(newGoalDTO.getDesc());

@@ -91,10 +91,12 @@ public class categoryManagement implements categoryManagementLocal {
                 return false;
             }
             
+            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
+            a.getCategoryCollection().remove(c);
+            
             /*REMOVE A CATEGORIA DA TABELA, E APAGA CONSEQUENTEMENTE OS SEUS OBJETIVOS, DEVIDO AO ATRIBUTO CASCADE, DEFINIDO NA COLECÇÃO DE OBJETIVOS*/
             this.cat.remove(c);
             
-            /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
             this.user.edit(a);
             
             return true;
@@ -138,6 +140,8 @@ public class categoryManagement implements categoryManagementLocal {
             }
             
             this.cat.edit(ca);
+            
+            this.user.edit(a);
             
             return true;
         }
