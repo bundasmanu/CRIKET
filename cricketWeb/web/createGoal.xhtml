@@ -38,12 +38,11 @@ and open the template in the editor.
                             <h:outputText value="#{bundle.GoalDescription}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.desc}" required="true"/><br/>
                             
-                            <h:outputText value="#{bundle.GoalType}"/><br/>
-                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.type}" required="true" class="radio">
+                            <h:outputText value="#{bundle.GoalStatus}"/><br/>
+                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
                                 <f:selectItem  itemValue="POSITIVE" itemLabel="Positive" />
                                 <f:selectItem itemValue="NEGATIVE" itemLabel="Negative" />
                             </h:selectOneRadio>
-                            
                             
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}">
@@ -51,27 +50,20 @@ and open the template in the editor.
                                                itemValue="#{categoryDTO.idCategory}"
                                                itemLabel="#{categoryDTO.nome}"/>
                             </h:selectOneMenu>
-                            
                             <br/>
-                            <h:outputText value="#{bundle.GoalStatus}"/><br/>
-                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
-                                <f:selectItem  itemValue="Concluido" itemLabel="Concluido" />
-                                <f:selectItem itemValue="Nao concluido" itemLabel="Nao concluido" />
+                            
+                            <h:outputText value="#{bundle.GoalType}"/><br/>
+                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.type}" required="true" class="radio">
+                                <f:selectItem  itemValue="RECURRENT" itemLabel="Recurrent" />
+                                <f:selectItem itemValue="NON_RECURRING" itemLabel="Non Recurrent" />
                             </h:selectOneRadio>
                             
                             <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
                             <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
                             
-                           
                             <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size=""></h:inputText><br/>
                        
-                        
-                            <h:outputText value="#{bundle.GoalFavorite}"/><br/>
-                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.favorite}" required="true" class="radio">
-                                <f:selectItem  itemValue="Favorite" itemLabel="Favorite" />
-                                <f:selectItem itemValue="Not Favorite" itemLabel="Not Favorite" />
-                            </h:selectOneRadio>
                             <br/>
                             <br/>
                             <h:commandButton class ="btn btn-info" action="#{goalBean.processAddGoal}" value="#{bundle.AddGoal}"></h:commandButton>

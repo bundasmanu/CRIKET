@@ -28,7 +28,8 @@
         
         <h:form>
             <nav class="navbar bg-dark navbar-dark">
-                <a class="navbar-brand" href="#">CrickeT</a>
+                
+                <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
                 
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
