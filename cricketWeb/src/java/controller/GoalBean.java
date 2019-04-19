@@ -155,6 +155,26 @@ public class GoalBean implements Serializable{
 
     }
     
+    
+    public String processEditGoal(){
+        
+        boolean result = false;
+
+        System.out.println("" + goalDTOTemp);
+        
+        //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
+        //depois mudo isto para o método do getidgoal().
+        //vou ver como faço o reload para ele remover automaticamente 
+        result = bridge.getCricket().editGoal(goalDTOTemp);
+        if (result) {
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/index.xhtml?faces-redirect=true?";
+        } else {
+            Utils.throwMessage("Error");
+            return "editGoal";
+        }
+    }
+    
      public void reload() throws IOException{
          ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());

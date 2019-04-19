@@ -50,12 +50,12 @@ public class goalManagement implements goalManagementLocal {
 
     @EJB
     categoryManagementLocal categoryManagement;
-    
+
     @EJB
     CategoryFacadeLocal ca;
-    
-    private DTOFactory dt= new DTOFactory();
-    
+
+    private DTOFactory dt = new DTOFactory();
+
     @Override
     public List<GoalDTO> selectAllGoalsFromAnUser(String email) {
 
@@ -94,9 +94,9 @@ public class goalManagement implements goalManagementLocal {
         try {
             //verify if this goal exists with the same name
             Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
-            Category cTmp=this.ca.find(newGoalDTO.getIdCategory());
-            
-            if (goalTmp != null || cTmp==null) {
+            Category cTmp = this.ca.find(newGoalDTO.getIdCategory());
+
+            if (goalTmp != null || cTmp == null) {
                 return false;
             }
 
@@ -112,7 +112,7 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setStatus(newGoalDTO.getStatus());
             newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
-            
+
             newGoal.setIdCategory(cTmp);
 
             //persist on database the respective goal
@@ -132,10 +132,10 @@ public class goalManagement implements goalManagementLocal {
 
         try {
             Goal goal = this.goal.find(editGoalDTO.getId_goal());
-            
-            Category cat=this.ca.find(editGoalDTO.getIdCategory());
-            
-            if (goal != null && cat!=null) {
+
+            Category cat = this.ca.find(editGoalDTO.getIdCategory());
+
+            if (goal != null && cat != null) {
                 return false;
             }
 
@@ -154,7 +154,7 @@ public class goalManagement implements goalManagementLocal {
             goal.setTotalvalue(editGoalDTO.getTotalValue());
 
             this.goal.edit(goal);
-             
+
             return true;
         } catch (Exception e) {
             System.out.println("Mensagem: " + e.getMessage());
@@ -162,7 +162,7 @@ public class goalManagement implements goalManagementLocal {
             return false;
         }
     }
-    
+
     @Override
     public boolean removeGoal(String email, Integer id) {
         try {
