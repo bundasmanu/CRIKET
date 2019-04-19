@@ -52,12 +52,6 @@ and open the template in the editor.
                             </h:selectOneMenu>
                             <br/>
                             
-                            <h:outputText value="#{bundle.GoalType}"/><br/>
-                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.type}" required="true" class="radio">
-                                <f:selectItem  itemValue="RECURRENT" itemLabel="Recurrent" />
-                                <f:selectItem itemValue="NON_RECURRING" itemLabel="Non Recurrent" />
-                            </h:selectOneRadio>
-                            
                             <h:outputText value="#{bundle.GoalFrequency}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.frequency}">
                                 <f:selectItem  itemValue="NEVER" itemLabel="Never" />
@@ -69,7 +63,7 @@ and open the template in the editor.
                             <br/>
                             
                             <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
-                            <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                            <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker"></h:inputText><br/>
                             
                             <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size=""></h:inputText><br/>

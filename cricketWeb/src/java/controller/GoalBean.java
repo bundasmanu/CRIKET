@@ -76,14 +76,16 @@ public class GoalBean implements Serializable{
             //convert the date from user
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date finalDateGoal;
-            finalDateGoal = formatter.parse(this.finalDateGoalTmp);
-             
-            goalDTOTemp.setFinalDate(finalDateGoal);
+            if(!finalDateGoalTmp.isEmpty())
+            {
+                finalDateGoal = formatter.parse(this.finalDateGoalTmp);
+                goalDTOTemp.setFinalDate(finalDateGoal);
+            }             
             
             Date logDate = Date.from(Instant.now());
             goalDTOTemp.setLogDate(logDate);
             
-            
+            goalDTOTemp.setType("RECORRENT");
             System.out.println("\n\n\nnextValueOrderGoal: " + nextValueOrderGoal);
 
             //define the value of the flag_order
