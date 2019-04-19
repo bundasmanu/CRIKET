@@ -69,56 +69,76 @@ and open the template in the editor.
 
                 <c:if test="#{not empty goalBean.allGoals}">
                     <div class="container">
-                        <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
-                            <div class="row p-3 mb-2 bg-light text-dark">
-                                <div class="col-1"></div>
-                                <div class="col-10">
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
-                                            <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
-                                        </div>
-                                        <div class="col-4">
-                                            #{goalTmp.name}
-                                        </div>                                
-                                        <div class="col-3">
-                                            <div class="progress">
-                                                <!-- TODO: the style must be for example "70%", "30%", etc... Not working... -->
-                                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="#{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %">
-                                                    #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %
+                        <h:form>
+                            <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
+                                <div class="row p-3 mb-2 bg-light text-dark">
+                                    <div class="col-1"></div>
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
+                                                <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
+                                            </div>
+                                            <div class="col-4">
+                                                #{goalTmp.name}
+                                            </div>                                
+                                            <div class="col-3">
+                                                <div class="progress">
+                                                    <!-- TODO: the style must be for example "70%", "30%", etc... Not working... -->
+                                                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="#{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %">
+                                                        #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="col-2">
+                                                <img src="https://img.icons8.com/ultraviolet/30/000000/plus-2-math.png"></img>
+                                                <img src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
+                                            </div>
+                                            <div class="col-1">
+                                                <h:commandLink action="#{goalBean.editGoal(goalTmp.id_goal)}">
+                                                    <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
+                                                </h:commandLink>
+                                                <a data-toggle="modal" data-target="#removeGoalModal">
+                                                    <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-2">
-                                            <img src="https://img.icons8.com/ultraviolet/30/000000/plus-2-math.png"></img>
-                                            <img src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
-                                        </div>
-                                        <div class="col-1">
-
-                                            <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
-                                        </div>
-
-
-                                        <h:form id="a">
-
-                                            <h:commandLink id="b" value="Editar"  action="#{goalBean.editGoal(goalTmp.id_goal)}"/>
-
-                                        </h:form>
                                     </div>
-                                    <h:form id="x" >
-                                        <h:commandLink id="d" value="Remover" action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}"/>
-                                    </h:form>
-
+                                    <div class="col-1"></div>
                                 </div>
-                            </div>
-                            <div class="col-1"></div>
-                        </ui:repeat>
+                                
+                                <!-- The Modal -->
+                                <div class="modal" id="removeGoalModal">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                      <!-- Modal Header -->
+                                      <div class="modal-header">
+                                          <h4 class="modal-title">#{bundle.RemoveGoal}</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                        #{bundle.RemoveGoalDesc} <br></br> Goal which will be removed: #{goalTmp.name}
+                                      </div>
+
+                                      <!-- Modal footer -->
+                                    <div class="modal-footer">
+
+                                        <h:commandLink action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}">
+                                            <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                        </h:commandLink>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                            </ui:repeat>
+                        </h:form>
                     </div>
-
                 </c:if>
-
-
-
             </ui:define>
         </ui:composition>
     </body>
