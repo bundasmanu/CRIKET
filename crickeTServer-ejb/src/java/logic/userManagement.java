@@ -114,11 +114,11 @@ public class userManagement implements userManagementLocal {
             Collection<Category> catCollect=exist.getCategoryCollection();
             
             if(catCollect.isEmpty()==true){
-                 System.out.println("\n\n\n\nEntrou\n");
                 return new AsyncResult<>(1);/*SENAO EXISTIR NENHUM OBJETIVO, O PRIMEIRO VALOR DE ORDEM DO OBJETIVO É 1*/
             }
             
             /*PERCORRER ARRAYLIST E VERIFICAR QUAL O ELEMENTO MÁXIMO DE ORDEM*/
+            
             List<Integer> OrderValues=new ArrayList<Integer>();
             for(Category c : catCollect){
                 if(c.getGoalCollection().isEmpty()==false){
@@ -126,6 +126,10 @@ public class userManagement implements userManagementLocal {
                         OrderValues.add(g.getFlagOrder());
                     }
                 }
+            }
+            
+            if(OrderValues.isEmpty()==true){
+                return new AsyncResult<>(1);
             }
             
             /*OBTENCAO DO VALOR MAXIMO DE GOAL*/
