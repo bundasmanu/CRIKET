@@ -1,12 +1,119 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <head>
+        <ui:define name="title">TODO supply a title </ui:define>
+    </head>
+    <body>
+        <ui:composition template = "template.xhtml">
 
+            <ui:define name = "introTitle">                                
+                <h2>Hi <span>#username!</span></h2>
+                <div>
+                    <a href="#services" class="btn-get-started scrollto">See my Goals</a>
+                </div>
+            </ui:define>
+
+            <ui:define name = "containerTitle">
+                <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
+
+                <h3>#{bundle.CategoriesListTitle}</h3>
+                <p> #{bundle.CategoriesListDesc}</p>
+            </ui:define>
+
+            <ui:define name = "containerContent">
+
+                <c:if test="#{empty categoryBean.allCategoriesFromLoggedUser}">
+                    <div class="container">
+                        <div class="row p-3 mb-2 bg-light text-dark">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <h2>#{bundle.EmptyListCategories}</h2>
+                                <br></br>
+                                <br></br>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </c:if>
+
+                <h:form>
+                    <h:commandLink action="#{categoryBean.createCategory}">
+                        <img src="https://img.icons8.com/office/80/000000/plus-2-math.png"></img>
+                    </h:commandLink>
+
+                    <br></br>
+                    <br></br>
+
+                    <c:if test="#{not empty categoryBean.allCategoriesFromLoggedUser}">
+                        <div class="container">
+                            <ui:repeat value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryTmp" varStatus="getObj">
+                                <div class="row p-3 mb-2 bg-light text-dark">
+                                    <div class="col-1"></div>
+                                    <div class="col-10">
+                                        <div class="row">
+                                            
+                                            <div class="col-8">
+                                                #{categoryTmp.nome}
+                                            </div>                     
+                                            <div class="col-3">
+                                                #{categoryTmp.descript}
+                                            </div>
+                                            <div class="col-1">
+                                                <h:commandLink action="#{categoryBean.editCategory(categoryTmp.idCategory)}">
+                                                    <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
+                                                </h:commandLink>
+                                                <a data-toggle="modal" data-target="#removeCategoryModal#{categoryTmp.idCategory}" data-id="#{categoryTmp.idCategory}">
+                                                    <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1"></div>
+                                </div>
+                                
+                                <!-- not efficient at all! Is rendering a modal to each goal. -->
+                                <!-- The Modal -->
+                                <div class="modal" id="removeCategoryModal#{categoryTmp.idCategory}">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                              <h4 class="modal-title">#{bundle.RemoveCategory}</h4>
+                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                          #{bundle.RemoveCategoryDesc} <br></br> Goal which will be removed: #{categoryTmp.nome}
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <h:commandLink id="goalId" action="#{categoryBean.processRemoveCategory(categoryTmp.idCategory)}">
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                            </h:commandLink>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </c:if>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
