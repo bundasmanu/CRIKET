@@ -144,31 +144,50 @@ public class goalManagement implements goalManagementLocal {
     public boolean editGoal(GoalDTO editGoalDTO) {
 
         try {
-            Goal goal = this.goal.find(editGoalDTO.getId_goal());
+            Goal goalToEdit = this.goal.find(editGoalDTO.getId_goal());
 
             Category cat = this.ca.find(editGoalDTO.getIdCategory());
 
-            if (goal != null && cat != null) {
+            if (goal == null || cat == null) {
                 return false;
             }
 
-            goal.setCurrentvalue(editGoalDTO.getCurrentValue());
-            goal.setDescript(editGoalDTO.getDesc());
-            goal.setFavorite(editGoalDTO.getFavorite());
-            goal.setFinaldate(editGoalDTO.getFinalDate());
-            goal.setFlagClickControl(editGoalDTO.getFlagClick());
-            goal.setFlagOrder(editGoalDTO.getFlag_order());
-            goal.setIdCategory(cat);
-            //goal.setIdGoal(editGoalDTO.getId_goal());
-            goal.setLogdate(editGoalDTO.getLogDate());
-            goal.setNome(editGoalDTO.getName());
-            goal.setStatus(editGoalDTO.getStatus());
-            goal.setTotalvalue(editGoalDTO.getTotalValue());
-                      
-            this.goal.edit(goal);
+            goalToEdit.setCurrentvalue(editGoalDTO.getCurrentValue());
+            goalToEdit.setDescript(editGoalDTO.getDesc());
+            goalToEdit.setFavorite(editGoalDTO.getFavorite());
+            goalToEdit.setFinaldate(editGoalDTO.getFinalDate());
+            goalToEdit.setFlagClickControl(editGoalDTO.getFlagClick());
+            goalToEdit.setFlagOrder(editGoalDTO.getFlag_order());
+            goalToEdit.setIdGoal(editGoalDTO.getId_goal());
+            goalToEdit.setLogdate(editGoalDTO.getLogDate());
+            goalToEdit.setNome(editGoalDTO.getName());
+            goalToEdit.setStatus(editGoalDTO.getStatus());
+            goalToEdit.setTotalvalue(editGoalDTO.getTotalValue());
+
+            System.out.println("\n\n\n goalToEdit.getIdCategory().getNome(): " + goalToEdit.getIdCategory().getNome());
+            System.out.println("\n\n\n cat.getNome(): " + cat.getNome());
             
-            this.ca.edit(cat);
+
+            //if the user selected anoter category (can comparing with name because name is unique)
+            //
+            //TODO: error changing category
+            //
+                
+                goalToEdit.setIdCategory(cat);
+                
+                for(Goal g : cat.getGoalCollection()){
+                    if(g.getIdGoal().equals(goalToEdit.getIdGoal())==true){
+                        g=goalToEdit;
+                    }
+                }
             
+                categoryManagement.save(cat);
+                
+
+            this.goal.edit(goalToEdit);
+            
+            //categoryManagement.save(cat);
+
             return true;
         } catch (Exception e) {
             System.out.println("Mensagem: " + e.getMessage());
@@ -192,7 +211,11 @@ public class goalManagement implements goalManagementLocal {
             if (g == null) {
                 return false;
             }
-
+            
+            Category category = g.getIdCategory();
+            category.getGoalCollection().remove(g);
+            categoryManagement.save(category);
+            
             //remove the goal
             this.goal.remove(g);
             return true;
@@ -247,6 +270,15 @@ public class goalManagement implements goalManagementLocal {
             return new AsyncResult<>(-1);
         }
         
+    }
+
+    @Override
+    public GoalDTO findGoalDTOById(int id) {
+        Goal goalTmp = goal.find(id);
+        
+        if(goalTmp == null)
+            return null;
+        return DTOFactory.getGoalDTO(goalTmp);
     }
     
 

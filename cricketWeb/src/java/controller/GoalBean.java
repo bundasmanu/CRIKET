@@ -67,7 +67,12 @@ public class GoalBean implements Serializable{
             return new ArrayList();
         }
     }
-    
+    public String addGoal()
+    {
+        this.goalDTOTemp = new GoalDTO();
+        this.finalDateGoalTmp = "";
+        return "createGoal";
+    }
     public String processAddGoal()
     {
         boolean result = false;
@@ -107,9 +112,10 @@ public class GoalBean implements Serializable{
                 
                 /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
                 this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());
-                
+                this.goalDTOTemp = new GoalDTO();
+                this.finalDateGoalTmp = "";
                 //Utils.throwMessage("Success Adding the New Goal");
-                return "dashboard?faces-redirect=true";
+                return "dashboard?faces-redirect=true?";
             }
             else
             {
@@ -137,15 +143,27 @@ public class GoalBean implements Serializable{
         if (result) {           
 
             //Utils.throwMessage("Success Adding the New Goal");
-            return "/index.xhtml?faces-redirect=true?";
+            return "/index?faces-redirect=true?";
             
         } else {
             Utils.throwMessage("Error");
-            return "removeGoal";
+            return "dashboard";
         }
 
     }
     
+    
+    public String editGoal(int idGoal){
+        
+        goalDTOTemp = bridge.getCricket().findGoalDTOById(idGoal);
+        
+        if(goalDTOTemp == null)
+        {
+            Utils.throwMessage("Error. Couln't find the goal.");
+            return "dashboard";
+        }
+        return "editGoal";
+    }
     
     public String processEditGoal(){
         
@@ -153,13 +171,11 @@ public class GoalBean implements Serializable{
 
         System.out.println("" + goalDTOTemp);
         
-        //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
-        //depois mudo isto para o método do getidgoal().
-        //vou ver como faço o reload para ele remover automaticamente 
         result = bridge.getCricket().editGoal(goalDTOTemp);
         if (result) {
-            //Utils.throwMessage("Success Adding the New Goal");
-            return "/index.xhtml?faces-redirect=true?";
+            this.goalDTOTemp = new GoalDTO();
+            this.finalDateGoalTmp = "";
+            return "/dashboard?faces-redirect=true?";
         } else {
             Utils.throwMessage("Error");
             return "editGoal";

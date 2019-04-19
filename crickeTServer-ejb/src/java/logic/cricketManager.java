@@ -98,5 +98,10 @@ public class cricketManager implements cricketManagerLocal {
     public Future<Integer> getNextValueGoal(String email){
         return this.goalManager.getNextValueGoal(email);
     }
+
+    @Override
+    public GoalDTO findGoalDTOById(int id) {
+        return goalManager.findGoalDTOById(id);
+    }
     
 }

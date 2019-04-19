@@ -45,4 +45,6 @@ public interface cricketManagerLocal {
     
     Future<Integer> getNextValueGoal(String email);
     
+    GoalDTO findGoalDTOById(int id);
+
 }

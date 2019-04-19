@@ -19,8 +19,8 @@ and open the template in the editor.
             
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
-                <h3>#{bundle.CreateGoalTitle}</h3>
-                <p> #{bundle.CreateGoalDesc}</p>
+                <h3>#{bundle.EditGoalTitle}</h3>
+                <p> #{bundle.EditGoalDesc}</p>
             </ui:define>
 
 
@@ -70,7 +70,7 @@ and open the template in the editor.
                        
                             <br/>
                             <br/>
-                            <h:commandButton class ="btn btn-info" action="#{goalBean.processAddGoal}" value="#{bundle.AddGoal}"></h:commandButton>
+                            <h:commandButton class ="btn btn-info" action="#{goalBean.processEditGoal}" value="#{bundle.EditGoal}"></h:commandButton>
                         </h:form>
                     </div>
                     <div class="col-1"></div>
