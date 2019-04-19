@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date; 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import utils.Utils;
@@ -52,29 +54,7 @@ public class GoalBean implements Serializable{
     
     public List<GoalDTO> getAllGoals() {
         try {
-//            List<GoalDTO> goals = new ArrayList();
-//            
-//            GoalDTO goal = new GoalDTO();
-//            goal.setName("Goal example");
-//            goal.setDesc("goal desc");
-//            goal.setCurrentValue(12);
-//            goal.setTotalValue(20);
-//            goal.setType(Config.POSITIVE);
-//            goal.setStatus(Config.RECURRENT);            
-//            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
-//            Date finalDate = formatter.parse("17/04/2019");
-//            goal.setFinalDate(finalDate);
-//           
-//            /*EXEMPLO DE UTILIZACAO DESTE VALOR*/
-//            //goal.setFlag_order(nextValueOrderGoal.get());
-//            
-//            goals.add(goal);
-//            goals.add(goal);
-//
-//            return goals;
-
            return this.bridge.getCricket().selectAllGoalsFromAnUser(this.su.getEmail());
-
 
         } catch (Exception ex) {
             return new ArrayList();
@@ -86,7 +66,7 @@ public class GoalBean implements Serializable{
         boolean result = false;
            
         try {
-        
+            //convert the date from user
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date finalDateGoal;
             finalDateGoal = formatter.parse(this.finalDateGoalTmp);
@@ -96,12 +76,19 @@ public class GoalBean implements Serializable{
             Date logDate = Date.from(Instant.now());
             goalDTOTemp.setLogDate(logDate);
             
-        
-            System.out.println("" + goalDTOTemp);
-
-
+            //generate new value of flag order
+            FacesContext fc = FacesContext.getCurrentInstance();
+            String email = (String) fc.getExternalContext().getSessionMap().get("user");
+            nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
+            
+            //define the value of the flag_order
+            goalDTOTemp.setFlag_order(nextValueOrderGoal.get());
+            
+            //add goal
             result = bridge.getCricket().addGoal(goalDTOTemp);
-
+            
+            System.out.println("" + goalDTOTemp);
+            
             if(result)
             {
                 //Utils.throwMessage("Success Adding the New Goal");
@@ -113,9 +100,9 @@ public class GoalBean implements Serializable{
                 return "createGoal";
             }
 
-        } catch (ParseException ex) {
-            Logger.getLogger(GoalBean.class.getName()).log(Level.SEVERE, null, ex);
-            Utils.throwMessage("Error");
+        } catch (Exception ex)
+        {
+            Utils.throwMessage("Error: " + ex);
             return "createGoal";
         }
     }
