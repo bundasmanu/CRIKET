@@ -25,12 +25,7 @@ import javax.inject.Inject;
 @SessionScoped
 public class CategoryBean implements Serializable{
 
-    /**
-     * Creates a new instance of CategoryBean
-     */
-    
-    String name_c;
-    String desc_c;
+    CategoryDTO categoryDTO;
     
     @EJB
     BridgeLocal bridge;
@@ -47,8 +42,16 @@ public class CategoryBean implements Serializable{
     
     /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
     public String createCategory(){
+        this.categoryDTO = new CategoryDTO();
+
+        return "createCategory";
+    }
+    
+    public String processAddCategory(){
         
-//        try{
+        return "indexCategories";
+    
+        //        try{
 //            
 //            /*TENTATIVA DE CRIAR UMA CATEGORIA*/
 //            boolean return_create=this.bridge.getCricket().createCategory(this.name_c, this.desc_c);
@@ -64,28 +67,43 @@ public class CategoryBean implements Serializable{
 //            System.out.println(e.getMessage());
 //            return "index.xhtml";
 //        }
-        return "";
+    }
+    
+    public String editCategory(int idCategory){
+        this.categoryDTO = bridge.getCricket().findCategoryDTOById(idCategory);
+        
+        return "editCategory";
+    }
+    public String processEditCategory(){
+        
+        return "indexCategories";
     }
     
     /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
-    public String removeCategory(){
+    public String processRemoveCategory(int id){
         
-        try{
-            
-            /*TENTATIVA DE REMOVER UMA CATEGORIA*/
-            boolean return_remove=this.bridge.getCricket().removeCategory(s.getEmail(),this.name_c);
-            
-            if(return_remove==false){
+        return "indexCategories";
+
+        /*
+        
+            try{
+
+                //TENTATIVA DE REMOVER UMA CATEGORIA
+                boolean return_remove=this.bridge.getCricket().removeCategory(s.getEmail(),this.name_c);
+
+                if(return_remove==false){
+                    return "index.xhtml";
+                }
+
+                return "dashboard.xhtml";
+
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
                 return "index.xhtml";
             }
-            
-            return "dashboard.xhtml";
-            
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            return "index.xhtml";
-        }
+        
+        */
         
     }
     
@@ -98,6 +116,14 @@ public class CategoryBean implements Serializable{
         List<CategoryDTO> list = bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
         
         return list;
+    }
+
+    public CategoryDTO getCategoryDTO() {
+        return categoryDTO;
+    }
+
+    public void setCategoryDTO(CategoryDTO categoryDTO) {
+        this.categoryDTO = categoryDTO;
     }
     
     
