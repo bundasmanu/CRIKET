@@ -76,16 +76,16 @@ public class GoalBean implements Serializable{
             Date logDate = Date.from(Instant.now());
             goalDTOTemp.setLogDate(logDate);
             
-            //generate new value of flag order
-            FacesContext fc = FacesContext.getCurrentInstance();
-            String email = (String) fc.getExternalContext().getSessionMap().get("user");
-            nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
-            
             //define the value of the flag_order
             goalDTOTemp.setFlag_order(nextValueOrderGoal.get());
             
             //add goal
             result = bridge.getCricket().addGoal(goalDTOTemp);
+            
+            //generate new value of flag order
+            FacesContext fc = FacesContext.getCurrentInstance();
+            String email = (String) fc.getExternalContext().getSessionMap().get("user");
+            nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
             
             System.out.println("" + goalDTOTemp);
             

@@ -96,6 +96,9 @@ public class CategoryBean implements Serializable{
         String emailOfLoggedUser = (String) fc.getExternalContext().getSessionMap().get("user");
         
         List<CategoryDTO> list = bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
+        
+        System.out.println("AllCategoriesFromLoggedUser: " + list);
+        
         return list;
     }
     
