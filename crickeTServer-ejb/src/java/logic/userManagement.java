@@ -108,12 +108,13 @@ public class userManagement implements userManagementLocal {
             Utilizador exist=this.user.findByEmail(email);
             
             if(exist==null){
-                return new AsyncResult<>(-1);
+                return new AsyncResult<>(-2);
             }
             
             Collection<Category> catCollect=exist.getCategoryCollection();
             
             if(catCollect.isEmpty()==true){
+                 System.out.println("\n\n\n\nEntrou\n");
                 return new AsyncResult<>(1);/*SENAO EXISTIR NENHUM OBJETIVO, O PRIMEIRO VALOR DE ORDEM DO OBJETIVO É 1*/
             }
             

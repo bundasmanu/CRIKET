@@ -92,21 +92,31 @@ public class goalManagement implements goalManagementLocal {
     public boolean createGoal(GoalDTO newGoalDTO) {
 
         try {
-            Category categoryTmp=this.ca.find(newGoalDTO.getIdCategory());
+            //verify if this goal exists with the same name
+            Category cTmp = this.ca.find(newGoalDTO.getIdCategory());
             
-            if (categoryTmp==null) {
+
+            if (cTmp == null) {
                 return false;
             }
             
             //if the category has goals...
-            if(!categoryTmp.getGoalCollection().isEmpty()){
-                for(Goal goalTmp: categoryTmp.getGoalCollection())
+            if(!cTmp.getGoalCollection().isEmpty()){
+                for(Goal goalTmp: cTmp.getGoalCollection())
                 {
                     if(goalTmp.getNome().equals(newGoalDTO.getName()))
                         return false;
                 }
             }
-
+            
+            if(cTmp.getGoalCollection().isEmpty()==false){
+                for(Goal g : cTmp.getGoalCollection()){
+                    if(g.getNome().equals(newGoalDTO.getName())==true){
+                        return false;
+                    }
+                }
+            }
+            
             Goal newGoal = new Goal();
             newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
             newGoal.setDescript(newGoalDTO.getDesc());
@@ -119,15 +129,15 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setStatus(newGoalDTO.getStatus());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
             newGoal.setFrequency(newGoalDTO.getFrequency());
-            newGoal.setIdCategory(categoryTmp);
+            newGoal.setIdCategory(cTmp);
 
             //persist on database the respective goal
             //this.goal.create(newGoal);
 
             
-            categoryTmp.getGoalCollection().add(newGoal);
+            cTmp.getGoalCollection().add(newGoal);
             
-            categoryManagement.save(categoryTmp);
+            categoryManagement.save(cTmp);
             
             return true;
 
@@ -209,7 +219,7 @@ public class goalManagement implements goalManagementLocal {
             Utilizador u=this.ut.findByEmail(email);
             
             if(u==null){
-                return new AsyncResult<>(-1);
+                return new AsyncResult<>(-2);
             }
             
             /*VERIFICAR SE JA EXISTEM GOALS PARA ESSE USER*/

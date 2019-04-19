@@ -32,17 +32,19 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> implements Util
     
     @Override
     public Utilizador findByEmail(String email) {
-        
-        Utilizador verifica_encontrado=null;
-        try{
-            Query qu= this.em.createNamedQuery("Utilizador.findByEmail");
+
+        Utilizador verifica_encontrado = null;
+        try {
+            Query qu = this.em.createNamedQuery("Utilizador.findByEmail");
             qu.setParameter("email", email);
-            verifica_encontrado= (Utilizador) qu.getSingleResult();
-        }catch(Exception e){
-            System.out.println(""+e.getMessage());
+            verifica_encontrado = (Utilizador) qu.getSingleResult();
+
+            return verifica_encontrado;
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
             return null;
+        }
     }
-        return verifica_encontrado;
-    }
-    
+
 }

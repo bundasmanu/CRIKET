@@ -93,15 +93,17 @@ public class GoalBean implements Serializable{
             //add goal
             result = bridge.getCricket().addGoal(goalDTOTemp);
             
-            //generate new value of flag order
-            FacesContext fc = FacesContext.getCurrentInstance();
-            String email = (String) fc.getExternalContext().getSessionMap().get("user");
-            nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
+
             
             System.out.println("" + goalDTOTemp);
             
             if(result)
             {
+                
+                //generate new value of flag order
+                FacesContext fc = FacesContext.getCurrentInstance();
+                String email = (String) fc.getExternalContext().getSessionMap().get("user");
+                nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
                 
                 /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
                 this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());

@@ -26,6 +26,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -54,10 +55,12 @@ public class SessionBean implements Serializable {
     @EJB
     private BridgeLocal bridge;
     
+    @Inject
+    GoalBean gg;
+    
     public SessionBean() {
         // do nothing
     }
-    
     
     private void setOrderFlag(FacesContext context){
         /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
@@ -67,7 +70,8 @@ public class SessionBean implements Serializable {
                             "#{goalBean}", GoalBean.class);
 
         GoalBean goalBean = (GoalBean)vex.getValue(context.getELContext());
-        goalBean.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
+        this.gg=goalBean;
+        this.gg.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
     }
     
     public String processSignIn() {
