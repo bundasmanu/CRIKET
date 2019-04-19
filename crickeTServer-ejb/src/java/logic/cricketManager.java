@@ -104,4 +104,14 @@ public class cricketManager implements cricketManagerLocal {
         return goalManager.findGoalDTOById(id);
     }
     
+    @Override
+    public boolean increaseCurrentValue(GoalDTO goal){
+        return this.goalManager.increaseCurrentValue(goal);
+    }
+    
+    @Override
+    public boolean decreaseCurrentValue(GoalDTO goal){
+        return this.goalManager.decreaseCurrentValue(goal);
+    }
+    
 }

@@ -164,22 +164,9 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setStatus(editGoalDTO.getStatus());
             goalToEdit.setTotalvalue(editGoalDTO.getTotalValue());
 
-            System.out.println("\n\n\n goalToEdit.getIdCategory().getNome(): " + goalToEdit.getIdCategory().getNome());
-            System.out.println("\n\n\n cat.getNome(): " + cat.getNome());
-            
-
-            //if the user selected anoter category (can comparing with name because name is unique)
-            //
-            //TODO: error changing category
-            //
                 
                 goalToEdit.setIdCategory(cat);
-                
-                for(Goal g : cat.getGoalCollection()){
-                    if(g.getIdGoal().equals(goalToEdit.getIdGoal())==true){
-                        g=goalToEdit;
-                    }
-                }
+              
             
                 categoryManagement.save(cat);
                 
@@ -281,5 +268,58 @@ public class goalManagement implements goalManagementLocal {
         return DTOFactory.getGoalDTO(goalTmp);
     }
     
+    @Override
+    public boolean increaseCurrentValue(GoalDTO goal){
+        
+        try{
+            
+            Goal goalI=this.goal.find(goal.getId_goal());
+            Category catI=this.ca.find(goal.getIdCategory());
+            
+            if(goalI==null || catI==null){
+                return false;
+            }
+            
+            goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
+            
+            this.ca.edit(catI);
+            
+            this.goal.edit(goalI);
+            
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+    }
+    
+    @Override
+    public boolean decreaseCurrentValue(GoalDTO goal){
+             
+        try{
+            
+            Goal goalI=this.goal.find(goal.getId_goal());
+            Category catI=this.ca.find(goal.getIdCategory());
+            
+            if(goalI==null || catI==null){
+                return false;
+            }
+            
+            goalI.setCurrentvalue(goalI.getCurrentvalue()-1);
+            
+            this.ca.edit(catI);
+            
+            this.goal.edit(goalI);
+            
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+    }
 
 }

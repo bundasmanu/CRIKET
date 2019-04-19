@@ -28,4 +28,9 @@ public interface goalManagementLocal {
     Future<Integer> getNextValueGoal(String email);
     
     GoalDTO findGoalDTOById(int id);
+    
+    boolean increaseCurrentValue(GoalDTO goal);
+    
+    boolean decreaseCurrentValue(GoalDTO goal);
+    
 }
