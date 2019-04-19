@@ -282,7 +282,7 @@ public class goalManagement implements goalManagementLocal {
             
             goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
             
-            this.ca.edit(catI);
+            this.ca.edit(catI); 
             
             this.goal.edit(goalI);
             
