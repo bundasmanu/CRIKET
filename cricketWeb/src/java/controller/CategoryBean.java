@@ -97,8 +97,6 @@ public class CategoryBean implements Serializable{
         
         List<CategoryDTO> list = bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
         
-        System.out.println("AllCategoriesFromLoggedUser: " + list);
-        
         return list;
     }
     

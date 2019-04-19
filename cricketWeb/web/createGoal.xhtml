@@ -46,9 +46,9 @@ and open the template in the editor.
                             
                             
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
-                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.categoryDTO}" converter="categoryDTOConverter">
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}">
                                 <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryDTO"
-                                               itemValue="#{categoryDTO}"
+                                               itemValue="#{categoryDTO.idCategory}"
                                                itemLabel="#{categoryDTO.nome}"/>
                             </h:selectOneMenu>
                             

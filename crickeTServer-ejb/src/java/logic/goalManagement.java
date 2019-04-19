@@ -91,9 +91,9 @@ public class goalManagement implements goalManagementLocal {
         try {
             //verify if this goal exists with the same name
             Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
-            Category cTmp=this.ca.find(newGoalDTO.getIdCategory());
+            Category categoryTmp=this.ca.find(newGoalDTO.getIdCategory());
             
-            if (goalTmp != null || cTmp==null) {
+            if (goalTmp != null || categoryTmp==null) {
                 return false;
             }
 
@@ -110,11 +110,16 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
             
-            newGoal.setIdCategory(cTmp);
+            newGoal.setIdCategory(categoryTmp);
 
             //persist on database the respective goal
-            this.goal.create(newGoal);
+            //this.goal.create(newGoal);
 
+            
+            categoryTmp.getGoalCollection().add(newGoal);
+            
+            categoryManagement.save(categoryTmp);
+            
             return true;
 
         } catch (Exception e) {

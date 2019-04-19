@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.el.ValueExpression;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -53,9 +54,6 @@ public class SessionBean implements Serializable {
     @EJB
     private BridgeLocal bridge;
     
-    @Inject
-    private GoalBean goal;
-    
     public SessionBean() {
         // do nothing
     }
@@ -71,8 +69,13 @@ public class SessionBean implements Serializable {
             context.getExternalContext().getSessionMap().put("user", email);
             
             /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
-            goal.nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
-            
+            ValueExpression vex =
+                context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(),
+                                "#{goalBean}", GoalBean.class);
+
+            GoalBean goalBean = (GoalBean)vex.getValue(context.getELContext());
+            goalBean.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
             
             return "dashboard?faces-redirect=true";
         }
@@ -105,17 +108,6 @@ public class SessionBean implements Serializable {
         try{              
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date birth = formatter.parse(this.birthTmp);
-            
-            /*
-            System.out.println("\n\n\n\n\n ---------");
-            System.out.println("" + email);
-            System.out.println("" + clientName);
-            System.out.println("" + password);
-            System.out.println("" + birthTmp);
-            System.out.println("" + birth);
-            System.out.println("" + gender);
-            */
-
             return bridge.getCricket().signUp(clientName, password, email, gender, birth);
         }
         catch(Exception e){

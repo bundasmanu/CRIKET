@@ -76,6 +76,9 @@ public class GoalBean implements Serializable{
             Date logDate = Date.from(Instant.now());
             goalDTOTemp.setLogDate(logDate);
             
+            
+            System.out.println("\n\n\nnextValueOrderGoal: " + nextValueOrderGoal);
+
             //define the value of the flag_order
             goalDTOTemp.setFlag_order(nextValueOrderGoal.get());
             
@@ -103,6 +106,7 @@ public class GoalBean implements Serializable{
         } catch (Exception ex)
         {
             Utils.throwMessage("Error: " + ex);
+            System.out.println("ERROR: " + ex);
             return "createGoal";
         }
     }

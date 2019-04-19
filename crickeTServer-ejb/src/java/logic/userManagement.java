@@ -130,6 +130,7 @@ public class userManagement implements userManagementLocal {
             /*OBTENCAO DO VALOR MAXIMO DE GOAL*/
             Integer maxV = Collections.max(OrderValues);
             
+            System.out.println("\n\n\n\n\n New Next Value From Goal Order: " + (maxV + 1));
             return new AsyncResult<>(maxV+1);
             
         }

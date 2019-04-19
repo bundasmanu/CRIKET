@@ -211,5 +211,15 @@ public class categoryManagement implements categoryManagementLocal {
         Category category = cat.find(id);
         return category;
     }
+
+    @Override
+    public boolean save(Category category) {
+        try{
+            cat.edit(category);
+            return true;
+        }catch(Exception e){
+            return false;
+        }        
+    }
     
 }
