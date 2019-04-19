@@ -64,7 +64,6 @@ public class DTOFactory{
             goalDTO.setName(goal.getNome());
             goalDTO.setDesc(goal.getDescript());
             goalDTO.setFavorite(goal.getFavorite());
-            goalDTO.setType(goal.getTipo());
             goalDTO.setFinalDate(goal.getFinaldate());
             goalDTO.setTotalValue(goal.getTotalvalue());
             goalDTO.setCurrentValue(goal.getCurrentvalue());
@@ -73,6 +72,7 @@ public class DTOFactory{
             goalDTO.setFlag_order(goal.getFlagOrder());
             goalDTO.setId_goal(goal.getIdGoal());
             goalDTO.setStatus(goal.getStatus());
+            goalDTO.setFrequency(goal.getFrequency());
         
         return goalDTO;
             

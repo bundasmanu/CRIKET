@@ -21,10 +21,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.el.ValueExpression;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -54,12 +56,23 @@ public class SessionBean implements Serializable {
     private BridgeLocal bridge;
     
     @Inject
-    private GoalBean goal;
+    GoalBean gg;
     
     public SessionBean() {
         // do nothing
     }
     
+    private void setOrderFlag(FacesContext context){
+        /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
+        ValueExpression vex =
+            context.getApplication().getExpressionFactory()
+                    .createValueExpression(context.getELContext(),
+                            "#{goalBean}", GoalBean.class);
+
+        GoalBean goalBean = (GoalBean)vex.getValue(context.getELContext());
+        this.gg=goalBean;
+        this.gg.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
+    }
     
     public String processSignIn() {
         
@@ -70,10 +83,7 @@ public class SessionBean implements Serializable {
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
             
-            /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
-            goal.nextValueOrderGoal=this.bridge.getCricket().getNextValueFromGoalOrder(email);
-            
-            goal.idGoal=this.bridge.getCricket().getNextValueGoal(email);
+            setOrderFlag(context);
             
             return "dashboard?faces-redirect=true";
         }
@@ -92,6 +102,7 @@ public class SessionBean implements Serializable {
         
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
+            setOrderFlag(context);
             return "dashboard?faces-redirect=true";
         }
         else
@@ -106,17 +117,6 @@ public class SessionBean implements Serializable {
         try{              
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date birth = formatter.parse(this.birthTmp);
-            
-            /*
-            System.out.println("\n\n\n\n\n ---------");
-            System.out.println("" + email);
-            System.out.println("" + clientName);
-            System.out.println("" + password);
-            System.out.println("" + birthTmp);
-            System.out.println("" + birth);
-            System.out.println("" + gender);
-            */
-
             return bridge.getCricket().signUp(clientName, password, email, gender, birth);
         }
         catch(Exception e){

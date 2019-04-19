@@ -24,5 +24,6 @@ public interface categoryManagementLocal {
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
     public CategoryDTO findCategoryDTOById(Integer id);
     public Category findCategoryById(Integer id);
+    public boolean save(Category category);
 
 }

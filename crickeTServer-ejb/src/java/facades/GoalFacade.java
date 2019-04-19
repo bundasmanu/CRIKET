@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Stateless
 public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal {
@@ -29,7 +29,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
     public GoalFacade() {
         super(Goal.class);
     }
-
+    
     @Override
     public Goal findByName(String name_goal) {
         Goal verifica_encontrado=null;
@@ -40,7 +40,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         }catch(Exception e){
             System.out.println(""+e.getMessage());
             return null;
-        }
+    }
         return verifica_encontrado;
     }
     

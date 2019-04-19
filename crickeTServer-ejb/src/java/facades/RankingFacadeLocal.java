@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Local
 public interface RankingFacadeLocal {
@@ -27,7 +27,7 @@ public interface RankingFacadeLocal {
     List<Ranking> findAll();
 
     List<Ranking> findRange(int[] range);
-    
+
     Ranking findByName(String name);
     
     List<Ranking> findMultipleNames(List<String> x);

@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Stateless
 public class RankingFacade extends AbstractFacade<Ranking> implements RankingFacadeLocal {

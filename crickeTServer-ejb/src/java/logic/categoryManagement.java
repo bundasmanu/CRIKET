@@ -58,8 +58,9 @@ public class categoryManagement implements categoryManagementLocal {
             Category exist=new Category(name, desc);
             exist.setIdUser(exist_user); 
             
-            this.cat.create(exist);
+            //this.cat.create(exist);
             /*PARA APARECER AS CATEGORIAS DE SEGUIDA*/
+            exist_user.getCategoryCollection().add(exist);
             this.user.edit(exist_user);
             
             return true;
@@ -170,27 +171,28 @@ public class categoryManagement implements categoryManagementLocal {
     @Override
     public List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser) {
         
-               try{
+        try{
             
             /*VERIFICAR PRIMEIRO SE EXISTE O UTILIZADOR*/
             Utilizador u=this.user.findByEmail(emailOfLoggedUser);
             
             if(u==null){
-                return null;
+                return new ArrayList<>();
             }
             
-            List<CategoryDTO> listaCategorias=new ArrayList<CategoryDTO>();
+            List<CategoryDTO> categoryList=new ArrayList<CategoryDTO>();
             
             if(u.getCategoryCollection().isEmpty()==true){
-                return null;
+                return new ArrayList<>();
             }
             
             for(Category c : u.getCategoryCollection()){
                 /*LA DENTRO JA FAZ O SET DOS GOALS*/
                 CategoryDTO x=DTOFactory.getCategoryDTO(c);
+                categoryList.add(x);
             }
             
-            return listaCategorias;
+            return categoryList;
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -213,6 +215,16 @@ public class categoryManagement implements categoryManagementLocal {
     public Category findCategoryById(Integer id) {
         Category category = cat.find(id);
         return category;
+    }
+
+    @Override
+    public boolean save(Category category) {
+        try{
+            cat.edit(category);
+            return true;
+        }catch(Exception e){
+            return false;
+        }        
     }
     
 }

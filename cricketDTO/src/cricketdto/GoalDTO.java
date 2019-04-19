@@ -18,7 +18,7 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     int id_goal;
     String name;
     String desc;
-    String type;
+    String frequency;
     String status;
     Date finalDate;
     int totalValue;
@@ -43,10 +43,6 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
 
     public String getDesc() {
         return desc;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getStatus() {
@@ -99,10 +95,6 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         this.desc = desc;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -142,6 +134,14 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
     }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
     
     /*COMPARACAO COM BASE NA FLAG DE ORDEM*/
     @Override
@@ -160,7 +160,6 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         hash = 59 * hash + this.id_goal;
         hash = 59 * hash + Objects.hashCode(this.name);
         hash = 59 * hash + Objects.hashCode(this.desc);
-        hash = 59 * hash + Objects.hashCode(this.type);
         hash = 59 * hash + Objects.hashCode(this.status);
         hash = 59 * hash + Objects.hashCode(this.finalDate);
         hash = 59 * hash + this.totalValue;
@@ -208,9 +207,6 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         if (!Objects.equals(this.desc, other.desc)) {
             return false;
         }
-        if (!Objects.equals(this.type, other.type)) {
-            return false;
-        }
         if (!Objects.equals(this.status, other.status)) {
             return false;
         }
@@ -225,7 +221,7 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
 
     @Override
     public String toString() {
-        return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", type=" + type + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
+        return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
     }
 
 }

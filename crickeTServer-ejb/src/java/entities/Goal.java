@@ -20,19 +20,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Entity
 @Table(name = "goal")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Goal.findAll", query = "SELECT g FROM Goal g")
     , @NamedQuery(name = "Goal.findByIdGoal", query = "SELECT g FROM Goal g WHERE g.idGoal = :idGoal")
     , @NamedQuery(name = "Goal.findByNome", query = "SELECT g FROM Goal g WHERE g.nome = :nome")
     , @NamedQuery(name = "Goal.findByDescript", query = "SELECT g FROM Goal g WHERE g.descript = :descript")
-    , @NamedQuery(name = "Goal.findByTipo", query = "SELECT g FROM Goal g WHERE g.tipo = :tipo")
+    , @NamedQuery(name = "Goal.findByFrequency", query = "SELECT g FROM Goal g WHERE g.frequency = :frequency")
     , @NamedQuery(name = "Goal.findByStatus", query = "SELECT g FROM Goal g WHERE g.status = :status")
     , @NamedQuery(name = "Goal.findByFinaldate", query = "SELECT g FROM Goal g WHERE g.finaldate = :finaldate")
     , @NamedQuery(name = "Goal.findByTotalvalue", query = "SELECT g FROM Goal g WHERE g.totalvalue = :totalvalue")
@@ -56,12 +58,11 @@ public class Goal implements Serializable {
     @Column(name = "descript")
     private String descript;
     @Basic(optional = false)
-    @Column(name = "tipo")
-    private String tipo;
+    @Column(name = "frequency")
+    private String frequency;
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
-    @Basic(optional = false)
     @Column(name = "finaldate")
     @Temporal(TemporalType.DATE)
     private Date finaldate;
@@ -95,13 +96,12 @@ public class Goal implements Serializable {
         this.idGoal = idGoal;
     }
 
-    public Goal(Integer idGoal, String nome, String descript, String tipo, String status, Date finaldate, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
+    public Goal(Integer idGoal, String nome, String descript, String frequency, String status, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
         this.idGoal = idGoal;
         this.nome = nome;
         this.descript = descript;
-        this.tipo = tipo;
+        this.frequency = frequency;
         this.status = status;
-        this.finaldate = finaldate;
         this.totalvalue = totalvalue;
         this.currentvalue = currentvalue;
         this.favorite = favorite;
@@ -134,12 +134,12 @@ public class Goal implements Serializable {
         this.descript = descript;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getFrequency() {
+        return frequency;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 
     public String getStatus() {

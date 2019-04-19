@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Local
 public interface UtilizadorFacadeLocal {
@@ -27,7 +27,7 @@ public interface UtilizadorFacadeLocal {
     List<Utilizador> findAll();
 
     List<Utilizador> findRange(int[] range);
-    
+
     Utilizador findByEmail(String email);
 
     int count();

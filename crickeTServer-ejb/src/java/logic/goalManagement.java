@@ -100,6 +100,15 @@ public class goalManagement implements goalManagementLocal {
                 return false;
             }
             
+            //if the category has goals...
+            if(!cTmp.getGoalCollection().isEmpty()){
+                for(Goal goalTmp: cTmp.getGoalCollection())
+                {
+                    if(goalTmp.getNome().equals(newGoalDTO.getName()))
+                        return false;
+                }
+            }
+            
             if(cTmp.getGoalCollection().isEmpty()==false){
                 for(Goal g : cTmp.getGoalCollection()){
                     if(g.getNome().equals(newGoalDTO.getName())==true){
@@ -118,14 +127,18 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setFlagOrder(newGoalDTO.getFlag_order());
             newGoal.setNome(newGoalDTO.getName());
             newGoal.setStatus(newGoalDTO.getStatus());
-            newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
-
+            newGoal.setFrequency(newGoalDTO.getFrequency());
             newGoal.setIdCategory(cTmp);
 
             //persist on database the respective goal
-            this.goal.create(newGoal);
+            //this.goal.create(newGoal);
 
+            
+            cTmp.getGoalCollection().add(newGoal);
+            
+            categoryManagement.save(cTmp);
+            
             return true;
 
         } catch (Exception e) {
@@ -158,7 +171,6 @@ public class goalManagement implements goalManagementLocal {
             goal.setLogdate(editGoalDTO.getLogDate());
             goal.setNome(editGoalDTO.getName());
             goal.setStatus(editGoalDTO.getStatus());
-            goal.setTipo(editGoalDTO.getType());
             goal.setTotalvalue(editGoalDTO.getTotalValue());
 
             this.goal.edit(goal);
@@ -207,7 +219,7 @@ public class goalManagement implements goalManagementLocal {
             Utilizador u=this.ut.findByEmail(email);
             
             if(u==null){
-                return new AsyncResult<>(-1);
+                return new AsyncResult<>(-2);
             }
             
             /*VERIFICAR SE JA EXISTEM GOALS PARA ESSE USER*/

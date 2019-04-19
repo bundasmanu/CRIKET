@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Local
 public interface CategoryFacadeLocal {
@@ -27,7 +27,7 @@ public interface CategoryFacadeLocal {
     List<Category> findAll();
 
     List<Category> findRange(int[] range);
-    
+
     Category findByName(String name);
     
     List<Category> findMultipleNames(List<String> x);

@@ -61,29 +61,7 @@ public class GoalBean implements Serializable{
     
     public List<GoalDTO> getAllGoals() {
         try {
-//            List<GoalDTO> goals = new ArrayList();
-//            
-//            GoalDTO goal = new GoalDTO();
-//            goal.setName("Goal example");
-//            goal.setDesc("goal desc");
-//            goal.setCurrentValue(12);
-//            goal.setTotalValue(20);
-//            goal.setType(Config.POSITIVE);
-//            goal.setStatus(Config.RECURRENT);            
-//            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
-//            Date finalDate = formatter.parse("17/04/2019");
-//            goal.setFinalDate(finalDate);
-//           
-//            /*EXEMPLO DE UTILIZACAO DESTE VALOR*/
-//            //goal.setFlag_order(nextValueOrderGoal.get());
-//            
-//            goals.add(goal);
-//            goals.add(goal);
-//
-//            return goals;
-
            return this.bridge.getCricket().selectAllGoalsFromAnUser(this.su.getEmail());
-
 
         } catch (Exception ex) {
             return new ArrayList();
@@ -95,25 +73,37 @@ public class GoalBean implements Serializable{
         boolean result = false;
            
         try {
-        
+            //convert the date from user
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date finalDateGoal;
-            finalDateGoal = formatter.parse(this.finalDateGoalTmp);
-             
-            goalDTOTemp.setFinalDate(finalDateGoal);
+            if(!finalDateGoalTmp.isEmpty())
+            {
+                finalDateGoal = formatter.parse(this.finalDateGoalTmp);
+                goalDTOTemp.setFinalDate(finalDateGoal);
+            }             
             
             Date logDate = Date.from(Instant.now());
             goalDTOTemp.setLogDate(logDate);
             
-        
-            System.out.println("" + goalDTOTemp);
+            System.out.println("\n\n\nnextValueOrderGoal: " + nextValueOrderGoal);
 
-
+            //define the value of the flag_order
+            goalDTOTemp.setFlag_order(nextValueOrderGoal.get());
+            
+            //add goal
             result = bridge.getCricket().addGoal(goalDTOTemp);
             
 
+            
+            System.out.println("" + goalDTOTemp);
+            
             if(result)
             {
+                
+                //generate new value of flag order
+                FacesContext fc = FacesContext.getCurrentInstance();
+                String email = (String) fc.getExternalContext().getSessionMap().get("user");
+                nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
                 
                 /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
                 this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());
@@ -127,9 +117,10 @@ public class GoalBean implements Serializable{
                 return "createGoal";
             }
 
-        } catch (ParseException ex) {
-            Logger.getLogger(GoalBean.class.getName()).log(Level.SEVERE, null, ex);
-            Utils.throwMessage("Error");
+        } catch (Exception ex)
+        {
+            Utils.throwMessage("Error: " + ex);
+            System.out.println("ERROR: " + ex);
             return "createGoal";
         }
     }
@@ -176,7 +167,7 @@ public class GoalBean implements Serializable{
     }
     
      public void reload() throws IOException{
-         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 
