@@ -71,6 +71,7 @@ create table GOAL (
    ID_CATEGORY          INT4                 not null,
    NOME                 VARCHAR(1024)        not null,
    DESCRIPT             VARCHAR(500)         not null,
+   FREQUENCY             VARCHAR(500)         not null,
    TIPO                 VARCHAR(1024)        not null,
    STATUS               VARCHAR(1024)        not null,
    FINALDATE            DATE                 not null,
