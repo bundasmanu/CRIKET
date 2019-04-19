@@ -33,4 +33,6 @@ public interface goalManagementLocal {
     
     boolean decreaseCurrentValue(GoalDTO goal);
     
+    boolean goalIsEnd(GoalDTO goal);
+    
 }

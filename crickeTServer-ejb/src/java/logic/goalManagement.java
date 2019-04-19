@@ -321,5 +321,49 @@ public class goalManagement implements goalManagementLocal {
         }
         
     }
+    
+    @Override
+    public boolean goalIsEnd(GoalDTO goal){
+        
+        try{
+            
+            /*VERIFICAR SE O GOAL EXISTE*/
+            Goal gT=this.goal.find(goal.getId_goal());
+            
+            /*PARA NAO CONFUNDIR O FALSE, DE NAO EXISTE COM ESTOIRO*/
+            if(gT==null){
+                throw new Exception();
+            }
+            
+            /*ACHO QUE ERA ASSIM O FORMATO QUE TINHAMOS*/
+            Date x= new SimpleDateFormat("dd/mm/yyyy").parse(new Date().toString());
+            
+            /*VERIFICAR O CURRENT VALUE, E AS DATA DE CONCLUSAO*/
+            if(gT.getCurrentvalue()>=gT.getTotalvalue() || isEnd(gT.getFinaldate(), x)==true){
+                return false;
+            }
+            
+            return true;
+            
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+    }
+    
+     public static boolean isEnd(Date date1,Date date2){
+         
+        if(date1.equals(date2)){
+            return true;
+        }
+         
+        if(date1.after(date2)){
+            return true;
+        }
+
+        return false;
+    }
 
 }

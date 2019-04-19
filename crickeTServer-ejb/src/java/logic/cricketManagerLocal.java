@@ -50,5 +50,7 @@ public interface cricketManagerLocal {
     boolean increaseCurrentValue(GoalDTO goal);
     
     boolean decreaseCurrentValue(GoalDTO goal);
-
+    
+    boolean goalIsEnd(GoalDTO goal);
+    
 }
