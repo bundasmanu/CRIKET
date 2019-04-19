@@ -67,7 +67,12 @@ public class GoalBean implements Serializable{
             return new ArrayList();
         }
     }
-    
+    public String addGoal()
+    {
+        this.goalDTOTemp = new GoalDTO();
+        this.finalDateGoalTmp = "";
+        return "createGoal";
+    }
     public String processAddGoal()
     {
         boolean result = false;

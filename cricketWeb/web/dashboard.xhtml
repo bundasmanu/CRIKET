@@ -61,15 +61,16 @@ and open the template in the editor.
                     </div>
                 </c:if>
 
-                <h:link outcome="createGoal">
-                    <img src="https://img.icons8.com/office/80/000000/plus-2-math.png"></img>
-                </h:link>
-                <br></br>
-                <br></br>
+                <h:form>
+                    <h:commandLink action="#{goalBean.addGoal}">
+                        <img src="https://img.icons8.com/office/80/000000/plus-2-math.png"></img>
+                    </h:commandLink>
 
-                <c:if test="#{not empty goalBean.allGoals}">
-                    <div class="container">
-                        <h:form>
+                    <br></br>
+                    <br></br>
+
+                    <c:if test="#{not empty goalBean.allGoals}">
+                        <div class="container">
                             <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
                                 <div class="row p-3 mb-2 bg-light text-dark">
                                     <div class="col-1"></div>
@@ -98,7 +99,7 @@ and open the template in the editor.
                                                 <h:commandLink action="#{goalBean.editGoal(goalTmp.id_goal)}">
                                                     <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
                                                 </h:commandLink>
-                                                <a data-toggle="modal" data-target="#removeGoalModal">
+                                                <a data-toggle="modal" data-target="#removeGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
                                                     <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
                                                 </a>
                                             </div>
@@ -107,39 +108,39 @@ and open the template in the editor.
                                     <div class="col-1"></div>
                                 </div>
                                 
+                                <!-- not efficient at all! Is rendering a modal to each goal. -->
                                 <!-- The Modal -->
-                                <div class="modal" id="removeGoalModal">
+                                <div class="modal" id="removeGoalModal#{goalTmp.id_goal}">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
 
-                                      <!-- Modal Header -->
-                                      <div class="modal-header">
-                                          <h4 class="modal-title">#{bundle.RemoveGoal}</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                      </div>
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                              <h4 class="modal-title">#{bundle.RemoveGoal}</h4>
+                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
 
-                                      <!-- Modal body -->
-                                      <div class="modal-body">
-                                        #{bundle.RemoveGoalDesc} <br></br> Goal which will be removed: #{goalTmp.name}
-                                      </div>
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                          #{bundle.RemoveGoalDesc} <br></br> Goal which will be removed: #{goalTmp.name}
+                                        </div>
 
-                                      <!-- Modal footer -->
-                                    <div class="modal-footer">
-
-                                        <h:commandLink action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}">
-                                            <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
-                                        </h:commandLink>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                                    </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <h:commandLink id="goalId" action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}">
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                            </h:commandLink>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>
                                     </div>
                                   </div>
                                 </div>
-                                
                             </ui:repeat>
-                        </h:form>
-                    </div>
-                </c:if>
+                        </div>
+                    </c:if>
+                </h:form>
             </ui:define>
         </ui:composition>
+        
     </body>
 </html>
