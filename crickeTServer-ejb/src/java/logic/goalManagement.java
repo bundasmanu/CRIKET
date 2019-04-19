@@ -92,12 +92,19 @@ public class goalManagement implements goalManagementLocal {
     public boolean createGoal(GoalDTO newGoalDTO) {
 
         try {
-            //verify if this goal exists with the same name
-            Goal goalTmp = this.goal.findByName(newGoalDTO.getName());
             Category categoryTmp=this.ca.find(newGoalDTO.getIdCategory());
             
-            if (goalTmp != null || categoryTmp==null) {
+            if (categoryTmp==null) {
                 return false;
+            }
+            
+            //if the category has goals...
+            if(!categoryTmp.getGoalCollection().isEmpty()){
+                for(Goal goalTmp: categoryTmp.getGoalCollection())
+                {
+                    if(goalTmp.getNome().equals(newGoalDTO.getName()))
+                        return false;
+                }
             }
 
             Goal newGoal = new Goal();
