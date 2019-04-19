@@ -58,8 +58,9 @@ public class categoryManagement implements categoryManagementLocal {
             Category exist=new Category(name, desc);
             exist.setIdUser(exist_user); 
             
-            this.cat.create(exist);
+            //this.cat.create(exist);
             /*PARA APARECER AS CATEGORIAS DE SEGUIDA*/
+            exist_user.getCategoryCollection().add(exist);
             this.user.edit(exist_user);
             
             return true;

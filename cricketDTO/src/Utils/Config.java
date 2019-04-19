@@ -18,6 +18,9 @@ public class Config {
     public static String POSITIVE = "POSITIVE";
     public static String NEGATIVE = "NEGATIVE";
     
-    
+    public static String DAILY = "DAILY";
+    public static String WEEKLY = "WEEKLY";
+    public static String MONTHLY = "MONTHLY";
+    public static String YEARLY = "YEARLY";
     
 }

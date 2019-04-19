@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Stateless
 public class TrophyFacade extends AbstractFacade<Trophy> implements TrophyFacadeLocal {

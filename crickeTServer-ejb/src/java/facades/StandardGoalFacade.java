@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Stateless
 public class StandardGoalFacade extends AbstractFacade<StandardGoal> implements StandardGoalFacadeLocal {

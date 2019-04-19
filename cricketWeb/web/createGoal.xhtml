@@ -58,6 +58,16 @@ and open the template in the editor.
                                 <f:selectItem itemValue="NON_RECURRING" itemLabel="Non Recurrent" />
                             </h:selectOneRadio>
                             
+                            <h:outputText value="#{bundle.GoalFrequency}"/><br/>
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.frequency}">
+                                <f:selectItem  itemValue="NEVER" itemLabel="Never" />
+                                <f:selectItem  itemValue="DAILY" itemLabel="Daily" />
+                                <f:selectItem  itemValue="WEEKLY" itemLabel="Weekly" />
+                                <f:selectItem  itemValue="MONTHLY" itemLabel="Monthly" />
+                                <f:selectItem  itemValue="YEARLY" itemLabel="Yearly" />
+                            </h:selectOneMenu>
+                            <br/>
+                            
                             <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
                             <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
                             

@@ -73,6 +73,7 @@ public class DTOFactory{
             goalDTO.setFlag_order(goal.getFlagOrder());
             goalDTO.setId_goal(goal.getIdGoal());
             goalDTO.setStatus(goal.getStatus());
+            goalDTO.setFrequency(goal.getFrequency());
         
         return goalDTO;
             

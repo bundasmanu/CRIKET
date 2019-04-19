@@ -59,6 +59,17 @@ public class SessionBean implements Serializable {
     }
     
     
+    private void setOrderFlag(FacesContext context){
+        /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
+        ValueExpression vex =
+            context.getApplication().getExpressionFactory()
+                    .createValueExpression(context.getELContext(),
+                            "#{goalBean}", GoalBean.class);
+
+        GoalBean goalBean = (GoalBean)vex.getValue(context.getELContext());
+        goalBean.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
+    }
+    
     public String processSignIn() {
         
         FacesContext context = FacesContext.getCurrentInstance();
@@ -68,14 +79,7 @@ public class SessionBean implements Serializable {
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
             
-            /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
-            ValueExpression vex =
-                context.getApplication().getExpressionFactory()
-                        .createValueExpression(context.getELContext(),
-                                "#{goalBean}", GoalBean.class);
-
-            GoalBean goalBean = (GoalBean)vex.getValue(context.getELContext());
-            goalBean.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
+            setOrderFlag(context);
             
             return "dashboard?faces-redirect=true";
         }
@@ -94,6 +98,7 @@ public class SessionBean implements Serializable {
         
         if(result){    
             context.getExternalContext().getSessionMap().put("user", email);
+            setOrderFlag(context);
             return "dashboard?faces-redirect=true";
         }
         else

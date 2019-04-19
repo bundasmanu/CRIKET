@@ -112,7 +112,7 @@ public class goalManagement implements goalManagementLocal {
             newGoal.setStatus(newGoalDTO.getStatus());
             newGoal.setTipo(newGoalDTO.getType());
             newGoal.setTotalvalue(newGoalDTO.getTotalValue());
-            
+            newGoal.setFrequency(newGoalDTO.getFrequency());
             newGoal.setIdCategory(categoryTmp);
 
             //persist on database the respective goal

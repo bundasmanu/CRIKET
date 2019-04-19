@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Local
 public interface StandardGoalFacadeLocal {

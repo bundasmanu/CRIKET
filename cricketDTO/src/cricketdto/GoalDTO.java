@@ -18,6 +18,7 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
     int id_goal;
     String name;
     String desc;
+    String frequency;
     String type;
     String status;
     Date finalDate;
@@ -141,6 +142,14 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
 
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
     
     /*COMPARACAO COM BASE NA FLAG DE ORDEM*/

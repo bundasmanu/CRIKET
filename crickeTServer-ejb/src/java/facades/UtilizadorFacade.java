@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author gustavo
+ * @author bruno
  */
 @Stateless
 public class UtilizadorFacade extends AbstractFacade<Utilizador> implements UtilizadorFacadeLocal {
@@ -41,7 +41,7 @@ public class UtilizadorFacade extends AbstractFacade<Utilizador> implements Util
         }catch(Exception e){
             System.out.println(""+e.getMessage());
             return null;
-        }
+    }
         return verifica_encontrado;
     }
     
