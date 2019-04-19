@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+        <ui:define name="title">TODO supply a title </ui:define>
+    </h:head>
+    <h:body>
+        <ui:composition template = "template.xhtml">
+            
+            <ui:define name = "containerTitle">
+                <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
+                <h3>#{bundle.EditGoalTitle}</h3>
+                <p> #{bundle.EditGoalDesc}</p>
+            </ui:define>
+
+
+            <ui:define name = "containerContent">
+                
+                <div class="row p-3 mb-2 bg-light text-dark">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <h:form>
+                            <h:messages />
+
+                            <h:outputText value="#{bundle.GoalName}"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.name}" required="true" styleClass = "form-control"/><br/>
+                            
+                            <h:outputText value="#{bundle.GoalDescription}"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.desc}" required="true" styleClass = "form-control" /><br/>
+                            
+                            <h:outputText value="#{bundle.GoalStatus}"/><br/>
+                            <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
+                                <f:selectItem  itemValue="POSITIVE" itemLabel="Positive" />
+                                <f:selectItem itemValue="NEGATIVE" itemLabel="Negative" />
+                            </h:selectOneRadio>
+                            
+                            <h:outputText value="#{bundle.GoalCategory}"/><br/>
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}" styleClass = "form-control">
+                                <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryDTO"
+                                               itemValue="#{categoryDTO.idCategory}"
+                                               itemLabel="#{categoryDTO.nome}"/>
+                            </h:selectOneMenu>
+                            <br/>
+                            
+                            <h:outputText value="#{bundle.GoalFrequency}"/><br/>
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.frequency}" styleClass = "form-control">
+                                <f:selectItem  itemValue="NEVER" itemLabel="Never" />
+                                <f:selectItem  itemValue="DAILY" itemLabel="Daily" />
+                                <f:selectItem  itemValue="WEEKLY" itemLabel="Weekly" />
+                                <f:selectItem  itemValue="MONTHLY" itemLabel="Monthly" />
+                                <f:selectItem  itemValue="YEARLY" itemLabel="Yearly" />
+                            </h:selectOneMenu>
+                            <br/>
+                            
+                            <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
+                            <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker"></h:inputText><br/>
+                            
+                            <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size="" styleClass = "form-control"></h:inputText><br/>
+                       
+                            <br/>
+                            <br/>
+                            <h:commandButton class ="btn btn-info" action="#{goalBean.processEditGoal}" value="#{bundle.EditGoal}"></h:commandButton>
+                        </h:form>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

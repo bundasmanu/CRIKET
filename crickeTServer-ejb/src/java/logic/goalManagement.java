@@ -244,6 +244,15 @@ public class goalManagement implements goalManagementLocal {
         }
         
     }
+
+    @Override
+    public GoalDTO findGoalDTOById(int id) {
+        Goal goalTmp = goal.find(id);
+        
+        if(goalTmp == null)
+            return null;
+        return DTOFactory.getGoalDTO(goalTmp);
+    }
     
 
 }

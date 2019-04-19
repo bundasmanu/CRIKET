@@ -105,9 +105,10 @@ public class GoalBean implements Serializable{
                 
                 /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
                 this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());
-                
+                this.goalDTOTemp = null;
+                this.finalDateGoalTmp = null;
                 //Utils.throwMessage("Success Adding the New Goal");
-                return "dashboard?faces-redirect=true";
+                return "dashboard?faces-redirect=true?";
             }
             else
             {
@@ -145,19 +146,29 @@ public class GoalBean implements Serializable{
     }
     
     
+    public String editGoal(int idGoal){
+        
+        goalDTOTemp = bridge.getCricket().findGoalDTOById(idGoal);
+        
+        if(goalDTOTemp == null)
+        {
+            Utils.throwMessage("Error. Couln't find the goal.");
+            return "dashboard";
+        }
+        return "editGoal";
+    }
+    
     public String processEditGoal(){
         
         boolean result = false;
 
         System.out.println("" + goalDTOTemp);
         
-        //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
-        //depois mudo isto para o método do getidgoal().
-        //vou ver como faço o reload para ele remover automaticamente 
         result = bridge.getCricket().editGoal(goalDTOTemp);
         if (result) {
-            //Utils.throwMessage("Success Adding the New Goal");
-            return "/index.xhtml?faces-redirect=true?";
+            this.goalDTOTemp = null;
+            this.finalDateGoalTmp = null;
+            return "/dashboard?faces-redirect=true?";
         } else {
             Utils.throwMessage("Error");
             return "editGoal";
