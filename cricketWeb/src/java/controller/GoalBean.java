@@ -138,11 +138,11 @@ public class GoalBean implements Serializable{
         if (result) {           
 
             //Utils.throwMessage("Success Adding the New Goal");
-            return "/index.xhtml?faces-redirect=true?";
+            return "/index?faces-redirect=true?";
             
         } else {
             Utils.throwMessage("Error");
-            return "removeGoal";
+            return "dashboard";
         }
 
     }

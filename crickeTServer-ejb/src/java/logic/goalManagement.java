@@ -198,7 +198,11 @@ public class goalManagement implements goalManagementLocal {
             if (g == null) {
                 return false;
             }
-
+            
+            Category category = g.getIdCategory();
+            category.getGoalCollection().remove(g);
+            categoryManagement.save(category);
+            
             //remove the goal
             this.goal.remove(g);
             return true;
