@@ -74,7 +74,7 @@ create table GOAL (
    FREQUENCY             VARCHAR(500)         not null,
    TIPO                 VARCHAR(1024)        not null,
    STATUS               VARCHAR(1024)        not null,
-   FINALDATE            DATE                 not null,
+   FINALDATE            DATE                 ,
    TOTALVALUE           INT4                 not null,
    CURRENTVALUE         INT4                 not null,
    FAVORITE             BOOL                 not null,
