@@ -58,7 +58,7 @@ public class categoryManagement implements categoryManagementLocal {
             Category exist=new Category(name, desc);
             exist.setIdUser(exist_user); 
             
-            //this.cat.create(exist);
+            this.cat.create(exist);
             /*PARA APARECER AS CATEGORIAS DE SEGUIDA*/
             exist_user.getCategoryCollection().add(exist);
             this.user.edit(exist_user);
@@ -125,12 +125,14 @@ public class categoryManagement implements categoryManagementLocal {
             if(c==null){
                 return false;
             }
-            
+           
             Category ca=this.cat.find(c.getIdCategory());
             
             if(ca==null){
                 return false;
             }
+            
+            /*ESTOU A ALTERAR A PROPRIA REFERENCIA, LOGO BASTA FAZER EDIT DO UTILIZADOR, QUE A CATEGORIA JA ESTA EDITADA*/
             
             if(ca.getDescript().equals(c.getDescript())==false){
                 ca.setDescript(c.getDescript());
