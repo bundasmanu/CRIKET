@@ -27,6 +27,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.Future;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
@@ -47,12 +50,12 @@ public class goalManagement implements goalManagementLocal {
 
     @EJB
     categoryManagementLocal categoryManagement;
-    
+
     @EJB
     CategoryFacadeLocal ca;
-    
-    private DTOFactory dt= new DTOFactory();
-    
+
+    private DTOFactory dt = new DTOFactory();
+
     @Override
     public List<GoalDTO> selectAllGoalsFromAnUser(String email) {
 
@@ -134,10 +137,10 @@ public class goalManagement implements goalManagementLocal {
 
         try {
             Goal goal = this.goal.find(editGoalDTO.getId_goal());
-            
-            Category cat=this.ca.find(editGoalDTO.getIdCategory());
-            
-            if (goal != null && cat!=null) {
+
+            Category cat = this.ca.find(editGoalDTO.getIdCategory());
+
+            if (goal != null && cat != null) {
                 return false;
             }
 
@@ -156,7 +159,7 @@ public class goalManagement implements goalManagementLocal {
             goal.setTotalvalue(editGoalDTO.getTotalValue());
 
             this.goal.edit(goal);
-             
+
             return true;
         } catch (Exception e) {
             System.out.println("Mensagem: " + e.getMessage());
@@ -164,5 +167,78 @@ public class goalManagement implements goalManagementLocal {
             return false;
         }
     }
+
+    @Override
+    public boolean removeGoal(String email, Integer id) {
+        try {
+            //find user
+            Utilizador u = this.ut.findByEmail(email);
+            if (u == null) {
+                return false;
+            }
+
+            //find goal by id
+            Goal g = this.goal.find(id);
+
+            if (g == null) {
+                return false;
+            }
+
+            //remove the goal
+            this.goal.remove(g);
+            return true;
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+            return false;
+        }
+
+    }
+    
+    @Asynchronous
+    @Override
+    public Future<Integer> getNextValueGoal(String email){
+        
+        try{
+            
+            /*VERIFICAR INICIALMENTE SE O UTILIZADOR EXISTE*/
+            Utilizador u=this.ut.findByEmail(email);
+            
+            if(u==null){
+                return new AsyncResult<>(-1);
+            }
+            
+            /*VERIFICAR SE JA EXISTEM GOALS PARA ESSE USER*/
+            Collection catUser=u.getCategoryCollection();
+            if(catUser.isEmpty()==true){
+                return new AsyncResult<>(1);/*NAO EXISTEM ELEMENTOS ENTAO O PRIMEIRO ELEMENTO É 1*/
+            }
+            
+            List<Integer> goals=new ArrayList<Integer>();
+            for(Category c : u.getCategoryCollection()){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
+                        goals.add(g.getIdGoal());
+                    }
+                }
+            }
+            
+            /*SE TENHO CATEGORIAS, MAS NAO TENHO GOALS, RETORNA 1*/
+            if(goals.isEmpty()==true){  
+                return new AsyncResult<>(1);
+            }
+            
+            /*OBTENCAO DO MAIOR VALOR DO GOAL*/
+            Integer maxValue=Collections.max(goals);
+            
+            return new AsyncResult<>(maxValue+1);
+            
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return new AsyncResult<>(-1);
+        }
+        
+    }
+    
 
 }

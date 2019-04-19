@@ -16,20 +16,20 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition template = "template.xhtml">
-            
+
             <ui:define name = "introTitle">                                
                 <h2>Hi <span>#username!</span></h2>
                 <div>
-                  <a href="#services" class="btn-get-started scrollto">See my Goals</a>
+                    <a href="#services" class="btn-get-started scrollto">See my Goals</a>
                 </div>
             </ui:define>
-            
+
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
 
                 <h3>#{bundle.GoalListTitle}</h3>
                 <p> #{bundle.GoalListDesc}</p>
-       
+
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#filters">#{bundle.GoalListFiltersButton}</button>
                 <div id="filters" class="collapse panel panel-default">
                     <h:form>
@@ -46,7 +46,7 @@ and open the template in the editor.
             </ui:define>
 
             <ui:define name = "containerContent">
-                
+
                 <c:if test="#{empty goalBean.allGoals}">
                     <div class="container">
                         <div class="row p-3 mb-2 bg-light text-dark">
@@ -60,7 +60,7 @@ and open the template in the editor.
                         </div>
                     </div>
                 </c:if>
-                
+
                 <h:link outcome="createGoal">
                     <img src="https://img.icons8.com/office/80/000000/plus-2-math.png"></img>
                 </h:link>
@@ -69,7 +69,7 @@ and open the template in the editor.
 
                 <c:if test="#{not empty goalBean.allGoals}">
                     <div class="container">
-                        <ui:repeat value="#{goalBean.allGoals}" var="goalTmp">
+                        <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
                             <div class="row p-3 mb-2 bg-light text-dark">
                                 <div class="col-1"></div>
                                 <div class="col-10">
@@ -97,17 +97,30 @@ and open the template in the editor.
 
                                             <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
 
+
                                         </div>
+
+
+                                        <h:form id="a">
+
+                                            <h:commandLink id="b" value="Editar"  action="#{goalBean.processEditGoal()}"/>
+
+                                        </h:form>
                                     </div>
+                                    <h:form id="x" >
+                                        <h:commandLink id="d" value="Remover" action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}"/>
+                                    </h:form>
+
                                 </div>
-                                <div class="col-1"></div>
                             </div>
+                            <div class="col-1"></div>
                         </ui:repeat>
                     </div>
+
                 </c:if>
 
-                
-                
+
+
             </ui:define>
         </ui:composition>
     </body>

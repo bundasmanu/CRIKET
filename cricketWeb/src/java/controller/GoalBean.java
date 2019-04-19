@@ -8,6 +8,7 @@ package controller;
 import BridgeLogicController.BridgeLocal;
 import Utils.Config;
 import cricketdto.GoalDTO;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,15 +18,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.ejb.AsyncResult;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import utils.Utils;
 
 @Named(value = "goalBean")
@@ -38,6 +43,7 @@ public class GoalBean implements Serializable{
     
     private GoalDTO goalDTOTemp;
     Future<Integer> nextValueOrderGoal;
+    Future<Integer> idGoal;
     
     @Inject
     SessionBean su;
@@ -70,7 +76,7 @@ public class GoalBean implements Serializable{
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date finalDateGoal;
             finalDateGoal = formatter.parse(this.finalDateGoalTmp);
-            
+             
             goalDTOTemp.setFinalDate(finalDateGoal);
             
             Date logDate = Date.from(Instant.now());
@@ -94,6 +100,10 @@ public class GoalBean implements Serializable{
             
             if(result)
             {
+                
+                /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
+                this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());
+                
                 //Utils.throwMessage("Success Adding the New Goal");
                 return "dashboard?faces-redirect=true";
             }
@@ -109,6 +119,52 @@ public class GoalBean implements Serializable{
             System.out.println("ERROR: " + ex);
             return "createGoal";
         }
+    }
+    
+    public String processRemoveGoal(int idGoalSelected) throws InterruptedException, ExecutionException{
+        boolean result = false;
+
+        System.out.println("" + goalDTOTemp);
+        
+        //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
+        //depois mudo isto para o método do getidgoal().
+        //vou ver como faço o reload para ele remover automaticamente 
+        result = bridge.getCricket().removeGoal(this.su.getEmail(), idGoalSelected);
+        if (result) {           
+
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/index.xhtml?faces-redirect=true?";
+            
+        } else {
+            Utils.throwMessage("Error");
+            return "removeGoal";
+        }
+
+    }
+    
+    
+    public String processEditGoal(){
+        
+        boolean result = false;
+
+        System.out.println("" + goalDTOTemp);
+        
+        //atenção ,para removerem têm por enquanto de colocar o id_goal que pretendem remover à "mão"
+        //depois mudo isto para o método do getidgoal().
+        //vou ver como faço o reload para ele remover automaticamente 
+        result = bridge.getCricket().editGoal(goalDTOTemp);
+        if (result) {
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/index.xhtml?faces-redirect=true?";
+        } else {
+            Utils.throwMessage("Error");
+            return "editGoal";
+        }
+    }
+    
+     public void reload() throws IOException{
+         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 
     public GoalDTO getGoalDTOTemp() {
