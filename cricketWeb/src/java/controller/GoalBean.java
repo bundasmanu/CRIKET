@@ -107,8 +107,8 @@ public class GoalBean implements Serializable{
                 
                 /*ATUALIZAR NOVO VALOR DO ID, PARA QUE SEJA POSSIVEL ADICIONAR NOVO GOAL DPS*/
                 this.idGoal=this.bridge.getCricket().getNextValueGoal(this.su.getEmail());
-                this.goalDTOTemp = null;
-                this.finalDateGoalTmp = null;
+                this.goalDTOTemp = new GoalDTO();
+                this.finalDateGoalTmp = "";
                 //Utils.throwMessage("Success Adding the New Goal");
                 return "dashboard?faces-redirect=true?";
             }
@@ -168,8 +168,8 @@ public class GoalBean implements Serializable{
         
         result = bridge.getCricket().editGoal(goalDTOTemp);
         if (result) {
-            this.goalDTOTemp = null;
-            this.finalDateGoalTmp = null;
+            this.goalDTOTemp = new GoalDTO();
+            this.finalDateGoalTmp = "";
             return "/dashboard?faces-redirect=true?";
         } else {
             Utils.throwMessage("Error");
