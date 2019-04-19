@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.AsyncResult;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -163,7 +164,7 @@ public class GoalBean implements Serializable{
     }
     
      public void reload() throws IOException{
-         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
 
