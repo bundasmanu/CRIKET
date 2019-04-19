@@ -33,10 +33,10 @@ and open the template in the editor.
                             <h:messages />
 
                             <h:outputText value="#{bundle.GoalName}"/><br/>
-                            <h:inputText value="#{goalBean.goalDTOTemp.name}" required="true"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.name}" required="true" styleClass = "form-control"/><br/>
                             
                             <h:outputText value="#{bundle.GoalDescription}"/><br/>
-                            <h:inputText value="#{goalBean.goalDTOTemp.desc}" required="true"/><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.desc}" required="true" styleClass = "form-control" /><br/>
                             
                             <h:outputText value="#{bundle.GoalStatus}"/><br/>
                             <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" class="radio">
@@ -45,7 +45,7 @@ and open the template in the editor.
                             </h:selectOneRadio>
                             
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
-                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}">
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}" styleClass = "form-control">
                                 <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryDTO"
                                                itemValue="#{categoryDTO.idCategory}"
                                                itemLabel="#{categoryDTO.nome}"/>
@@ -53,7 +53,7 @@ and open the template in the editor.
                             <br/>
                             
                             <h:outputText value="#{bundle.GoalFrequency}"/><br/>
-                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.frequency}">
+                            <h:selectOneMenu value="#{goalBean.goalDTOTemp.frequency}" styleClass = "form-control">
                                 <f:selectItem  itemValue="NEVER" itemLabel="Never" />
                                 <f:selectItem  itemValue="DAILY" itemLabel="Daily" />
                                 <f:selectItem  itemValue="WEEKLY" itemLabel="Weekly" />
@@ -66,7 +66,7 @@ and open the template in the editor.
                             <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker"></h:inputText><br/>
                             
                             <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
-                            <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size=""></h:inputText><br/>
+                            <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" size="" styleClass = "form-control"></h:inputText><br/>
                        
                             <br/>
                             <br/>
