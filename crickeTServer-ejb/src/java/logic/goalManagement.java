@@ -109,14 +109,6 @@ public class goalManagement implements goalManagementLocal {
                 }
             }
             
-            if(cTmp.getGoalCollection().isEmpty()==false){
-                for(Goal g : cTmp.getGoalCollection()){
-                    if(g.getNome().equals(newGoalDTO.getName())==true){
-                        return false;
-                    }
-                }
-            }
-            
             Goal newGoal = new Goal();
             newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
             newGoal.setDescript(newGoalDTO.getDesc());
