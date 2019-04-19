@@ -159,14 +159,16 @@ public class goalManagement implements goalManagementLocal {
             goal.setFlagClickControl(editGoalDTO.getFlagClick());
             goal.setFlagOrder(editGoalDTO.getFlag_order());
             goal.setIdCategory(cat);
-            goal.setIdGoal(editGoalDTO.getId_goal());
+            //goal.setIdGoal(editGoalDTO.getId_goal());
             goal.setLogdate(editGoalDTO.getLogDate());
             goal.setNome(editGoalDTO.getName());
             goal.setStatus(editGoalDTO.getStatus());
             goal.setTotalvalue(editGoalDTO.getTotalValue());
-
+                      
             this.goal.edit(goal);
-
+            
+            this.ca.edit(cat);
+            
             return true;
         } catch (Exception e) {
             System.out.println("Mensagem: " + e.getMessage());
