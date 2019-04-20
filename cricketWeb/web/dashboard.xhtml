@@ -72,44 +72,42 @@ and open the template in the editor.
                     <c:if test="#{not empty goalBean.allGoals}">
                         <div class="container">
                             <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
-                                <div class="row p-3 mb-2 bg-light text-dark">
-                                    <div class="col-1"></div>
-                                    <div class="col-10">
-                                        <div class="row">
-                                            <div class="col-2">
-                                                <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
-                                                <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
-                                            </div>
-                                            <div class="col-4">
-                                                #{goalTmp.name}
-                                            </div>                                
-                                            <div class="col-3">
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 }%">
-                                                        #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <h:commandLink action="#{goalBean.increaseCurrentValue(goalTmp)}">
-                                                    <img src="https://img.icons8.com/ultraviolet/30/000000/plus-2-math.png"></img>
-                                                </h:commandLink>
-                                                <h:commandLink action="#{goalBean.decreaseCurrentValue(goalTmp)}">
-                                                    <img src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
-                                                </h:commandLink>    
-                                            </div>
-                                            <div class="col-1">
-                                                <h:commandLink action="#{goalBean.editGoal(goalTmp.id_goal)}">
-                                                    <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
-                                                </h:commandLink>
-                                                <a data-toggle="modal" data-target="#removeGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
-                                                    <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
-                                                </a>
+                                
+                                <!-- panel group just to define the background color -->
+                                <h:panelGroup class="row text-dark #{goalBean.goalIsEnd(goalTmp)}">
+                                            
+                                    <div class="col-2">
+                                        <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
+                                        <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
+                                    </div>
+                                    <div class="col-4">
+                                        #{goalTmp.name}
+                                    </div>                                
+                                    <div class="col-3">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 }%">
+                                                #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-1"></div>
-                                </div>
+                                    <div class="col-2">
+                                        <h:commandLink action="#{goalBean.increaseCurrentValue(goalTmp)}">
+                                            <img src="https://img.icons8.com/ultraviolet/30/000000/plus-2-math.png"></img>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{goalBean.decreaseCurrentValue(goalTmp)}">
+                                            <img src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
+                                        </h:commandLink>    
+                                    </div>
+                                    <div class="col-1">
+                                        <h:commandLink action="#{goalBean.editGoal(goalTmp.id_goal)}">
+                                            <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
+                                        </h:commandLink>
+                                        <a data-toggle="modal" data-target="#removeGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
+                                            <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
+                                        </a>
+                                    </div>
+                                            
+                                </h:panelGroup>
                                 
                                 <!-- not efficient at all! Is rendering a modal to each goal. -->
                                 <!-- The Modal -->

@@ -198,6 +198,16 @@ public class GoalBean implements Serializable{
         return "dashboard";
     }
     
+    public String goalIsEnd(GoalDTO goalDTO){
+        boolean result = bridge.getCricket().goalIsEnd(goalDTO);
+        
+        if(result && goalDTO.getStatus().equals(Config.POSITIVE))
+            return "bg-success";
+        if(result && goalDTO.getStatus().equals(Config.NEGATIVE))
+            return "bg-danger";
+        else
+            return "bg-light";
+    }
     
     public void reload() throws IOException{
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
