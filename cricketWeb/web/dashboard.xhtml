@@ -74,7 +74,7 @@ and open the template in the editor.
                             <ui:repeat value="#{goalBean.allGoals}" var="goalTmp" varStatus="getObj">
                                 
                                 <!-- panel group just to define the background color -->
-                                <h:panelGroup class="row text-dark #{goalBean.goalIsEnd(goalTmp)}">
+                                <h:panelGroup class="row" style="#{goalBean.goalIsEnd(goalTmp)}">
                                             
                                     <div class="col-2">
                                         <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>

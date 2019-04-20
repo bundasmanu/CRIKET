@@ -22,5 +22,7 @@ public class Config {
     public static String WEEKLY = "WEEKLY";
     public static String MONTHLY = "MONTHLY";
     public static String YEARLY = "YEARLY";
-    
+    public static String BACKGROUND_SUCCESS_COLOR_GOAL = "#52BE80";
+    public static String BACKGROUND_UNSUCCESS_COLOR_GOAL = "#EC7063";
+
 }

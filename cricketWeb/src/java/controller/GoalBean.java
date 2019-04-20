@@ -201,12 +201,16 @@ public class GoalBean implements Serializable{
     public String goalIsEnd(GoalDTO goalDTO){
         boolean result = bridge.getCricket().goalIsEnd(goalDTO);
         
+        System.out.println("\n\n\n\n" + goalDTO);
+        System.out.println("\n\n\n\n goal is ended: " + result);
+        
+        
         if(result && goalDTO.getStatus().equals(Config.POSITIVE))
-            return "bg-success";
-        if(result && goalDTO.getStatus().equals(Config.NEGATIVE))
-            return "bg-danger";
+            return "background-color: " + Config.BACKGROUND_SUCCESS_COLOR_GOAL + ";";
+        else if(result && goalDTO.getStatus().equals(Config.NEGATIVE))
+            return "background-color: " + Config.BACKGROUND_UNSUCCESS_COLOR_GOAL + ";";
         else
-            return "bg-light";
+            return "bg-light text-dark";
     }
     
     public void reload() throws IOException{
