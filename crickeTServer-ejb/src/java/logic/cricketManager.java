@@ -113,7 +113,7 @@ public class cricketManager implements cricketManagerLocal {
     public boolean decreaseCurrentValue(GoalDTO goal){
         return this.goalManager.decreaseCurrentValue(goal);
     }
-    
+     
     @Override
     public boolean goalIsEnd(GoalDTO goal){
         return this.goalManager.goalIsEnd(goal);
