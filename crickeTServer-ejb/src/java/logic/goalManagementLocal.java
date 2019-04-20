@@ -35,4 +35,10 @@ public interface goalManagementLocal {
     
     boolean goalIsEnd(GoalDTO goal);
     
+    /*APLICADO QUANDO É CLICADA A SETA PARA CIMA*/
+    boolean downOrderValue(GoalDTO goal);
+    
+    /*APLICADO QUANDO É CLICADA A SETA PARA BAIXO*/
+    boolean upOrderValue(GoalDTO goal);
+    
 }
