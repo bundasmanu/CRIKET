@@ -23,8 +23,10 @@ import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Future;
@@ -163,17 +165,10 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setNome(editGoalDTO.getName());
             goalToEdit.setStatus(editGoalDTO.getStatus());
             goalToEdit.setTotalvalue(editGoalDTO.getTotalValue());
+            goalToEdit.setIdCategory(cat);
 
-                
-                goalToEdit.setIdCategory(cat);
-              
-            
-                categoryManagement.save(cat);
-                
-
+            categoryManagement.save(cat);
             this.goal.edit(goalToEdit);
-            
-            //categoryManagement.save(cat);
 
             return true;
         } catch (Exception e) {
@@ -273,18 +268,16 @@ public class goalManagement implements goalManagementLocal {
         
         try{
             
-            Goal goalI=this.goal.find(goal.getId_goal());
-            Category catI=this.ca.find(goal.getIdCategory());
-            
-            if(goalI==null || catI==null){
+            Goal goalI=this.goal.find(goal.getId_goal());            
+            if(goalI==null){
                 return false;
             }
             
-            goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
-            
-            this.ca.edit(catI); 
-            
-            this.goal.edit(goalI);
+            if(goalI.getCurrentvalue() + 1 <= goalI.getTotalvalue())
+            {
+                goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
+                this.goal.edit(goalI);
+            }
             
             return true;
         }
@@ -299,27 +292,23 @@ public class goalManagement implements goalManagementLocal {
     public boolean decreaseCurrentValue(GoalDTO goal){
              
         try{
-            
             Goal goalI=this.goal.find(goal.getId_goal());
-            Category catI=this.ca.find(goal.getIdCategory());
             
-            if(goalI==null || catI==null){
+            if(goalI==null){
                 return false;
             }
             
-            goalI.setCurrentvalue(goalI.getCurrentvalue()-1);
-            
-            this.ca.edit(catI);
-            
-            this.goal.edit(goalI);
-            
+            if(goalI.getCurrentvalue() - 1 >= 0)
+            {
+                goalI.setCurrentvalue(goalI.getCurrentvalue()-1);
+                this.goal.edit(goalI);
+            }
             return true;
         }
         catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
-        
     }
     
     @Override
@@ -335,15 +324,23 @@ public class goalManagement implements goalManagementLocal {
                 throw new Exception();
             }
             
-            /*ACHO QUE ERA ASSIM O FORMATO QUE TINHAMOS*/
-            Date x= new SimpleDateFormat("dd/mm/yyyy").parse(new Date().toString());
+            //not the best way to get the actual date... but it's functional :D
+            DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedString = LocalDate.now().format(formatterLocalDate);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+            Date actualDate = formatter.parse(formattedString);
+            
+            System.out.println("\n\n\n atual date: " + actualDate);
+            System.out.println("\n\n\n goal final date: " + gT.getFinaldate());
+
             
             /*VERIFICAR O CURRENT VALUE, E AS DATA DE CONCLUSAO*/
-            if(gT.getCurrentvalue()>=gT.getTotalvalue() || isEnd(gT.getFinaldate(), x)==true){
-                return false;
+            if(gT.getCurrentvalue()>=gT.getTotalvalue() || isEnd(gT.getFinaldate(), actualDate)){
+                return true;
             }
             
-            return true;
+            return false;
             
         }
         catch(Exception e){
@@ -355,11 +352,14 @@ public class goalManagement implements goalManagementLocal {
     
      public static boolean isEnd(Date date1,Date date2){
          
+        if(date1 == null) //since it can be null (not defined final date)
+            return false;
+
         if(date1.equals(date2)){
             return true;
         }
          
-        if(date1.after(date2)){
+        if(date1.before(date2)){
             return true;
         }
 
