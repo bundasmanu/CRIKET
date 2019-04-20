@@ -182,7 +182,24 @@ public class GoalBean implements Serializable{
         }
     }
     
-     public void reload() throws IOException{
+    public String increaseCurrentValue(GoalDTO goalDTO){
+        boolean result = bridge.getCricket().increaseCurrentValue(goalDTO);
+        
+        if(!result)
+            Utils.throwMessage("Error incrementing the current value of the selected goal.");
+        return "dashboard";
+    }
+    
+    public String decreaseCurrentValue(GoalDTO goalDTO){
+        boolean result = bridge.getCricket().decreaseCurrentValue(goalDTO);
+        
+        if(!result)
+            Utils.throwMessage("Error decreasing the current value of the selected goal.");
+        return "dashboard";
+    }
+    
+    
+    public void reload() throws IOException{
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
@@ -202,5 +219,6 @@ public class GoalBean implements Serializable{
     public void setFinalDateGoalTmp(String finalDateGoalTmp) {
         this.finalDateGoalTmp = finalDateGoalTmp;
     }
+    
     
 }

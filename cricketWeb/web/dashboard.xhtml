@@ -91,8 +91,12 @@ and open the template in the editor.
                                                 </div>
                                             </div>
                                             <div class="col-2">
-                                                <img src="https://img.icons8.com/ultraviolet/30/000000/plus-2-math.png"></img>
-                                                <img src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
+                                                <h:commandLink action="#{goalBean.increaseCurrentValue(goalTmp)}">
+                                                    <img src="https://img.icons8.com/ultraviolet/30/000000/plus-2-math.png"></img>
+                                                </h:commandLink>
+                                                <h:commandLink action="#{goalBean.decreaseCurrentValue(goalTmp)}">
+                                                    <img src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
+                                                </h:commandLink>    
                                             </div>
                                             <div class="col-1">
                                                 <h:commandLink action="#{goalBean.editGoal(goalTmp.id_goal)}">

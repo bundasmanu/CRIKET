@@ -273,17 +273,11 @@ public class goalManagement implements goalManagementLocal {
         
         try{
             
-            Goal goalI=this.goal.find(goal.getId_goal());
-            Category catI=this.ca.find(goal.getIdCategory());
-            
-            if(goalI==null || catI==null){
+            Goal goalI=this.goal.find(goal.getId_goal());            
+            if(goalI==null){
                 return false;
             }
-            
             goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
-            
-            this.ca.edit(catI); 
-            
             this.goal.edit(goalI);
             
             return true;
@@ -299,18 +293,13 @@ public class goalManagement implements goalManagementLocal {
     public boolean decreaseCurrentValue(GoalDTO goal){
              
         try{
-            
             Goal goalI=this.goal.find(goal.getId_goal());
-            Category catI=this.ca.find(goal.getIdCategory());
             
-            if(goalI==null || catI==null){
+            if(goalI==null){
                 return false;
             }
             
             goalI.setCurrentvalue(goalI.getCurrentvalue()-1);
-            
-            this.ca.edit(catI);
-            
             this.goal.edit(goalI);
             
             return true;
@@ -319,7 +308,6 @@ public class goalManagement implements goalManagementLocal {
             System.out.println(e.getMessage());
             return false;
         }
-        
     }
     
     @Override
