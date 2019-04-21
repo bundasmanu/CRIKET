@@ -6,10 +6,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        
+
         <meta charset="utf-8"></meta>
         <title><ui:insert name="title">Default Title</ui:insert></title>
-        
+
         <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
         <meta content="" name="keywords"></meta>
         <meta content="" name="description"></meta>
@@ -20,55 +20,63 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        
-    
+
+
     </h:head>
     <h:body>
-        
-        
+
+
         <h:form>
             <nav class="navbar bg-dark navbar-dark">
-                
+
                 <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
-                
+
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav float-right">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                          </li>
-                          <li class="nav-item">
-                              <h:link outcome="indexCategories">
-                                  #{bundle.Categories}
-                                  <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
-                              </h:link>
-                            <a class="nav-link" href="#">Link</a>
-                          </li>
-                          <li class="nav-item">
-                              <li>
-                                  <h:commandLink action="#{sessionBean.processLogout}">
-                                      <img src="https://img.icons8.com/office/30/000000/shutdown.png"></img>
-                                  </h:commandLink>
-                              </li>
-                          </li>    
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <li>
+
+                                    <a class="nav-link" href="/cricketWeb/faces/login.xhtml"><img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png"></img></a>
+
+                                </li>
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <h:link outcome="indexCategories">
+                                    #{bundle.Categories}
+                                    <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
+                                </h:link>
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item">
+                                <li>
+                                    <h:commandLink action="#{sessionBean.processLogout}">
+                                        <img src="https://img.icons8.com/office/30/000000/shutdown.png"></img>
+                                    </h:commandLink>
+                                </li>
+                            </li>    
                         </ul>
                     </div>
                 </h:panelGroup>
-                
-                
+
+
             </nav>
             <br></br>
         </h:form>
-        
-        
+
+
         <div class="container">
-            
+
             <div class="row">
-              <div class="col-2"></div>
-              <div class="col-8">
+                <div class="col-2"></div>
+                <div class="col-8">
 
                     <div class="container">
 
@@ -83,13 +91,13 @@
                         </div>
                     </div>    
                 </div>
-              <div class="col-2"></div>
+                <div class="col-2"></div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="container">
                         <div class="copyright">
-                          &copy; Copyright <strong>7 Homens 1 Desafio</strong>. All Rights Reserved
+                            &copy; Copyright <strong>7 Homens 1 Desafio</strong>. All Rights Reserved
                         </div>
                     </div>
                 </div>
@@ -98,7 +106,7 @@
 
         <!-- DatePicker JavaScript & CSS -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"> </script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> </link>
         <script src="resources/js/formatDatePicker.js"></script>
         <script src="resources/js/toggleButton.js"></script>
