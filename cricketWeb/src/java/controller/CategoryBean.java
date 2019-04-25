@@ -16,6 +16,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import utils.Utils;
 
 /**
  *
@@ -23,98 +24,109 @@ import javax.inject.Inject;
  */
 @Named(value = "categoryBean")
 @SessionScoped
-public class CategoryBean implements Serializable{
+public class CategoryBean implements Serializable {
 
     CategoryDTO categoryDTO;
-    
+
     @EJB
     BridgeLocal bridge;
-    
+
     @Inject
     SessionBean s;
-    
+
     public CategoryBean() {
     }
-    
-    public CategoryDTO findCategoryDTOById(Integer id){
+
+    public CategoryDTO findCategoryDTOById(Integer id) {
         return bridge.getCricket().findCategoryDTOById(id);
     }
-    
+
     /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
-    public String createCategory(){
+    public String createCategory() {
         this.categoryDTO = new CategoryDTO();
 
         return "createCategory";
     }
-    
-    public String processAddCategory(){
-        
-        return "indexCategories";
-    
-        //        try{
-//            
-//            /*TENTATIVA DE CRIAR UMA CATEGORIA*/
-//            boolean return_create=this.bridge.getCricket().createCategory(this.name_c, this.desc_c);
-//            
-//            if(return_create==false){
-//                return "index.xhtml";
-//            }
-//            
-//            return "dashboard.xhtml";
-//            
-//        }
-//        catch(Exception e){
-//            System.out.println(e.getMessage());
-//            return "index.xhtml";
-//        }
-    }
-    
-    public String editCategory(int idCategory){
-        this.categoryDTO = bridge.getCricket().findCategoryDTOById(idCategory);
-        
-        return "editCategory";
-    }
-    public String processEditCategory(){
-        
-        return "indexCategories";
-    }
-    
-    /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
-    public String processRemoveCategory(int id){
-        
-        return "indexCategories";
 
-        /*
-        
-            try{
+    public String processAddCategory() {
 
-                //TENTATIVA DE REMOVER UMA CATEGORIA
-                boolean return_remove=this.bridge.getCricket().removeCategory(s.getEmail(),this.name_c);
+        try {
 
-                if(return_remove==false){
-                    return "index.xhtml";
-                }
+            /*TENTATIVA DE CRIAR UMA CATEGORIA*/
+            boolean return_create = this.bridge.getCricket().createCategory(this.categoryDTO.getNome(), this.categoryDTO.getDescript(), this.s.getEmail());
 
-                return "dashboard.xhtml";
-
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
+            if (return_create == false) {
                 return "index.xhtml";
             }
-        
-        */
-        
+
+            return "dashboard.xhtml";
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "index.xhtml";
+        }
     }
-    
-    
-    public List<CategoryDTO> getAllCategoriesFromLoggedUser() 
-    {
+
+    public String editCategory(int idCategory) {
+        this.categoryDTO = bridge.getCricket().findCategoryDTOById(idCategory);
+        if (categoryDTO == null) {
+            Utils.throwMessage("Error. Couldn't find the category");
+        }
+        return "editCategory";
+    }
+
+    public String processEditCategory() {
+        boolean result = false;
+        try {
+
+            /*TENTATIVA DE CRIAR UMA CATEGORIA*/
+            boolean return_create = this.bridge.getCricket().editCategory(this.s.getEmail(), this.categoryDTO);
+            if (return_create) {
+                this.categoryDTO = new CategoryDTO();
+                return "/dashboard?faces-redirect=true?";
+            } else {
+                Utils.throwMessage("Error");
+                return "editCategory";
+            }
+
+        } catch (Exception e) {
+            Utils.throwMessage("Error");
+            return "editCategory";
+        }
+    }
+
+    public String removeCategory(int idCategory) {
+        this.categoryDTO = bridge.getCricket().findCategoryDTOById(idCategory);
+        if (categoryDTO == null) {
+            Utils.throwMessage("Error. Couldn't find the category");
+        }
+        return "removeCategory";
+    }
+
+    /*ACCAO DO BOTAO DE CRIAR CATEGORIA*/
+    public String processRemoveCategory(int id) {
+        boolean result = false;
+        try {
+            result = this.bridge.getCricket().removeCategory(this.s.getEmail(), id);
+            if (result) {
+                 return "/index?faces-redirect=true?";
+            } else {
+                Utils.throwMessage("Error");
+                return "removeCategory";
+            }
+        } catch (Exception e) {
+            Utils.throwMessage("Error");
+            return "removeCategory";
+        }
+
+    }
+
+    public List<CategoryDTO> getAllCategoriesFromLoggedUser() {
         FacesContext fc = FacesContext.getCurrentInstance();
         String emailOfLoggedUser = (String) fc.getExternalContext().getSessionMap().get("user");
-        
+
         List<CategoryDTO> list = bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
-        
+
         return list;
     }
 
@@ -125,7 +137,5 @@ public class CategoryBean implements Serializable{
     public void setCategoryDTO(CategoryDTO categoryDTO) {
         this.categoryDTO = categoryDTO;
     }
-    
-    
-    
+
 }

@@ -53,8 +53,8 @@ public class cricketManager implements cricketManagerLocal {
     }
 
     @Override
-    public boolean removeCategory(String email, String name){
-        return this.categoryManager.removeCategory(email,name);
+    public boolean removeCategory(String email, Integer id){
+        return this.categoryManager.removeCategory(email,id);
     }
 
     @Override
@@ -127,6 +127,11 @@ public class cricketManager implements cricketManagerLocal {
     @Override
     public boolean increaseClickFlag(GoalDTO goal){
         return this.goalManager.increaseClickFlag(goal);
+    }
+
+    @Override
+    public boolean editCategory(String email, CategoryDTO c) {
+        return this.categoryManager.editCategory(email, c);
     }
     
 }

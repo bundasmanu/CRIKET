@@ -73,7 +73,7 @@ public class categoryManagement implements categoryManagementLocal {
     }
     
     @Override
-    public boolean removeCategory(String email, String name){
+    public boolean removeCategory(String email, Integer id){
         
         try{
             
@@ -85,7 +85,7 @@ public class categoryManagement implements categoryManagementLocal {
             }
             
             /*VERIFICAR SE EXISTE ALGUMA CATEGORIA A ELIMINAR COM AQUELE NOME*/
-            Category c=this.cat.findByName(name);
+            Category c=this.cat.find(id);
             
             /*SENAO EXISTE NENHUMA CATEGORIA COM AQUELE NOME RETORNA FALSE*/
             if(c==null){
