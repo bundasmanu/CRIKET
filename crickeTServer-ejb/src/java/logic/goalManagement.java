@@ -498,7 +498,7 @@ public class goalManagement implements goalManagementLocal {
             
             goalClick.setFlagClickControl(goalClick.getFlagClickControl()+1);
             
-            this.goal.edit(goalClick);
+            this.goal.edit(goalClick); 
             
             return true;
         }
