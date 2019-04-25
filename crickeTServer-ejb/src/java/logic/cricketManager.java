@@ -66,6 +66,11 @@ public class cricketManager implements cricketManagerLocal {
     public List<GoalDTO> selectAllGoalsFromAnUser(String email) {
         return this.goalManager.selectAllGoalsFromAnUser(email);
     }
+    
+    @Override
+    public List<GoalDTO> selectAllGoalsFromUserByClicks(String email){
+        return this.goalManager.selectAllGoalsFromUserByClicks(email);
+    }
 
     @Asynchronous
     @Override
@@ -117,6 +122,11 @@ public class cricketManager implements cricketManagerLocal {
     @Override
     public boolean goalIsEnd(GoalDTO goal){
         return this.goalManager.goalIsEnd(goal);
+    }
+    
+    @Override
+    public boolean increaseClickFlag(GoalDTO goal){
+        return this.goalManager.increaseClickFlag(goal);
     }
     
 }

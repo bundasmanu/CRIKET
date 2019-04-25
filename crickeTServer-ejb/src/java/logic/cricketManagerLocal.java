@@ -31,8 +31,11 @@ public interface cricketManagerLocal {
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
+    List<GoalDTO> selectAllGoalsFromUserByClicks(String email);
+    
     @Asynchronous
     Future<Integer> getNextValueFromGoalOrder(String email);
+    
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
     
     CategoryDTO findCategoryDTOById(Integer id);
@@ -52,5 +55,7 @@ public interface cricketManagerLocal {
     boolean decreaseCurrentValue(GoalDTO goal);
     
     boolean goalIsEnd(GoalDTO goal);
+    
+    boolean increaseClickFlag(GoalDTO goal);
     
 }

@@ -19,6 +19,8 @@ public interface goalManagementLocal {
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
+    List<GoalDTO> selectAllGoalsFromUserByClicks(String email);
+    
     boolean createGoal(GoalDTO newGoalDTO);
     
     boolean editGoal(GoalDTO editGoalDTO);
@@ -40,5 +42,7 @@ public interface goalManagementLocal {
     
     /*APLICADO QUANDO É CLICADA A SETA PARA BAIXO*/
     boolean upOrderValue(GoalDTO goal);
+    
+    boolean increaseClickFlag(GoalDTO goal);
     
 }
