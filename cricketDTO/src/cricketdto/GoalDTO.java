@@ -6,6 +6,7 @@
 package cricketdto;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author gustavo
  */
-public class GoalDTO implements Serializable, Comparable<GoalDTO> {
+public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<GoalDTO> {
     
     int id_goal;
     String name;
@@ -143,7 +144,7 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         this.frequency = frequency;
     }
     
-    /*COMPARACAO COM BASE NA FLAG DE ORDEM*/
+    /*COMPARACAO COM BASE NA FLAG DE ORDEM-->OVERRIDE METODO COMPARE TO*/
     @Override
     public int compareTo(GoalDTO obj){
         
@@ -154,6 +155,13 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO> {
         
     }
 
+    /*COMPARACAO COM BASE NO Nº DE CLICKS-->OVERRIDE METODO COMPARE*/
+    @Override
+    public int compare(GoalDTO g1, GoalDTO g2) {
+      return g2.flagClick - g1.flagClick; //TEM DE SER ASSIM, PORQUE QUERO UMA ORDEM DECRESCENTE
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;

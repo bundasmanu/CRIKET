@@ -89,6 +89,50 @@ public class goalManagement implements goalManagementLocal {
 
         return retorno_goals_user;
     }
+    
+    @Override
+    public List<GoalDTO> selectAllGoalsFromUserByClicks(String email){
+        
+        try{
+            
+            Utilizador user=this.ut.findByEmail(email);
+            
+            if(user==null){
+                return null;
+            }
+            
+            Collection<Category> userCategories=user.getCategoryCollection();
+            
+            if(userCategories.isEmpty()==true){
+                return null;
+            }
+            
+            List<GoalDTO> allGoalsOfUser=new ArrayList<GoalDTO>();
+            
+            for(Category c : userCategories){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
+                        allGoalsOfUser.add(DTOFactory.getGoalDTO(g));
+                    }
+                }
+            }
+            
+            if(allGoalsOfUser.isEmpty()==true){
+                return null;
+            }
+            
+            /*ORDENACAO AGORA PELO NUMERO DE CLICKS*/
+            Collections.sort(allGoalsOfUser, new GoalDTO());
+            
+            return allGoalsOfUser;
+            
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
 
     @Override
     public boolean createGoal(GoalDTO newGoalDTO) {
@@ -435,6 +479,30 @@ public class goalManagement implements goalManagementLocal {
             return false;
             
         }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+    }
+    
+    @Override
+    public boolean increaseClickFlag(GoalDTO goal){
+        
+        try{
+            
+            Goal goalClick=this.goal.find(goal.getId_goal());            
+            
+            if(goalClick==null){
+                return false;
+            }
+            
+            goalClick.setFlagClickControl(goalClick.getFlagClickControl()+1);
+            
+            this.goal.edit(goalClick); 
+            
+            return true;
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
