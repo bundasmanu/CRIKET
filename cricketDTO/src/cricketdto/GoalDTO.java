@@ -231,5 +231,41 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
     public String toString() {
         return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
     }
+    
+    
+    /*CLASSES DE FILTROS DE OBJETIVOS*/
+    
+    /*QUEM DATA MENOR, GANHA É A IDEIA, E JA TEM EM CONTA A FREQUENCIA*/
+    class OrdenaCartoesPorSaldo implements Comparator<GoalDTO> {
 
+        @Override
+        public int compare(GoalDTO g1, GoalDTO g2) {
+            
+            
+            if(g1.getFinalDate()==null && g2.getFinalDate()==null){
+                Integer a= (Integer) g1.getTotalValue();
+                Integer b= (Integer) g2.getTotalValue();
+                return a.compareTo(b); /*CASO NENHUMA DAS DATAS EXISTA, SAO IGUAIS, É IRRELEVANTE A ORDEM*/
+            }
+            else if(g1.getFinalDate()==null && g2.getFinalDate()!=null){
+                return 1;/*GANHA O QUE NAO TEM DATA*/
+            }
+            else if(g1.getFinalDate()!=null && g2.getFinalDate()==null){
+                return -1;/*GANHA O QUE NAO TEM DATA*/
+            }
+            else{
+                if(g1.getFinalDate().after(g2.getFinalDate())){
+                    return -1;
+                }
+                else if(g1.getFinalDate().before(g2.getFinalDate())){
+                    return 1;
+                }
+                else{
+                    return 0; /*CASO SEJAM IGUAIS*/
+                }
+            }
+        }
+
+    }
+    
 }
