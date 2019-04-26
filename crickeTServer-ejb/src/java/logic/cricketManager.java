@@ -7,6 +7,7 @@ package logic;
 
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
+import cricketdto.UserDTO;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -53,8 +54,8 @@ public class cricketManager implements cricketManagerLocal {
     }
 
     @Override
-    public boolean removeCategory(String email, String name){
-        return this.categoryManager.removeCategory(email,name);
+    public boolean removeCategory(String email, Integer id){
+        return this.categoryManager.removeCategory(email,id);
     }
 
     @Override
@@ -128,5 +129,19 @@ public class cricketManager implements cricketManagerLocal {
     public boolean increaseClickFlag(GoalDTO goal){
         return this.goalManager.increaseClickFlag(goal);
     }
+
+    @Override
+    public boolean editCategory(String email, CategoryDTO c) {
+        return this.categoryManager.editCategory(email, c);
+    }
     
+     @Override
+    public boolean editUser(String email, String password) {
+        return this.userManager.editUser(email, password);
+    }
+
+    @Override
+    public UserDTO findUserById(Integer id) {
+       return this.userManager.findUserById(id);   
+    }
 }

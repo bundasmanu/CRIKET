@@ -6,11 +6,12 @@
 package logic;
 
 import cricketdto.CategoryDTO;
+import cricketdto.UserDTO;
 import facades.RankingFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.Date;
 import entities.*;
-import facades.*; 
+import facades.*;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import entities.*;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
+import javax.xml.registry.infomodel.User;
 
 /**
  *
@@ -32,52 +34,51 @@ public class userManagement implements userManagementLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
     @EJB
     UtilizadorFacadeLocal user;
-    
+
     @EJB
     RankingFacadeLocal ranks;
-    
+
     @EJB
     categoryManagementLocal cat;
     
+    
+
     @Override
-    public boolean signUp(String username, String pass, String email, String gender, Date birth){
-        
-        try{
-            
+    public boolean signUp(String username, String pass, String email, String gender, Date birth) {
+
+        try {
+
             /*VERIFICAR PRIMEIRO SE JA EXISTE ALGUM USER, COM ESSE EMAIL*/
-            Utilizador x=user.findByEmail(email);
-            
-            if(x!=null){
+            Utilizador x = user.findByEmail(email);
+
+            if (x != null) {
                 return false;
             }
-            
+
             /*OBTENCAO DA PRIMEIRA INSTANCIA, PRIMEIRO NIVEL DO RANK*/
-            List<Ranking> r=ranks.findAll();
-            if(r.isEmpty()==true){
+            List<Ranking> r = ranks.findAll();
+            if (r.isEmpty() == true) {
                 return false;
             }
-            Ranking novo_ad=r.get(0);
-            
+            Ranking novo_ad = r.get(0);
+
             /*É CRIADA ENTAO UMA LINHA PARA O NOVO USER*/
-            
-            Utilizador newUser= new Utilizador(email, pass, username, birth, gender);
+            Utilizador newUser = new Utilizador(email, pass, username, birth, gender);
             newUser.setIdRank(novo_ad);
-                    
+
             user.create(newUser);
-            
+
             /*SE CHEGAR AQUI É PORQUE CRIOU USER, ENTAO BASTA CHAMAR A CRIACAO DE ENTIDADES GENERICAS PARA UM USER*/
             this.cat.initializeCategories(email);
-            
+
             return true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Estoiro");
             return false;
         }
-        
+
     }
 
     @Override
@@ -92,58 +93,88 @@ public class userManagement implements userManagementLocal {
             }
 
         } catch (Exception e) {
-            System.out.println("" + e.getMessage()); 
+            System.out.println("" + e.getMessage());
             return false;
         }
         return true;
     }
-    
+
     @Asynchronous
     @Override
-    public Future<Integer> getNextValueFromGoalOrder(String email){
-        
-        try{
-            
+    public Future<Integer> getNextValueFromGoalOrder(String email) {
+
+        try {
+
             /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
-            Utilizador exist=this.user.findByEmail(email);
-            
-            if(exist==null){
+            Utilizador exist = this.user.findByEmail(email);
+
+            if (exist == null) {
                 return new AsyncResult<>(-2);
             }
-            
-            Collection<Category> catCollect=exist.getCategoryCollection();
-            
-            if(catCollect.isEmpty()==true){
+
+            Collection<Category> catCollect = exist.getCategoryCollection();
+
+            if (catCollect.isEmpty() == true) {
                 return new AsyncResult<>(1);/*SENAO EXISTIR NENHUM OBJETIVO, O PRIMEIRO VALOR DE ORDEM DO OBJETIVO É 1*/
             }
-            
+
             /*PERCORRER ARRAYLIST E VERIFICAR QUAL O ELEMENTO MÁXIMO DE ORDEM*/
-            
-            List<Integer> OrderValues=new ArrayList<Integer>();
-            for(Category c : catCollect){
-                if(c.getGoalCollection().isEmpty()==false){
-                    for(Goal g : c.getGoalCollection()){
+            List<Integer> OrderValues = new ArrayList<Integer>();
+            for (Category c : catCollect) {
+                if (c.getGoalCollection().isEmpty() == false) {
+                    for (Goal g : c.getGoalCollection()) {
                         OrderValues.add(g.getFlagOrder());
                     }
                 }
             }
-            
-            if(OrderValues.isEmpty()==true){
+
+            if (OrderValues.isEmpty() == true) {
                 return new AsyncResult<>(1);
             }
-            
+
             /*OBTENCAO DO VALOR MAXIMO DE GOAL*/
             Integer maxV = Collections.max(OrderValues);
-            
+
             System.out.println("\n\n\n\n\n New Next Value From Goal Order: " + (maxV + 1));
-            return new AsyncResult<>(maxV+1);
-            
-        }
-        catch(Exception e){
+            return new AsyncResult<>(maxV + 1);
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return new AsyncResult<>(-1);
         }
-        
+
+    }
+
+    @Override
+    public boolean editUser(String email, String password) {
+
+        try {
+            Utilizador us = this.user.findByEmail(email);
+            if (us == null) {
+                return false;
+            }
+
+            us.setPassword(password);
+
+            this.user.edit(us);
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Mensagem: " + e.getMessage());
+
+            return false;
+        }
+    }
+
+    @Override
+    public UserDTO findUserById(Integer id) {
+
+        Utilizador userTmp = user.find(id);
+
+        if (userTmp == null) {
+            return null;
+        }
+        return DTOFactory.getUserDTO(userTmp);
     }
 
 }

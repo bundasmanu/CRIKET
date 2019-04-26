@@ -12,44 +12,37 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
 
-        <ui:define name="title" >Sign-in</ui:define>
+        <ui:define name="title" >Edit Profile</ui:define>
     </h:head>
     <h:body>
         <ui:composition template = "template.xhtml">
-            
-            <ui:define name = "containerTitle">
-                <f:event listener="#{sessionBean.validateIfUserIsLogged}" type="preRenderView" />
-                <h3>#{bundle.SignInSignUp}</h3>
-                <p> #{bundle.SignInSignUpDesc}</p>
-            </ui:define>
- 
+
+       
+
 
             <ui:define name = "containerContent">
-                
+
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-                
-                    <h3>#{bundle.SignIn}</h3>
+
+                    <h3>Edit Profile</h3>
                     <h:form>
-                        
+
                         <h:messages></h:messages>
-                        
-                        <h:outputText value="#{bundle.UserEmail}" /><br/>
-                        <h:inputText id="username" value="#{sessionBean.email}"></h:inputText><br/>
+
+
+                        <h:outputText value="#{bundle.UserEmail}:" />#{sessionBean.email}<br/>
+  
                         <br></br>
 
-                        <h:outputText value="#{bundle.UserPassword}" /><br/>
+                        <h:outputText value="#{bundle.UserPass}" /><br/>
                         <h:inputSecret id="password" value="#{sessionBean.password}"></h:inputSecret><br/>
 
-                        <br/>
-                        <a href="/cricketWeb/faces/registerUser.xhtml">Not registered?Please login or register.</a>
-                        <br/>
-                        
-                        <h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/>  
+                        <h:commandButton class ="btn btn-info" action="#{sessionBean.process_EditUser}" value="#{bundle.EditProfile}"/>  
                     </h:form>
-                    
+
                     <hr/>
-                  
-                    
+
+
                 </div>
             </ui:define>
         </ui:composition>

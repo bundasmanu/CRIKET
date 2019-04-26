@@ -6,6 +6,7 @@
 package logic;
 
 import cricketdto.CategoryDTO;
+import cricketdto.UserDTO;
 import entities.Category;
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,8 +25,11 @@ public interface userManagementLocal {
     
     boolean signUp(String username, String pass, String email, String gender, Date birth);
     boolean validateLogin(String email, String pass);
+    boolean editUser(String email, String password);
     
     @Asynchronous
     public Future<Integer> getNextValueFromGoalOrder(String email);
+
+    public UserDTO findUserById(Integer id);
     
 }
