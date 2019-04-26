@@ -487,7 +487,7 @@ public class goalManagement implements goalManagementLocal {
     
     @Override
     public boolean increaseClickFlag(GoalDTO goal){
-        
+         
         try{
             
             Goal goalClick=this.goal.find(goal.getId_goal());            
