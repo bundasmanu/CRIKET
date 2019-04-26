@@ -7,6 +7,7 @@ package logic;
 
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
+import cricketdto.UserDTO;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,8 @@ public interface cricketManagerLocal {
     
     CategoryDTO findCategoryDTOById(Integer id);
     
+    UserDTO findUserById(Integer id);
+    
     boolean addGoal(GoalDTO goalDTO);
     
     boolean editGoal(GoalDTO goalDTO);
@@ -59,5 +62,7 @@ public interface cricketManagerLocal {
     boolean goalIsEnd(GoalDTO goal);
     
     boolean increaseClickFlag(GoalDTO goal);
+    
+    boolean editUser(String email,  String password);
     
 }

@@ -7,6 +7,7 @@ package controller;
 
 import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
+import cricketdto.UserDTO;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,136 +39,140 @@ import utils.Utils;
  *
  * @author bruno
  */
-
 @Named("sessionBean")
 @SessionScoped
 public class SessionBean implements Serializable {
 
     private static final long serialVersionUID = 1094801825228386363L;
-	
+
     private String password;
     private String passwordConfirmation;
     private String email;
     private String clientName;
     private String birthTmp;
     private String gender;
-    
+    UserDTO user;
+
     @EJB
     private BridgeLocal bridge;
-    
+
     @Inject
     GoalBean gg;
-    
+
     public SessionBean() {
         // do nothing
     }
-    
-    private void setOrderFlag(FacesContext context){
-        /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
-        ValueExpression vex =
-            context.getApplication().getExpressionFactory()
-                    .createValueExpression(context.getELContext(),
-                            "#{goalBean}", GoalBean.class);
 
-        GoalBean goalBean = (GoalBean)vex.getValue(context.getELContext());
-        this.gg=goalBean;
+    private void setOrderFlag(FacesContext context) {
+        /*RESTAURO DA FLAG DE ORDENACAO DO NOVO OBJETIVO QUE O UTILIZADOR PODE CRIAR*/
+        ValueExpression vex
+                = context.getApplication().getExpressionFactory()
+                        .createValueExpression(context.getELContext(),
+                                "#{goalBean}", GoalBean.class);
+
+        GoalBean goalBean = (GoalBean) vex.getValue(context.getELContext());
+        this.gg = goalBean;
         this.gg.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
     }
-    
+
     public String processSignIn() {
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         boolean result = this.bridge.getCricket().validateLogin(email, password);
-        
-        if(result){    
+
+        if (result) {
             context.getExternalContext().getSessionMap().put("user", email);
-            
+
             setOrderFlag(context);
-            
+
             return "dashboard?faces-redirect=true";
-        }
-        else
-        {
+        } else {
             Utils.throwMessage("Wrong e-mail or password.");
             return "index";
         }
     }
-    
-    public String process_SignUp(){
-        
+
+    public String process_SignUp() {
+
         FacesContext context = FacesContext.getCurrentInstance();
-    
-        boolean result = this.signUp();     
-        
-        if(result){    
+
+        boolean result = this.signUp();
+
+        if (result) {
             context.getExternalContext().getSessionMap().put("user", email);
             setOrderFlag(context);
             return "dashboard?faces-redirect=true";
-        }
-        else
-        {
+        } else {
             Utils.throwMessage("This user already exists.");
             return "index";
         }
     }
-    
-    public boolean signUp(){
-        
-        try{              
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+
+    public String process_EditUser() {
+        boolean result = false;
+
+        result = bridge.getCricket().editUser(this.getEmail(), password);
+        if (result) {
+            return "dashboard?faces-redirect=true";
+        } else {
+            return "index";
+        }
+
+    }
+
+    public boolean signUp() {
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date birth = formatter.parse(this.birthTmp);
             return bridge.getCricket().signUp(clientName, password, email, gender, birth);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
     }
-    
+
     //used before render the html page...
-    public void validateIfLoggedUser(ComponentSystemEvent event){			
-	FacesContext fc = FacesContext.getCurrentInstance();
-	
+    public void validateIfLoggedUser(ComponentSystemEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+
         String username = (String) fc.getExternalContext().getSessionMap().get("user");
-        
-        if(username == null || username.isEmpty())
-        {
-            ConfigurableNavigationHandler nav 
-		   = (ConfigurableNavigationHandler) 
-			fc.getApplication().getNavigationHandler();
-		
-		nav.performNavigation("/index");
-        }	
+
+        if (username == null || username.isEmpty()) {
+            ConfigurableNavigationHandler nav
+                    = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+
+            nav.performNavigation("/index");
+        }
     }
-    
+
     //used before render the html page...
     //if user is logged and want go to "index" return to dashboard
-    public void validateIfUserIsLogged(ComponentSystemEvent event){			
-	FacesContext fc = FacesContext.getCurrentInstance();
-	
+    public void validateIfUserIsLogged(ComponentSystemEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+
         String email = (String) fc.getExternalContext().getSessionMap().get("user");
-        
-        if(email != null)
-        {
-            ConfigurableNavigationHandler nav 
-		   = (ConfigurableNavigationHandler) 
-			fc.getApplication().getNavigationHandler();
-		
-		nav.performNavigation("/dashboard");
-        }	
+
+        if (email != null) {
+            ConfigurableNavigationHandler nav
+                    = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+
+            nav.performNavigation("/dashboard");
+        }
     }
-    
+
     public Boolean getIsLogged() {
         FacesContext fc = FacesContext.getCurrentInstance();
         String username = (String) fc.getExternalContext().getSessionMap().get("user");
-        
-        if(username == null)
+
+        if (username == null) {
             return false;
-        
+        }
+
         return !username.isEmpty();
     }
-    
+
     public String processLogout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index?faces-redirect=true";
@@ -220,5 +225,5 @@ public class SessionBean implements Serializable {
     public void setBirthTmp(String birthTmp) {
         this.birthTmp = birthTmp;
     }
-    
+
 }

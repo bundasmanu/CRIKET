@@ -7,6 +7,7 @@ package logic;
 
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
+import cricketdto.UserDTO;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -134,4 +135,13 @@ public class cricketManager implements cricketManagerLocal {
         return this.categoryManager.editCategory(email, c);
     }
     
+     @Override
+    public boolean editUser(String email, String password) {
+        return this.userManager.editUser(email, password);
+    }
+
+    @Override
+    public UserDTO findUserById(Integer id) {
+       return this.userManager.findUserById(id);   
+    }
 }
