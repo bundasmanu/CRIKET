@@ -210,6 +210,7 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setStatus(editGoalDTO.getStatus());
             goalToEdit.setTotalvalue(editGoalDTO.getTotalValue());
             goalToEdit.setIdCategory(cat);
+            goalToEdit.setFrequency(editGoalDTO.getFrequency());
 
             categoryManagement.save(cat);
             this.goal.edit(goalToEdit);
