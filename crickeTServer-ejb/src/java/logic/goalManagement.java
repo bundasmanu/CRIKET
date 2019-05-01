@@ -255,7 +255,7 @@ public class goalManagement implements goalManagementLocal {
     @Asynchronous
     @Override
     public Future<Integer> getNextValueGoal(String email){
-        
+         
         try{
             
             /*VERIFICAR INICIALMENTE SE O UTILIZADOR EXISTE*/
