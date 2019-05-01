@@ -6,6 +6,8 @@
 package facades;
 
 import entities.Goal;
+import entities.Utilizador;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +27,8 @@ public interface GoalFacadeLocal {
     Goal find(Object id);
 
     Goal findByName(String name_goal);
+    
+    List<Goal> getGoalsBetweenDates(Utilizador u, Date d1, Date d2);
 
     List<Goal> findAll();
 

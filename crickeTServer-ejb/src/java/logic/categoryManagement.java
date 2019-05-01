@@ -12,6 +12,7 @@ import entities.Utilizador;
 import facades.CategoryFacadeLocal;
 import facades.UtilizadorFacadeLocal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton; 
@@ -227,6 +228,37 @@ public class categoryManagement implements categoryManagementLocal {
         }catch(Exception e){
             return false;
         }        
+    }
+    
+    public List<CategoryDTO> getCategorysFromUserOrderedByName(String email){
+        
+        try{
+            
+            /*VERIFICAR SE O USER EXISTE*/
+            Utilizador u=this.user.findByEmail(email);
+            
+            if(u==null){
+                return null;
+            }
+            
+            if(u.getCategoryCollection().isEmpty()==true){
+                return null;
+            }
+            
+            List<CategoryDTO> categoriesOfUser=new ArrayList<CategoryDTO>();
+            for(Category c : u.getCategoryCollection()){
+                categoriesOfUser.add(DTOFactory.getCategoryDTO(c));
+            }
+            
+            Collections.sort(categoriesOfUser);
+            
+            return categoriesOfUser;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
     }
     
 }

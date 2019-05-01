@@ -65,4 +65,10 @@ public interface cricketManagerLocal {
     
     boolean editUser(String email,  String password);
     
+    List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2);
+    
+    List<CategoryDTO> getCategorysFromUserOrderedByName(String email);
+    
+    List<GoalDTO> orderGoalsBetweenDate(String email);
+    
 }

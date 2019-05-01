@@ -6,8 +6,10 @@
 package cricketdto;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -232,11 +234,32 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
         return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
     }
     
+    public static List<GoalDTO> retGoalsOrderByDate(List<GoalDTO> g){
+        
+        try{
+            
+            if(g==null){
+                return null;
+            }
+            
+            Collections.sort(g, new OrderGoalByDate());
+            
+            return g;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
     
+}
+
+ 
     /*CLASSES DE FILTROS DE OBJETIVOS*/
     
     /*QUEM DATA MENOR, GANHA É A IDEIA, E JA TEM EM CONTA A FREQUENCIA*/
-    class OrdenaCartoesPorSaldo implements Comparator<GoalDTO> {
+    class OrderGoalByDate implements Comparator<GoalDTO> {
 
         @Override
         public int compare(GoalDTO g1, GoalDTO g2) {
@@ -267,5 +290,3 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
         }
 
     }
-    
-}
