@@ -97,7 +97,6 @@ public class GoalBean implements Serializable{
             
             if(result)
             {
-                
                 //generate new value of flag order
                 FacesContext fc = FacesContext.getCurrentInstance();
                 String email = (String) fc.getExternalContext().getSessionMap().get("user");
