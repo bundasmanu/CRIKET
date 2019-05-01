@@ -255,7 +255,7 @@ public class goalManagement implements goalManagementLocal {
     @Asynchronous
     @Override
     public Future<Integer> getNextValueGoal(String email){
-        
+         
         try{
             
             /*VERIFICAR INICIALMENTE SE O UTILIZADOR EXISTE*/
@@ -487,7 +487,7 @@ public class goalManagement implements goalManagementLocal {
     
     @Override
     public boolean increaseClickFlag(GoalDTO goal){
-        
+         
         try{
             
             Goal goalClick=this.goal.find(goal.getId_goal());            
@@ -505,6 +505,107 @@ public class goalManagement implements goalManagementLocal {
         catch(Exception e){
             System.out.println(e.getMessage());
             return false;
+        }
+        
+    }
+    
+    @Override
+    public List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2){
+        
+        try{
+            
+            /*VERIFICAR PRIMEIRO SE O UTILIZADOR EXISTE*/
+            Utilizador u=this.ut.findByEmail(email);
+            
+            if(u==null){
+                return null;
+            }
+            
+            /*PRIMEIRO PASSAR AS DATAS PARA O FORMATO CORRETO*/
+            d1=this.getDateInRightFormat(d1);
+            d2=this.getDateInRightFormat(d2);
+            
+            if(d1==null || d2==null){
+                return null;
+            }
+            
+            List<Goal> getListOfGoalsBetweenDates=this.goal.getGoalsBetweenDates(u,d1, d2);
+            
+            if(getListOfGoalsBetweenDates==null){
+                return null;
+            }
+            
+            /*CONVERSAO DE GOAL, PARA GOAL DTO*/
+            List<GoalDTO> listGoals=new ArrayList<GoalDTO>();
+            for(Goal g : getListOfGoalsBetweenDates){
+                listGoals.add(DTOFactory.getGoalDTO(g));
+            }
+            
+            return listGoals;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    public Date getDateInRightFormat(Date d1){
+        
+        try{
+            
+            DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedString = LocalDate.now().format(formatterLocalDate);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+            Date actualDate = formatter.parse(formattedString);
+            
+            return actualDate;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    public List<GoalDTO> orderGoalsBetweenDate(String email){
+        
+        try{
+            
+            /*VERIFICAR SE O USER EXISTE*/
+            Utilizador u=this.ut.findByEmail(email);
+            
+            if(u==null){
+                return null;
+            }
+            
+            if(u.getCategoryCollection().isEmpty()==true){
+                return null;
+            }
+            
+            List<GoalDTO> listGoalsOfAnUser = new ArrayList<GoalDTO>();
+            for(Category c : u.getCategoryCollection()){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
+                        listGoalsOfAnUser.add(DTOFactory.getGoalDTO(g));    
+                    }
+                }
+            }
+            
+            if(listGoalsOfAnUser.isEmpty()==true){
+                return null;
+            }
+            
+            /*ORDENA OS OBJETIVOS, UTILIZANDO A CLASSE CRIADA PARA O EFEITO*/
+            List<GoalDTO> orderedListofGoalsByDate=GoalDTO.retGoalsOrderByDate(listGoalsOfAnUser);
+            
+            return orderedListofGoalsByDate;
+            
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
         }
         
     }

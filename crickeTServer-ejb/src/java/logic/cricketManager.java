@@ -144,4 +144,20 @@ public class cricketManager implements cricketManagerLocal {
     public UserDTO findUserById(Integer id) {
        return this.userManager.findUserById(id);   
     }
+    
+    @Override
+    public List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2){
+        return this.goalManager.getGoalsBetweenTwoDates(email, d1, d2);
+    }
+    
+    @Override
+    public List<CategoryDTO> getCategorysFromUserOrderedByName(String email){
+        return this.categoryManager.getCategorysFromUserOrderedByName(email);
+    }
+    
+    @Override
+    public List<GoalDTO> orderGoalsBetweenDate(String email){
+        return this.goalManager.orderGoalsBetweenDate(email);
+    }
+    
 }

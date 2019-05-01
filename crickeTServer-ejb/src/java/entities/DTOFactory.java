@@ -54,7 +54,7 @@ public class DTOFactory{
     public static GoalDTO getGoalDTO(Goal goal){
         
         try{
-            
+             
             GoalDTO goalDTO = new GoalDTO();
             
             if(goal==null){
@@ -73,6 +73,10 @@ public class DTOFactory{
             goalDTO.setId_goal(goal.getIdGoal());
             goalDTO.setStatus(goal.getStatus());
             goalDTO.setFrequency(goal.getFrequency());
+            goalDTO.setFlagDone(goal.getFlagdone());
+            if(goal.getLogfinaldate()!=null){
+                goalDTO.setLogFinalDate(goal.getLogfinaldate());
+            }
         
         return goalDTO;
             
@@ -96,6 +100,7 @@ public class DTOFactory{
             
             userDTO.setEmail(utilizador.getEmail());
             userDTO.setName(utilizador.getNome());
+            userDTO.setCurrentPoints(utilizador.getCurrentpoints());
             
             return userDTO;
             

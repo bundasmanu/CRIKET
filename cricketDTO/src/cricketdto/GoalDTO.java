@@ -6,8 +6,10 @@
 package cricketdto;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,6 +31,8 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
     int flag_order;/*ORDEM DA FLAG--> JA NAO ME LEMBRO MUITO BEM DISTO*/
     int idCategory;
+    boolean flagDone;
+    Date logFinalDate;
     
     public GoalDTO(){
         
@@ -143,7 +147,23 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
-    
+
+    public boolean isFlagDone() {
+        return flagDone;
+    }
+
+    public void setFlagDone(boolean flagDone) {
+        this.flagDone = flagDone;
+    }
+
+    public Date getLogFinalDate() {
+        return logFinalDate;
+    }
+
+    public void setLogFinalDate(Date logFinalDate) {
+        this.logFinalDate = logFinalDate;
+    }
+
     /*COMPARACAO COM BASE NA FLAG DE ORDEM-->OVERRIDE METODO COMPARE TO*/
     @Override
     public int compareTo(GoalDTO obj){
@@ -231,5 +251,60 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
     public String toString() {
         return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
     }
-
+    
+    public static List<GoalDTO> retGoalsOrderByDate(List<GoalDTO> g){
+        
+        try{
+            
+            if(g==null){
+                return null;
+            }
+            
+            Collections.sort(g, new OrderGoalByDate());
+            
+            return g;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
 }
+
+ 
+    /*CLASSES DE FILTROS DE OBJETIVOS*/
+    
+    /*QUEM DATA MENOR, GANHA É A IDEIA, E JA TEM EM CONTA A FREQUENCIA*/
+    class OrderGoalByDate implements Comparator<GoalDTO> {
+
+        @Override
+        public int compare(GoalDTO g1, GoalDTO g2) {
+            
+            
+            if(g1.getFinalDate()==null && g2.getFinalDate()==null){
+                Integer a= (Integer) g1.getTotalValue();
+                Integer b= (Integer) g2.getTotalValue();
+                return a.compareTo(b); /*CASO NENHUMA DAS DATAS EXISTA, SAO IGUAIS, É IRRELEVANTE A ORDEM*/
+            }
+            else if(g1.getFinalDate()==null && g2.getFinalDate()!=null){
+                return 1;/*GANHA O QUE NAO TEM DATA*/
+            }
+            else if(g1.getFinalDate()!=null && g2.getFinalDate()==null){
+                return -1;/*GANHA O QUE NAO TEM DATA*/
+            }
+            else{
+                if(g1.getFinalDate().after(g2.getFinalDate())){
+                    return -1;
+                }
+                else if(g1.getFinalDate().before(g2.getFinalDate())){
+                    return 1;
+                }
+                else{
+                    return 0; /*CASO SEJAM IGUAIS*/
+                }
+            }
+        }
+
+    }

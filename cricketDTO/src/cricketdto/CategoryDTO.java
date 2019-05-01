@@ -14,7 +14,7 @@ import java.util.Objects;
  *
  * @author bruno
  */
-public class CategoryDTO implements Serializable{
+public class CategoryDTO implements Serializable, Comparable<CategoryDTO>{
     
     private Integer idCategory;
     private String nome;
@@ -103,6 +103,15 @@ public class CategoryDTO implements Serializable{
         return "CategoryDTO{" + "idCategory=" + idCategory + ", nome=" + nome + ", descript=" + descript + ", idUser=" + idUser + '}';
     }
     
-    
+    @Override
+    public int compareTo(CategoryDTO c){
+        
+        if (c == null) {
+            throw new NullPointerException();/*TRATA A EXCECAO, ONDE É INVOCADO O COMPARE TO (NUM COLLECTIONS.SORT NESTE CASO)*/
+        }
+        
+        return this.getNome().compareTo(c.getNome());
+        
+    }
     
 }

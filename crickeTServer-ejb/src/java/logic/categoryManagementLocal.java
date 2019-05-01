@@ -25,5 +25,6 @@ public interface categoryManagementLocal {
     public CategoryDTO findCategoryDTOById(Integer id);
     public Category findCategoryById(Integer id);
     public boolean save(Category category);
-
+    List<CategoryDTO> getCategorysFromUserOrderedByName(String email);
+    
 }

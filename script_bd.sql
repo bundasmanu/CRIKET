@@ -80,6 +80,8 @@ create table GOAL (
    LOGDATE              DATE                 not null,
    FLAG_CLICK_CONTROL   INT4                 not null,
    FLAG_ORDER           INT4                 not null,
+   FLAGDONE             BOOL                 not null DEFAULT FALSE,
+   LOGFINALDATE         DATE                 ,
    constraint PK_GOAL primary key (ID_GOAL)
 );
 
@@ -182,6 +184,7 @@ create table UTILIZADOR (
    NOME                 VARCHAR(1024)        not null,
    AGE                  DATE                 not null,
    GENRE                VARCHAR(500)         not null,
+   CURRENTPOINTS        INT4                 not null DEFAULT 0,
    constraint PK_UTILIZADOR primary key (ID_USER)
 );
 
