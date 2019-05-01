@@ -54,7 +54,7 @@ public class DTOFactory{
     public static GoalDTO getGoalDTO(Goal goal){
         
         try{
-            
+             
             GoalDTO goalDTO = new GoalDTO();
             
             if(goal==null){
