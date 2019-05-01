@@ -230,6 +230,7 @@ public class categoryManagement implements categoryManagementLocal {
         }        
     }
     
+    @Override
     public List<CategoryDTO> getCategorysFromUserOrderedByName(String email){
         
         try{
