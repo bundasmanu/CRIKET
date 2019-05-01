@@ -66,11 +66,12 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
     }
     
+    @Override
     public List<Goal> getCompleteGoalsFromAnUser(Utilizador u){
         
         try{
             
-            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue>=g.totalValue";
+            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.flagdone= TRUE";
             Query qu=this.em.createQuery(cmdCompleteGoals);
             List<Goal> listCompleteGoals= (List<Goal>) qu.getResultList();
             
@@ -83,11 +84,12 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
     }
     
+    @Override
     public List<Goal> getIncompleteGoalsFromAnUser(Utilizador u){
         
         try{
             
-            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue<g.totalValue and g.finalDate< to_char( CURRENT_DATE, 'DD/MM/YYYY') as re_format ";
+            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue<g.totalValue and g.finalDate< to_char( CURRENT_DATE, 'DD/MM/YYYY') as re_format and g.flagdone=TRUE ";
             Query qu=this.em.createQuery(cmdCompleteGoals);
             List<Goal> listCompleteGoals= (List<Goal>) qu.getResultList();
             
@@ -95,6 +97,83 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         }
         catch(Exception e){
             System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    @Override
+    public List<Goal> getDailyGoals(){
+        
+        try{
+            
+            String dailyQuery="select g from Goal g where g.frequency= ?1 and g.flagdone= ?2";
+            Query qu=this.em.createQuery(dailyQuery);
+            qu.setParameter(1, "Daily");
+            qu.setParameter(2, Boolean.FALSE);
+            List<Goal> dailyGoals= (List<Goal>) qu.getResultList();
+            
+            return dailyGoals;
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    @Override
+    public List<Goal> getWeeklyGoals(){
+       
+        try {
+
+            String weeklyQuery = "select g from Goal g where g.frequency= ?1 and g.flagdone= ?2";
+            Query qu = this.em.createQuery(weeklyQuery);
+            qu.setParameter(1, "Weekly");
+            qu.setParameter(2, Boolean.FALSE);
+            List<Goal> weeklyGoals = (List<Goal>) qu.getResultList();
+
+            return weeklyGoals;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    @Override
+    public List<Goal> getMonthlyGoals(){
+        
+        try {
+
+            String monthlyQuery = "select g from Goal g where g.frequency= ?1 and g.flagdone= ?2";
+            Query qu = this.em.createQuery(monthlyQuery);
+            qu.setParameter(1, "Monthly");
+            qu.setParameter(2, Boolean.FALSE);
+            List<Goal> monthlyGoals = (List<Goal>) qu.getResultList();
+
+            return monthlyGoals;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    @Override
+    public List<Goal> getYearGoals(){
+        
+        try {
+
+            String yearlyQuery = "select g from Goal g where g.frequency= ?1 and g.flagdone= ?2";
+            Query qu = this.em.createQuery(yearlyQuery);
+            qu.setParameter(1, "Yearly");
+            qu.setParameter(2, Boolean.FALSE);
+            List<Goal> yearlyGoals = (List<Goal>) qu.getResultList();
+
+            return yearlyGoals;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
             return null;
         }
         
