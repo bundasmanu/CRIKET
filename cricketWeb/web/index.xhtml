@@ -34,11 +34,11 @@ and open the template in the editor.
                         <h:messages></h:messages>
                         
                         <h:outputText value="#{bundle.UserEmail}" /><br/>
-                        <h:inputText id="username" value="#{sessionBean.email}"></h:inputText><br/>
+                        <h:inputText id="username" value="#{sessionBean.email}" required="true" requiredMessage="Username is required"></h:inputText><br/>
                         <br></br>
 
                         <h:outputText value="#{bundle.UserPassword}" /><br/>
-                        <h:inputSecret id="password" value="#{sessionBean.password}"></h:inputSecret><br/>
+                        <h:inputSecret id="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputSecret><br/>
 
                         <br/>
 
@@ -53,18 +53,18 @@ and open the template in the editor.
                         <h:messages />
                         
                         <h:outputText value="#{bundle.UserEmail}"/><br/>
-                        <h:inputText value="#{sessionBean.email}" required="true"/><br/>
+                        <h:inputText value="#{sessionBean.email}" required="true" requiredMessage="Email is required"/><br/>
                         <h:outputText value="#{bundle.UserFullName}"/><br/>
-                        <h:inputText value="#{sessionBean.clientName}" required="true"/><br/>
+                        <h:inputText value="#{sessionBean.clientName}" required="true" requiredMessage="Name is required"/><br/>
                         <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                        <h:inputText value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" required="true"></h:inputText><br/>
+                        <h:inputText value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" required="true" requiredMessage="Birthday is required"></h:inputText><br/>
                         <h:outputText value="#{bundle.UserPassword}"/><br/>
-                        <h:inputSecret value="#{sessionBean.password}" required="true" /><br/>
+                        <h:inputSecret value="#{sessionBean.password}" required="true" requiredMessage="Password is required"/><br/>
                         <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
-                        <h:inputSecret value="#{sessionBean.passwordConfirmation}" required="true" /><br/>
+                        <h:inputSecret value="#{sessionBean.passwordConfirmation}" required="true" requiredMessage="Password confirmation is required"/><br/>
                         <h:outputText value="#{bundle.UserGender}"/><br/>
                         
-                        <h:selectOneRadio value="#{sessionBean.gender}" required="true" class="radio">
+                        <h:selectOneRadio value="#{sessionBean.gender}" required="true"  requiredMessage="Gender is required" class="radio">
                                 <f:selectItem itemValue="MALE" itemLabel="Male" />
                                 <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
                         </h:selectOneRadio>
