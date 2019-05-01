@@ -71,4 +71,6 @@ public interface cricketManagerLocal {
     
     List<GoalDTO> orderGoalsBetweenDate(String email);
     
+    String findRankUser(String email);
+    
 }

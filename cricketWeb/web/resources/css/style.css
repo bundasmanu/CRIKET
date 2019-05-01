@@ -69,6 +69,8 @@ h6 {
   color: #fff;
 }
 
+
+
 /* Prelaoder */
 
 #preloader {
@@ -180,6 +182,10 @@ h6 {
   display: none;
 }
 
+#ok{
+    color: white;
+}
+
 #header .logo h1 {
   font-size: 36px;
   margin: 0;
@@ -255,6 +261,8 @@ h6 {
 --------------------------------------------------------------*/
 
 /* Desktop Navigation */
+
+
 
 .main-nav {
   /* Drop Down */

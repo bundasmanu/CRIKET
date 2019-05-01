@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logic;
-
-import javax.ejb.Local;
+package cricketdto;
 
 /**
  *
- * @author gustavo
+ * @author pedro
  */
-@Local
-public interface rankingManagementLocal {
+public class RankDTO {
+    private Integer idRank;
+    private String nome;
+    private String descript;
+    private Integer minpoints;
     
-    boolean createRanking(String name, int minP);
-    String findRankUser(String email);
     
 }

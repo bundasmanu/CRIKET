@@ -41,6 +41,7 @@
   box-sizing: border-box;
 }
 
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -215,6 +216,10 @@ caption {
   color: #6c757d;
   text-align: left;
   caption-side: bottom;
+}
+
+#ok{
+    color: white;
 }
 
 th {
