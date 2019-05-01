@@ -37,7 +37,8 @@ import javax.persistence.TemporalType;
     , @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password")
     , @NamedQuery(name = "Utilizador.findByNome", query = "SELECT u FROM Utilizador u WHERE u.nome = :nome")
     , @NamedQuery(name = "Utilizador.findByAge", query = "SELECT u FROM Utilizador u WHERE u.age = :age")
-    , @NamedQuery(name = "Utilizador.findByGenre", query = "SELECT u FROM Utilizador u WHERE u.genre = :genre")})
+    , @NamedQuery(name = "Utilizador.findByGenre", query = "SELECT u FROM Utilizador u WHERE u.genre = :genre")
+    , @NamedQuery(name = "Utilizador.findByCurrentpoints", query = "SELECT u FROM Utilizador u WHERE u.currentpoints = :currentpoints")})
 public class Utilizador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +63,9 @@ public class Utilizador implements Serializable {
     @Basic(optional = false)
     @Column(name = "genre")
     private String genre;
+    @Basic(optional = false)
+    @Column(name = "currentpoints")
+    private int currentpoints;
     @JoinColumn(name = "id_rank", referencedColumnName = "id_rank")
     @ManyToOne(optional = false)
     private Ranking idRank;
@@ -82,15 +86,16 @@ public class Utilizador implements Serializable {
         this.idUser = idUser;
     }
 
-    public Utilizador(Integer idUser, String email, String password, String nome, Date age, String genre) {
+    public Utilizador(Integer idUser, String email, String password, String nome, Date age, String genre, int currentpoints) {
         this.idUser = idUser;
         this.email = email;
         this.password = password;
         this.nome = nome;
         this.age = age;
         this.genre = genre;
+        this.currentpoints = currentpoints;
     }
-    
+
     public Utilizador(String email, String password, String nome, Date age, String genre) {
         this.email = email;
         this.password = password;
@@ -98,7 +103,7 @@ public class Utilizador implements Serializable {
         this.age = age;
         this.genre = genre;
     }
-
+    
     public Integer getIdUser() {
         return idUser;
     }
@@ -145,6 +150,14 @@ public class Utilizador implements Serializable {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getCurrentpoints() {
+        return currentpoints;
+    }
+
+    public void setCurrentpoints(int currentpoints) {
+        this.currentpoints = currentpoints;
     }
 
     public Ranking getIdRank() {

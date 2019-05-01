@@ -31,6 +31,8 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
     int flagClick;/*NUMERO CLIQUES TEM DE SER SEMPRE AUMENTADO ASSIM QUE HÁ CLIQUES NO OBJETIVO*/
     int flag_order;/*ORDEM DA FLAG--> JA NAO ME LEMBRO MUITO BEM DISTO*/
     int idCategory;
+    boolean flagDone;
+    Date logFinalDate;
     
     public GoalDTO(){
         
@@ -145,7 +147,23 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
-    
+
+    public boolean isFlagDone() {
+        return flagDone;
+    }
+
+    public void setFlagDone(boolean flagDone) {
+        this.flagDone = flagDone;
+    }
+
+    public Date getLogFinalDate() {
+        return logFinalDate;
+    }
+
+    public void setLogFinalDate(Date logFinalDate) {
+        this.logFinalDate = logFinalDate;
+    }
+
     /*COMPARACAO COM BASE NA FLAG DE ORDEM-->OVERRIDE METODO COMPARE TO*/
     @Override
     public int compareTo(GoalDTO obj){

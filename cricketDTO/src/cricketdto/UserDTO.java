@@ -16,6 +16,7 @@ public class UserDTO implements Serializable{
     private String name;
     private String email;
     private String password;
+    private int currentPoints;
     
     public UserDTO(){/*NECESSARIO PORQUE É SERIALIZABLE*/
         
@@ -44,6 +45,14 @@ public class UserDTO implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 
     @Override

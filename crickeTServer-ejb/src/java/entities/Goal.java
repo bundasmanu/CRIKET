@@ -20,15 +20,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author bruno
+ * @author gustavo
  */
 @Entity
 @Table(name = "goal")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Goal.findAll", query = "SELECT g FROM Goal g")
     , @NamedQuery(name = "Goal.findByIdGoal", query = "SELECT g FROM Goal g WHERE g.idGoal = :idGoal")
@@ -42,7 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Goal.findByFavorite", query = "SELECT g FROM Goal g WHERE g.favorite = :favorite")
     , @NamedQuery(name = "Goal.findByLogdate", query = "SELECT g FROM Goal g WHERE g.logdate = :logdate")
     , @NamedQuery(name = "Goal.findByFlagClickControl", query = "SELECT g FROM Goal g WHERE g.flagClickControl = :flagClickControl")
-    , @NamedQuery(name = "Goal.findByFlagOrder", query = "SELECT g FROM Goal g WHERE g.flagOrder = :flagOrder")})
+    , @NamedQuery(name = "Goal.findByFlagOrder", query = "SELECT g FROM Goal g WHERE g.flagOrder = :flagOrder")
+    , @NamedQuery(name = "Goal.findByFlagdone", query = "SELECT g FROM Goal g WHERE g.flagdone = :flagdone")
+    , @NamedQuery(name = "Goal.findByLogfinaldate", query = "SELECT g FROM Goal g WHERE g.logfinaldate = :logfinaldate")})
 public class Goal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -85,6 +85,12 @@ public class Goal implements Serializable {
     @Basic(optional = false)
     @Column(name = "flag_order")
     private int flagOrder;
+    @Basic(optional = false)
+    @Column(name = "flagdone")
+    private boolean flagdone;
+    @Column(name = "logfinaldate")
+    @Temporal(TemporalType.DATE)
+    private Date logfinaldate;
     @JoinColumn(name = "id_category", referencedColumnName = "id_category")
     @ManyToOne(optional = false)
     private Category idCategory;
@@ -96,7 +102,7 @@ public class Goal implements Serializable {
         this.idGoal = idGoal;
     }
 
-    public Goal(Integer idGoal, String nome, String descript, String frequency, String status, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder) {
+    public Goal(Integer idGoal, String nome, String descript, String frequency, String status, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder, boolean flagdone) {
         this.idGoal = idGoal;
         this.nome = nome;
         this.descript = descript;
@@ -108,6 +114,21 @@ public class Goal implements Serializable {
         this.logdate = logdate;
         this.flagClickControl = flagClickControl;
         this.flagOrder = flagOrder;
+        this.flagdone = flagdone;
+    }
+    
+    public Goal(String nome, String descript, String frequency, String status, int totalvalue, int currentvalue, boolean favorite, Date logdate, int flagClickControl, int flagOrder, boolean flagdone) {
+        this.nome = nome;
+        this.descript = descript;
+        this.frequency = frequency;
+        this.status = status;
+        this.totalvalue = totalvalue;
+        this.currentvalue = currentvalue;
+        this.favorite = favorite;
+        this.logdate = logdate;
+        this.flagClickControl = flagClickControl;
+        this.flagOrder = flagOrder;
+        this.flagdone = flagdone;
     }
 
     public Integer getIdGoal() {
@@ -204,6 +225,22 @@ public class Goal implements Serializable {
 
     public void setFlagOrder(int flagOrder) {
         this.flagOrder = flagOrder;
+    }
+
+    public boolean getFlagdone() {
+        return flagdone;
+    }
+
+    public void setFlagdone(boolean flagdone) {
+        this.flagdone = flagdone;
+    }
+
+    public Date getLogfinaldate() {
+        return logfinaldate;
+    }
+
+    public void setLogfinaldate(Date logfinaldate) {
+        this.logfinaldate = logfinaldate;
     }
 
     public Category getIdCategory() {
