@@ -333,7 +333,7 @@ public class DailyTimer implements DailyTimerLocal {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return -1;
-        }
+        } 
         
     }
     
