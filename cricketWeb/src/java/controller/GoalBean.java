@@ -252,5 +252,20 @@ public class GoalBean implements Serializable{
         this.finalDateGoalTmp = finalDateGoalTmp;
     }
     
+    public String processRecoverDoneGoal(int idGoalSelected) throws InterruptedException, ExecutionException{
+        boolean result = false;
+        
+        result = bridge.getCricket().recoveryDoneGoal(idGoalSelected);
+        if (result) {           
+
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/indexHistory?faces-redirect=true?";
+            
+        } else {
+            Utils.throwMessage("Error");
+            return "indexHistory";
+        }
+
+    }
     
 }

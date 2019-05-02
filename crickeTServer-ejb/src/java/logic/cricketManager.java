@@ -177,5 +177,10 @@ public class cricketManager implements cricketManagerLocal {
     public List<GoalDTO> selectAllDoneGoalsFromAnUser(String email) {
         return this.goalManager.selectAllDoneGoalsFromAnUser(email);
     }
+
+    @Override
+    public boolean recoveryDoneGoal(Integer id) {
+        return this.goalManager.recoveryDoneGoal(id);
+    }
     
 }

@@ -55,6 +55,8 @@ public interface cricketManagerLocal {
     
     boolean removeGoal(String email,Integer id);
     
+    boolean recoveryDoneGoal(Integer id);
+    
     Future<Integer> getNextValueGoal(String email);
     
     GoalDTO findGoalDTOById(int id);

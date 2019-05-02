@@ -297,12 +297,6 @@ public class goalManagement implements goalManagementLocal {
     @Override
     public boolean removeGoal(String email, Integer id) {
         try {
-            //find user
-            Utilizador u = this.ut.findByEmail(email);
-            if (u == null) {
-                return false;
-            }
-
             //find goal by id
             Goal g = this.goalFacade.find(id);
 
@@ -470,7 +464,7 @@ public class goalManagement implements goalManagementLocal {
         
     }
     
-     public static boolean isEnd(Date date1,Date date2){
+    public static boolean isEnd(Date date1,Date date2){
          
         if(date1 == null) //since it can be null (not defined final date)
             return false;
@@ -700,6 +694,35 @@ public class goalManagement implements goalManagementLocal {
         categoryManagement.save(goalTmp.getIdCategory());
         
         return true;
+    }
+
+    @Override
+    public boolean recoveryDoneGoal(Integer id) {
+        
+        try {
+            Goal goalToRecover = this.goalFacade.find(id);
+
+            Category cat = goalToRecover.getIdCategory();
+
+            if (goalFacade == null || cat == null) {
+                return false;
+            }
+
+            goalToRecover.setCurrentvalue(0);
+            goalToRecover.setFinaldate(null);
+            goalToRecover.setFlagdone(false);
+
+            categoryManagement.save(cat);
+            this.goalFacade.edit(goalToRecover);
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Mensagem: " + e.getMessage());
+
+            return false;
+        }
+        
+        
     }
      
 }

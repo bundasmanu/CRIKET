@@ -69,13 +69,40 @@ and open the template in the editor.
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <a data-toggle="modal" data-target="#removeGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
+                                        <a data-toggle="modal" data-target="#recoveryDoneGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
                                             <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
                                         </a>
                                     </div>
                                             
                                 </h:panelGroup>
 
+                                <!-- not efficient at all! Is rendering a modal to each goal. -->
+                                <!-- The Modal -->
+                                <div class="modal" id="recoveryDoneGoalModal#{goalTmp.id_goal}">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                              <h4 class="modal-title">#{bundle.RecoveryDoneGoal}</h4>
+                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                          #{bundle.RecoveryDoneGoalDesc} <br></br> Goal which will be recovered: #{goalTmp.name}
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <h:commandLink id="goalId" action="#{goalBean.processRecoverDoneGoal(goalTmp.id_goal)}">
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                            </h:commandLink>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
                             </ui:repeat>
                         </div>
                     </c:if>
