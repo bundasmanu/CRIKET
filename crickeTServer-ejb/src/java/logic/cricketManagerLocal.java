@@ -34,6 +34,10 @@ public interface cricketManagerLocal {
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
+    List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email);
+    
+    List<GoalDTO> selectAllDoneGoalsFromAnUser(String email);
+        
     List<GoalDTO> selectAllGoalsFromUserByClicks(String email);
     
     @Asynchronous

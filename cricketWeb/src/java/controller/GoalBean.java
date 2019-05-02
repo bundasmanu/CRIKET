@@ -59,14 +59,24 @@ public class GoalBean implements Serializable{
     public GoalBean() {
     }
     
-    public List<GoalDTO> getAllGoals() {
+    public List<GoalDTO> getAllNotDoneGoals() {
         try {
-           return this.bridge.getCricket().selectAllGoalsFromAnUser(this.su.getEmail());
+           return this.bridge.getCricket().selectAllNotDoneGoalsFromAnUser(this.su.getEmail());
 
         } catch (Exception ex) {
             return new ArrayList();
         }
     }
+    
+    public List<GoalDTO> getAllDoneGoals() {
+        try {
+           return this.bridge.getCricket().selectAllDoneGoalsFromAnUser(this.su.getEmail());
+
+        } catch (Exception ex) {
+            return new ArrayList();
+        }
+    }
+    
     public String addGoal()
     {
         this.goalDTOTemp = new GoalDTO();
@@ -210,12 +220,8 @@ public class GoalBean implements Serializable{
         return "dashboard";
     }
     
-    public String goalIsEnd(GoalDTO goalDTO){
+    public String goalWasEnddedSucessfully(GoalDTO goalDTO){
         boolean result = bridge.getCricket().goalIsEnd(goalDTO);
-        
-        System.out.println("\n\n\n\n" + goalDTO);
-        System.out.println("\n\n\n\n goal is ended: " + result);
-        
         
         if(result && goalDTO.getStatus().equals(Config.POSITIVE))
             return "background-color: " + Config.BACKGROUND_SUCCESS_COLOR_GOAL + ";";

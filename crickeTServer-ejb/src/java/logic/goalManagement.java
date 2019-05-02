@@ -92,6 +92,76 @@ public class goalManagement implements goalManagementLocal {
     }
     
     @Override
+    public List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email) {
+
+        /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
+            return null;
+        }
+
+        /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
+        Collection<Category> catUser = u.getCategoryCollection();
+
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
+        if (catUser.isEmpty() != true) {
+            for (Category x : catUser) {
+                if (x.getGoalCollection().isEmpty() != true) {
+                    for (Goal g : x.getGoalCollection()) {
+                        if(!g.getFlagdone())
+                        {
+                            GoalDTO gt = dt.getGoalDTO(g);
+                            retorno_goals_user.add(gt);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
+        Collections.sort(retorno_goals_user);
+
+        return retorno_goals_user;
+    }
+    
+    @Override
+    public List<GoalDTO> selectAllDoneGoalsFromAnUser(String email) {
+
+        /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
+            return null;
+        }
+
+        /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
+        Collection<Category> catUser = u.getCategoryCollection();
+
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
+        if (catUser.isEmpty() != true) {
+            for (Category x : catUser) {
+                if (x.getGoalCollection().isEmpty() != true) {
+                    for (Goal g : x.getGoalCollection()) {
+                        if(g.getFlagdone())
+                        {
+                            GoalDTO gt = dt.getGoalDTO(g);
+                            retorno_goals_user.add(gt);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
+        Collections.sort(retorno_goals_user);
+
+        return retorno_goals_user;
+    }
+    
+    @Override
     public List<GoalDTO> selectAllGoalsFromUserByClicks(String email){
         
         try{
@@ -324,6 +394,10 @@ public class goalManagement implements goalManagementLocal {
                 goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
                 this.goalFacade.edit(goalI);
             }
+            
+            //if the goal isn't setted as done... set it as done
+            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue())
+                this.setGoalAsDone(goalI);
             
             return true;
         }

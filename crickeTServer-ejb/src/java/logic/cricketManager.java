@@ -167,5 +167,15 @@ public class cricketManager implements cricketManagerLocal {
     public String findRankUser(String email) {
         return this.rankManager.findRankUser(email);
     }
+
+    @Override
+    public List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email) {
+        return this.goalManager.selectAllNotDoneGoalsFromAnUser(email);
+    }
+
+    @Override
+    public List<GoalDTO> selectAllDoneGoalsFromAnUser(String email) {
+        return this.goalManager.selectAllDoneGoalsFromAnUser(email);
+    }
     
 }
