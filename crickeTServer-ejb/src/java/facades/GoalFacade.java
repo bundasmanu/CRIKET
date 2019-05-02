@@ -89,7 +89,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
         try{
             
-            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue<g.totalValue and g.finalDate< to_char( CURRENT_DATE, 'DD/MM/YYYY') as re_format and g.flagdone=TRUE ";
+            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue<g.totalValue and g.frequency != 'NEVER' ";
             Query qu=this.em.createQuery(cmdCompleteGoals);
             List<Goal> listCompleteGoals= (List<Goal>) qu.getResultList();
             

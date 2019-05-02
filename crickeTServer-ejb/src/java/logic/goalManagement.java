@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic;
 
 import cricketdto.GoalDTO;
@@ -23,6 +18,7 @@ import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -43,7 +39,7 @@ import javax.ejb.Singleton;
 public class goalManagement implements goalManagementLocal {
 
     @EJB
-    GoalFacadeLocal goal;
+    GoalFacadeLocal goalFacade;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -89,48 +85,49 @@ public class goalManagement implements goalManagementLocal {
 
         return retorno_goals_user;
     }
-
+    
     @Override
-    public List<GoalDTO> selectAllGoalsFromUserByClicks(String email) {
-
-        try {
-
-            Utilizador user = this.ut.findByEmail(email);
-
-            if (user == null) {
+    public List<GoalDTO> selectAllGoalsFromUserByClicks(String email){
+        
+        try{
+            
+            Utilizador user=this.ut.findByEmail(email);
+            
+            if(user==null){
                 return null;
             }
-
-            Collection<Category> userCategories = user.getCategoryCollection();
-
-            if (userCategories.isEmpty() == true) {
+            
+            Collection<Category> userCategories=user.getCategoryCollection();
+            
+            if(userCategories.isEmpty()==true){
                 return null;
             }
-
-            List<GoalDTO> allGoalsOfUser = new ArrayList<GoalDTO>();
-
-            for (Category c : userCategories) {
-                if (c.getGoalCollection().isEmpty() == false) {
-                    for (Goal g : c.getGoalCollection()) {
+            
+            List<GoalDTO> allGoalsOfUser=new ArrayList<GoalDTO>();
+            
+            for(Category c : userCategories){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
                         allGoalsOfUser.add(DTOFactory.getGoalDTO(g));
                     }
                 }
             }
-
-            if (allGoalsOfUser.isEmpty() == true) {
+            
+            if(allGoalsOfUser.isEmpty()==true){
                 return null;
             }
-
+            
             /*ORDENACAO AGORA PELO NUMERO DE CLICKS*/
             Collections.sort(allGoalsOfUser, new GoalDTO());
-
+            
             return allGoalsOfUser;
-
-        } catch (Exception e) {
+            
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return null;
         }
-
+        
     }
 
     @Override
@@ -139,30 +136,26 @@ public class goalManagement implements goalManagementLocal {
         try {
             //verify if this goal exists with the same name
             Category cTmp = this.ca.find(newGoalDTO.getIdCategory());
+            
 
             if (cTmp == null) {
                 return false;
             }
-
+            
             //if the category has goals...
-            if (!cTmp.getGoalCollection().isEmpty()) {
-                for (Goal goalTmp : cTmp.getGoalCollection()) {
-                    if (goalTmp.getNome().equals(newGoalDTO.getName())) {
+            if(!cTmp.getGoalCollection().isEmpty()){
+                for(Goal goalTmp: cTmp.getGoalCollection())
+                {
+                    if(goalTmp.getNome().equals(newGoalDTO.getName()))
                         return false;
-                    }
                 }
             }
-
-            DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-            Date dateActual = new Date();
-
+            
             Goal newGoal = new Goal();
             newGoal.setCurrentvalue(newGoalDTO.getCurrentValue());
             newGoal.setDescript(newGoalDTO.getDesc());
             newGoal.setFavorite(newGoalDTO.getFavorite());
-
             newGoal.setFinaldate(newGoalDTO.getFinalDate());
-
             newGoal.setLogdate(newGoalDTO.getLogDate());
             newGoal.setFlagClickControl(newGoalDTO.getFlagClick());
             newGoal.setFlagOrder(newGoalDTO.getFlag_order());
@@ -174,10 +167,12 @@ public class goalManagement implements goalManagementLocal {
 
             //persist on database the respective goal
             //this.goal.create(newGoal);
+
+            
             cTmp.getGoalCollection().add(newGoal);
-
+            
             categoryManagement.save(cTmp);
-
+            
             return true;
 
         } catch (Exception e) {
@@ -191,11 +186,11 @@ public class goalManagement implements goalManagementLocal {
     public boolean editGoal(GoalDTO editGoalDTO) {
 
         try {
-            Goal goalToEdit = this.goal.find(editGoalDTO.getId_goal());
+            Goal goalToEdit = this.goalFacade.find(editGoalDTO.getId_goal());
 
             Category cat = this.ca.find(editGoalDTO.getIdCategory());
 
-            if (goal == null || cat == null) {
+            if (goalFacade == null || cat == null) {
                 return false;
             }
 
@@ -214,7 +209,7 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setFrequency(editGoalDTO.getFrequency());
 
             categoryManagement.save(cat);
-            this.goal.edit(goalToEdit);
+            this.goalFacade.edit(goalToEdit);
 
             return true;
         } catch (Exception e) {
@@ -234,18 +229,18 @@ public class goalManagement implements goalManagementLocal {
             }
 
             //find goal by id
-            Goal g = this.goal.find(id);
+            Goal g = this.goalFacade.find(id);
 
             if (g == null) {
                 return false;
             }
-
+            
             Category category = g.getIdCategory();
             category.getGoalCollection().remove(g);
             categoryManagement.save(category);
-
+            
             //remove the goal
-            this.goal.remove(g);
+            this.goalFacade.remove(g);
             return true;
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
@@ -253,353 +248,379 @@ public class goalManagement implements goalManagementLocal {
         }
 
     }
-
+    
     @Asynchronous
     @Override
-    public Future<Integer> getNextValueGoal(String email) {
-
-        try {
-
+    public Future<Integer> getNextValueGoal(String email){
+         
+        try{
+            
             /*VERIFICAR INICIALMENTE SE O UTILIZADOR EXISTE*/
-            Utilizador u = this.ut.findByEmail(email);
-
-            if (u == null) {
+            Utilizador u=this.ut.findByEmail(email);
+            
+            if(u==null){
                 return new AsyncResult<>(-2);
             }
-
+            
             /*VERIFICAR SE JA EXISTEM GOALS PARA ESSE USER*/
-            Collection catUser = u.getCategoryCollection();
-            if (catUser.isEmpty() == true) {
+            Collection catUser=u.getCategoryCollection();
+            if(catUser.isEmpty()==true){
                 return new AsyncResult<>(1);/*NAO EXISTEM ELEMENTOS ENTAO O PRIMEIRO ELEMENTO É 1*/
             }
-
-            List<Integer> goals = new ArrayList<Integer>();
-            for (Category c : u.getCategoryCollection()) {
-                if (c.getGoalCollection().isEmpty() == false) {
-                    for (Goal g : c.getGoalCollection()) {
+            
+            List<Integer> goals=new ArrayList<Integer>();
+            for(Category c : u.getCategoryCollection()){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
                         goals.add(g.getIdGoal());
                     }
                 }
             }
-
+            
             /*SE TENHO CATEGORIAS, MAS NAO TENHO GOALS, RETORNA 1*/
-            if (goals.isEmpty() == true) {
+            if(goals.isEmpty()==true){  
                 return new AsyncResult<>(1);
             }
-
+            
             /*OBTENCAO DO MAIOR VALOR DO GOAL*/
-            Integer maxValue = Collections.max(goals);
-
-            return new AsyncResult<>(maxValue + 1);
-
-        } catch (Exception e) {
+            Integer maxValue=Collections.max(goals);
+            
+            return new AsyncResult<>(maxValue+1);
+            
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return new AsyncResult<>(-1);
         }
-
+        
     }
 
     @Override
     public GoalDTO findGoalDTOById(int id) {
-        Goal goalTmp = goal.find(id);
-
-        if (goalTmp == null) {
+        Goal goalTmp = goalFacade.find(id);
+        
+        if(goalTmp == null)
             return null;
-        }
         return DTOFactory.getGoalDTO(goalTmp);
     }
-
+    
     @Override
-    public boolean increaseCurrentValue(GoalDTO goal) {
-
-        try {
-
-            Goal goalI = this.goal.find(goal.getId_goal());
-            if (goalI == null) {
+    public boolean increaseCurrentValue(GoalDTO goal){
+        
+        try{
+            
+            Goal goalI=this.goalFacade.find(goal.getId_goal());            
+            if(goalI==null){
                 return false;
             }
-
-            if (goalI.getCurrentvalue() + 1 <= goalI.getTotalvalue()) {
-                goalI.setCurrentvalue(goalI.getCurrentvalue() + 1);
-                this.goal.edit(goalI);
+            
+            if(goalI.getCurrentvalue() + 1 <= goalI.getTotalvalue())
+            {
+                goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
+                this.goalFacade.edit(goalI);
             }
-
+            
             return true;
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
-
+        
     }
-
+    
     @Override
-    public boolean decreaseCurrentValue(GoalDTO goal) {
-
-        try {
-            Goal goalI = this.goal.find(goal.getId_goal());
-
-            if (goalI == null) {
+    public boolean decreaseCurrentValue(GoalDTO goal){
+             
+        try{
+            Goal goalI=this.goalFacade.find(goal.getId_goal());
+            
+            if(goalI==null){
                 return false;
             }
-
-            if (goalI.getCurrentvalue() - 1 >= 0) {
-                goalI.setCurrentvalue(goalI.getCurrentvalue() - 1);
-                this.goal.edit(goalI);
+            
+            if(goalI.getCurrentvalue() - 1 >= 0)
+            {
+                goalI.setCurrentvalue(goalI.getCurrentvalue()-1);
+                this.goalFacade.edit(goalI);
             }
             return true;
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
     }
-
+    
     @Override
-    public boolean goalIsEnd(GoalDTO goal) {
-
-        try {
-
+    public boolean goalIsEnd(GoalDTO goal){
+        
+        try{
+            
             /*VERIFICAR SE O GOAL EXISTE*/
-            Goal gT = this.goal.find(goal.getId_goal());
-
+            Goal gT=this.goalFacade.find(goal.getId_goal());
+            
             /*PARA NAO CONFUNDIR O FALSE, DE NAO EXISTE COM ESTOIRO*/
-            if (gT == null) {
+            if(gT==null){
                 throw new Exception();
             }
-
+            
             //not the best way to get the actual date... but it's functional :D
             DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String formattedString = LocalDate.now().format(formatterLocalDate);
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date actualDate = formatter.parse(formattedString);
-
+            
             System.out.println("\n\n\n atual date: " + actualDate);
             System.out.println("\n\n\n goal final date: " + gT.getFinaldate());
 
+            
             /*VERIFICAR O CURRENT VALUE, E AS DATA DE CONCLUSAO*/
-            if (gT.getCurrentvalue() >= gT.getTotalvalue() || isEnd(gT.getFinaldate(), actualDate)) {
+            if(gT.getCurrentvalue()>=gT.getTotalvalue() || isEnd(gT.getFinaldate(), actualDate)){
                 return true;
             }
-
+            
             return false;
-
-        } catch (Exception e) {
+            
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
-
+        
     }
-
-    public static boolean isEnd(Date date1, Date date2) {
-
-        if (date1 == null) //since it can be null (not defined final date)
-        {
+    
+     public static boolean isEnd(Date date1,Date date2){
+         
+        if(date1 == null) //since it can be null (not defined final date)
             return false;
-        }
 
-        if (date1.equals(date2)) {
+        if(date1.equals(date2)){
             return true;
         }
-
-        if (date1.before(date2)) {
+         
+        if(date1.before(date2)){
             return true;
         }
 
         return false;
     }
 
-    @Override
-    public boolean downOrderValue(GoalDTO goal) {
-
-        try {
-
+    @Override 
+    public boolean downOrderValue(GoalDTO goal){
+        
+        try{
+            
             /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals = this.goal.findAll();
-
-            if (listOfGoals == null) {
+            List<Goal> listOfGoals=this.goalFacade.findAll();
+            
+            if(listOfGoals==null){
                 return false;
             }
-
+            
             /*VERIFICAR SE EXISTE O GOAL*/
-            for (Goal g : listOfGoals) {
-                if (g.getIdGoal().equals(goal.getId_goal()) == true) {
+            for(Goal g : listOfGoals){
+                if(g.getIdGoal().equals(goal.getId_goal())==true){
                     /*TROCAR O VALOR DO ORDER DESTE ELEMENTO COM O ELEMENTO QUE ESTAVA ATRAS*/
-                    g.setFlagOrder(g.getFlagOrder() - 1);
-                    int posGoal = listOfGoals.indexOf(g);
-                    Goal increaseGoal = listOfGoals.get(posGoal - 1);
-                    if (increaseGoal != null) {
-                        increaseGoal.setFlagOrder(increaseGoal.getFlagOrder() + 1);
-                        this.goal.edit(increaseGoal);
+                    g.setFlagOrder(g.getFlagOrder()-1);
+                    int posGoal=listOfGoals.indexOf(g);
+                    Goal increaseGoal=listOfGoals.get(posGoal-1);
+                    if(increaseGoal!=null){
+                        increaseGoal.setFlagOrder(increaseGoal.getFlagOrder()+1);
+                        this.goalFacade.edit(increaseGoal);
                     }
-                    this.goal.edit(g);
+                    this.goalFacade.edit(g);
                     return true;
                 }
             }
-
+            
+            
             return false;
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
-
+        
     }
-
+    
     @Override
-    public boolean upOrderValue(GoalDTO goal) {
-
+    public boolean upOrderValue(GoalDTO goal){
+        
         try {
-
-            /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals = this.goal.findAll();
-
-            if (listOfGoals == null) {
+            
+             /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
+            List<Goal> listOfGoals=this.goalFacade.findAll();
+            
+            if(listOfGoals==null){
                 return false;
             }
-
+            
             /*VERIFICAR SE EXISTE O GOAL*/
-            for (Goal g : listOfGoals) {
-                if (g.getIdGoal().equals(goal.getId_goal()) == true) {
+            for(Goal g : listOfGoals){
+                if(g.getIdGoal().equals(goal.getId_goal())==true){
                     /*TROCAR O VALOR DO ORDER DESTE ELEMENTO COM O ELEMENTO QUE ESTA À FRENTE*/
-                    g.setFlagOrder(g.getFlagOrder() + 1);
-                    int posGoal = listOfGoals.indexOf(g);
-                    Goal decreaseGoal = listOfGoals.get(posGoal + 1);
-                    if (decreaseGoal != null) {
-                        decreaseGoal.setFlagOrder(decreaseGoal.getFlagOrder() - 1);
-                        this.goal.edit(decreaseGoal);
+                    g.setFlagOrder(g.getFlagOrder()+1);
+                    int posGoal=listOfGoals.indexOf(g);
+                    Goal decreaseGoal=listOfGoals.get(posGoal+1);
+                    if(decreaseGoal!=null){
+                        decreaseGoal.setFlagOrder(decreaseGoal.getFlagOrder()-1);
+                        this.goalFacade.edit(decreaseGoal);
                     }
-                    this.goal.edit(g);
+                    this.goalFacade.edit(g);
                     return true;
                 }
-            }
-
+            }  
+            
             return false;
-
-        } catch (Exception e) {
+            
+        }catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
-
+        
     }
-
+    
     @Override
-    public boolean increaseClickFlag(GoalDTO goal) {
-
-        try {
-
-            Goal goalClick = this.goal.find(goal.getId_goal());
-
-            if (goalClick == null) {
+    public boolean increaseClickFlag(GoalDTO goal){
+         
+        try{
+            
+            Goal goalClick=this.goalFacade.find(goal.getId_goal());            
+            
+            if(goalClick==null){
                 return false;
             }
-
-            goalClick.setFlagClickControl(goalClick.getFlagClickControl() + 1);
-
-            this.goal.edit(goalClick);
-
+            
+            goalClick.setFlagClickControl(goalClick.getFlagClickControl()+1);
+            
+            this.goalFacade.edit(goalClick); 
+            
             return true;
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return false;
         }
-
+        
     }
-
+    
     @Override
-    public List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2) {
-
-        try {
-
+    public List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2){
+        
+        try{
+            
             /*VERIFICAR PRIMEIRO SE O UTILIZADOR EXISTE*/
-            Utilizador u = this.ut.findByEmail(email);
-
-            if (u == null) {
+            Utilizador u=this.ut.findByEmail(email);
+            
+            if(u==null){
                 return null;
             }
-
+            
             /*PRIMEIRO PASSAR AS DATAS PARA O FORMATO CORRETO*/
-            d1 = this.getDateInRightFormat(d1);
-            d2 = this.getDateInRightFormat(d2);
-
-            if (d1 == null || d2 == null) {
+            d1=this.getDateInRightFormat(d1);
+            d2=this.getDateInRightFormat(d2);
+            
+            if(d1==null || d2==null){
                 return null;
             }
-
-            List<Goal> getListOfGoalsBetweenDates = this.goal.getGoalsBetweenDates(u, d1, d2);
-
-            if (getListOfGoalsBetweenDates == null) {
+            
+            List<Goal> getListOfGoalsBetweenDates=this.goalFacade.getGoalsBetweenDates(u,d1, d2);
+            
+            if(getListOfGoalsBetweenDates==null){
                 return null;
             }
-
+            
             /*CONVERSAO DE GOAL, PARA GOAL DTO*/
-            List<GoalDTO> listGoals = new ArrayList<GoalDTO>();
-            for (Goal g : getListOfGoalsBetweenDates) {
+            List<GoalDTO> listGoals=new ArrayList<GoalDTO>();
+            for(Goal g : getListOfGoalsBetweenDates){
                 listGoals.add(DTOFactory.getGoalDTO(g));
             }
-
+            
             return listGoals;
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return null;
         }
-
+        
     }
-
-    public Date getDateInRightFormat(Date d1) {
-
-        try {
-
+    
+    public Date getDateInRightFormat(Date d1){
+        
+        try{
+            
             DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String formattedString = LocalDate.now().format(formatterLocalDate);
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date actualDate = formatter.parse(formattedString);
-
+            
             return actualDate;
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return null;
         }
-
+        
     }
-
-    public List<GoalDTO> orderGoalsBetweenDate(String email) {
-
-        try {
-
+    
+    public List<GoalDTO> orderGoalsBetweenDate(String email){
+        
+        try{
+            
             /*VERIFICAR SE O USER EXISTE*/
-            Utilizador u = this.ut.findByEmail(email);
-
-            if (u == null) {
+            Utilizador u=this.ut.findByEmail(email);
+            
+            if(u==null){
                 return null;
             }
-
-            if (u.getCategoryCollection().isEmpty() == true) {
+            
+            if(u.getCategoryCollection().isEmpty()==true){
                 return null;
             }
-
+            
             List<GoalDTO> listGoalsOfAnUser = new ArrayList<GoalDTO>();
-            for (Category c : u.getCategoryCollection()) {
-                if (c.getGoalCollection().isEmpty() == false) {
-                    for (Goal g : c.getGoalCollection()) {
-                        listGoalsOfAnUser.add(DTOFactory.getGoalDTO(g));
+            for(Category c : u.getCategoryCollection()){
+                if(c.getGoalCollection().isEmpty()==false){
+                    for(Goal g : c.getGoalCollection()){
+                        listGoalsOfAnUser.add(DTOFactory.getGoalDTO(g));    
                     }
                 }
             }
-
-            if (listGoalsOfAnUser.isEmpty() == true) {
+            
+            if(listGoalsOfAnUser.isEmpty()==true){
                 return null;
             }
-
+            
             /*ORDENA OS OBJETIVOS, UTILIZANDO A CLASSE CRIADA PARA O EFEITO*/
-            List<GoalDTO> orderedListofGoalsByDate = GoalDTO.retGoalsOrderByDate(listGoalsOfAnUser);
-
+            List<GoalDTO> orderedListofGoalsByDate=GoalDTO.retGoalsOrderByDate(listGoalsOfAnUser);
+            
             return orderedListofGoalsByDate;
-
-        } catch (Exception e) {
+            
+        }
+        catch(Exception e){
             System.out.println(e.getMessage());
             return null;
         }
-
+        
     }
 
+    @Override
+    public boolean setGoalAsDone(Goal goalTmp) {
+        
+        if(goalTmp == null)
+            return false;
+        
+        goalTmp.setFlagdone(true);
+        Date logDate = Date.from(Instant.now());
+        goalTmp.setFinaldate(logDate);
+        
+        goalFacade.edit(goalTmp);
+        categoryManagement.save(goalTmp.getIdCategory());
+        
+        return true;
+    }
+     
 }
