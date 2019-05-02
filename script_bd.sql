@@ -235,7 +235,7 @@ alter table UTILIZADOR
       on delete restrict on update restrict;
 
 create sequence sequence_UTILIZADOR_seq;
-alter table UTILIZADOR alter id_UTILIZADOR set default nextval('sequence_UTILIZADOR_seq');
+alter table UTILIZADOR alter ID_USER set default nextval('sequence_UTILIZADOR_seq');
 
 create sequence sequence_rank_seq;
 alter table RANKING alter id_rank set default nextval('sequence_rank_seq');
