@@ -51,6 +51,9 @@ public class DailyTimer implements DailyTimerLocal {
     @EJB
     CategoryFacadeLocal cat;
     
+    @EJB
+    goalManagementLocal goalM;
+    
     @PostConstruct
     public void startCrono(){
         CancelTimers();
@@ -76,7 +79,11 @@ public class DailyTimer implements DailyTimerLocal {
     
     @Schedule(hour="0", dayOfWeek ="*"  , info="RunsEveryDay")
     public void timeoutEveryDay() { 
-        
+        /*CALL TIMEOUT METHODS FOR GOALS DIFFERENT NEVER*/
+        this.testDailyGoals();
+        this.testWeeklyGoals();
+        this.testMonthlyGoals();
+        this.testYearGoals();
     }
     
     /*METODOS CHAMADOS NO TIMEOUT*/
@@ -104,8 +111,7 @@ public class DailyTimer implements DailyTimerLocal {
                         this.createCloneGoal(g);
                     }
                     /*TERMINA OBJETIVO*/
-                    this.goals.edit(g);
-                    this.cat.edit(g.getIdCategory());
+                    this.goalM.setGoalAsDone(g);
                 }
             }
             
@@ -141,8 +147,7 @@ public class DailyTimer implements DailyTimerLocal {
                     if (this.getDateTimeNow().before(g.getFinaldate())) {
                         this.createCloneGoal(g);
                     }
-                    this.goals.edit(g);
-                    this.cat.edit(g.getIdCategory());
+                    this.goalM.setGoalAsDone(g);
                 }
             }
 
@@ -179,8 +184,7 @@ public class DailyTimer implements DailyTimerLocal {
                         if (this.getDateTimeNow().before(g.getFinaldate())) {
                             this.createCloneGoal(g);
                         }
-                        this.goals.edit(g);
-                        this.cat.edit(g.getIdCategory());
+                        this.goalM.setGoalAsDone(g);
                     }
 
                 }
@@ -218,8 +222,7 @@ public class DailyTimer implements DailyTimerLocal {
                         if (this.getDateTimeNow().before(g.getFinaldate())) {
                             this.createCloneGoal(g);
                         }
-                        this.goals.edit(g);
-                        this.cat.edit(g.getIdCategory());
+                        this.goalM.setGoalAsDone(g);
                     }
 
                 }
