@@ -179,4 +179,22 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
     }
     
+    @Override
+    public List<Goal> getGoalsWithSameNameAndLogdate(Goal g){
+        
+        try{
+            
+            String goalsQuery = "select g from Goal g where g.nome='"+g.getNome()+"' and g.logdate='"+g.getLogdate()+"' order by g.logfinaldate";
+            Query qu = this.em.createQuery(goalsQuery);
+            List<Goal> goals = (List<Goal>) qu.getResultList();
+            
+            return goals;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
 }
