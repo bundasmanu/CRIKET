@@ -99,10 +99,11 @@ public class DailyTimer implements DailyTimerLocal {
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             
             for(Goal g : listDailyGoals){
-                if(g.getFlagdone()==Boolean.FALSE){
-                    this.createCloneGoal(g);
-                    /*ATUALIZA A FLAG*/
-                    g.setFlagdone(Boolean.TRUE);
+                if(g.getFlagdone()==Boolean.FALSE && g.getCurrentvalue()>=g.getTotalvalue()){
+                    if(this.getDateTimeNow().before(g.getFinaldate())){
+                        this.createCloneGoal(g);
+                    }
+                    /*TERMINA OBJETIVO*/
                     this.goals.edit(g);
                     this.cat.edit(g.getIdCategory());
                 }
@@ -135,10 +136,11 @@ public class DailyTimer implements DailyTimerLocal {
 
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listWeeklyGoals) {
-                if (g.getFlagdone() == Boolean.FALSE && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogdate())==7) { /*VERIFICAR SE JÁ PASSARAM 7 DIAS DESDE A SUA DATA DE CRIACAO*/
-                    this.createCloneGoal(g);
-                    /*ATUALIZA A FLAG*/
-                    g.setFlagdone(Boolean.TRUE);
+                if (g.getFlagdone() == Boolean.FALSE && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogfinaldate()) == 7 && g.getCurrentvalue() >= g.getTotalvalue()) {
+                    /*VERIFICAR SE JÁ PASSARAM 7 DIAS DESDE A SUA DATA DE CRIACAO*/
+                    if (this.getDateTimeNow().before(g.getFinaldate())) {
+                        this.createCloneGoal(g);
+                    }
                     this.goals.edit(g);
                     this.cat.edit(g.getIdCategory());
                 }
@@ -170,13 +172,13 @@ public class DailyTimer implements DailyTimerLocal {
 
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listMonthlyGoals) {
-                if (g.getFlagdone() == Boolean.FALSE) {
+                if (g.getFlagdone() == Boolean.FALSE && g.getCurrentvalue() >= g.getTotalvalue()) {
                     /*COMPARAR COM O MES ATUAL, VISTO QUE IMAGINE SE QUE FOI SUBMETIDO O OBJETIVO EM DEZEMBRO, E JA ESTAMOS NO ANO A SEGUIR A COMPARAR*/
-                    int daysDistance=this.getDaysOnAMonth(g.getLogdate());
-                    if(this.getDaysBetweenDates(g.getLogdate(), this.getDateTimeNow())==daysDistance){
-                        this.createCloneGoal(g);
-                        /*ATUALIZA A FLAG*/
-                        g.setFlagdone(Boolean.TRUE);
+                    int daysDistance = this.getDaysOnAMonth(g.getLogdate());
+                    if (this.getDaysBetweenDates(g.getLogfinaldate(), this.getDateTimeNow()) == daysDistance) {
+                        if (this.getDateTimeNow().before(g.getFinaldate())) {
+                            this.createCloneGoal(g);
+                        }
                         this.goals.edit(g);
                         this.cat.edit(g.getIdCategory());
                     }
@@ -210,12 +212,12 @@ public class DailyTimer implements DailyTimerLocal {
 
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listYearlyGoals) {
-                if (g.getFlagdone() == Boolean.FALSE) {
+                if (g.getFlagdone() == Boolean.FALSE && g.getCurrentvalue() >= g.getTotalvalue()) {
                     /*COMPARAR COM O MES ATUAL, VISTO QUE IMAGINE SE QUE FOI SUBMETIDO O OBJETIVO EM DEZEMBRO, E JA ESTAMOS NO ANO A SEGUIR A COMPARAR*/
-                    if ((this.isLeapYear(this.getDateTimeNow()) == true && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogdate()) == 366) || (this.isLeapYear(this.getDateTimeNow()) == false && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogdate()) == 365)) {
-                        this.createCloneGoal(g);
-                        /*ATUALIZA A FLAG*/
-                        g.setFlagdone(Boolean.TRUE);
+                    if ((this.isLeapYear(this.getDateTimeNow()) == true && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogfinaldate()) == 366) || (this.isLeapYear(this.getDateTimeNow()) == false && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogdate()) == 365)) {
+                        if (this.getDateTimeNow().before(g.getFinaldate())) {
+                            this.createCloneGoal(g);
+                        }
                         this.goals.edit(g);
                         this.cat.edit(g.getIdCategory());
                     }
@@ -237,6 +239,7 @@ public class DailyTimer implements DailyTimerLocal {
         try{
             
             Goal x=new Goal(g.getNome(), g.getDescript(), g.getFrequency(), g.getStatus(), g.getTotalvalue(), g.getCurrentvalue(), g.getFavorite(), g.getLogdate(), g.getFlagClickControl(),g.getFlagOrder() , Boolean.FALSE);
+            x.setLogfinaldate(null);
             Category c=g.getIdCategory();
             
             x.setIdCategory(c);
