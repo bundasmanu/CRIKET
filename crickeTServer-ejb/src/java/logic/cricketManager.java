@@ -37,6 +37,9 @@ public class cricketManager implements cricketManagerLocal {
 
     @EJB
     categoryManagementLocal categoryManager;
+    
+    @EJB
+    rankingManagementLocal rankManager;
 
     @Override
     public boolean validateLogin(String email, String pass) {
@@ -158,6 +161,11 @@ public class cricketManager implements cricketManagerLocal {
     @Override
     public List<GoalDTO> orderGoalsBetweenDate(String email){
         return this.goalManager.orderGoalsBetweenDate(email);
+    }
+
+    @Override
+    public String findRankUser(String email) {
+        return this.rankManager.findRankUser(email);
     }
     
 }

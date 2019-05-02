@@ -29,6 +29,18 @@ public interface GoalFacadeLocal {
     Goal findByName(String name_goal);
     
     List<Goal> getGoalsBetweenDates(Utilizador u, Date d1, Date d2);
+    
+    List<Goal> getCompleteGoalsFromAnUser(Utilizador u);
+    
+    List<Goal> getIncompleteGoalsFromAnUser(Utilizador u);
+    
+    List<Goal> getDailyGoals();
+    
+    List<Goal> getWeeklyGoals();
+    
+    List<Goal> getMonthlyGoals();
+    
+    List<Goal> getYearGoals();
 
     List<Goal> findAll();
 

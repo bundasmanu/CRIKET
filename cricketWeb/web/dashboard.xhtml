@@ -26,10 +26,10 @@ and open the template in the editor.
 
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
-
+                
                 <h3>#{bundle.GoalListTitle}</h3>
                 <p> #{bundle.GoalListDesc}</p>
-
+                
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#filters">#{bundle.GoalListFiltersButton}</button>
                 <div id="filters" class="collapse panel panel-default">
                     <h:form>

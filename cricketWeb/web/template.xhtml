@@ -30,15 +30,16 @@
             <nav class="navbar bg-dark navbar-dark">
 
                 <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
-
+                
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
+                    
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav float-right">
                             
-                            <!--
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>
                             </li>
@@ -57,8 +58,8 @@
                                 </h:link>
                                 <a class="nav-link" href="#">Link</a>
                             </li>
-                            -->
                             
+                          
                             <li class="nav-item">
                                 <li>
                                     <h:commandLink action="#{sessionBean.processLogout}">
@@ -83,7 +84,12 @@
                 <div class="col-8">
 
                     <div class="container">
-
+                        <h:form rendered="#{sessionBean.isLogged}">
+                            <h3>Email:</h3><h:outputText value = "#{sessionBean.email}"></h:outputText><h3>Rank:</h3><h:outputText value="#{rankBean.processFindRank()}"></h:outputText>
+                               
+                         </h:form>
+                                           
+                       
                         <header class="section-header">
                             <div class="jumbotron">
                                 <ui:insert name="containerTitle">Default Title</ui:insert>   
