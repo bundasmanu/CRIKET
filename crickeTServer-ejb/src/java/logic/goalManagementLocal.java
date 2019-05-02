@@ -6,6 +6,7 @@
 package logic;
 
 import cricketdto.GoalDTO;
+import entities.Goal;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -49,5 +50,7 @@ public interface goalManagementLocal {
     List<GoalDTO> getGoalsBetweenTwoDates(String email,Date d1, Date d2);
     
     List<GoalDTO> orderGoalsBetweenDate(String email);
+    
+    boolean setGoalAsDone(Goal goal);
     
 }

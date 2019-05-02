@@ -6,7 +6,9 @@
 package logic;
 
 import entities.Ranking;
+import entities.Utilizador;
 import facades.RankingFacadeLocal;
+import facades.UtilizadorFacadeLocal;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
@@ -22,6 +24,9 @@ public class rankingManagement implements rankingManagementLocal {
     
     @EJB
     RankingFacadeLocal rankL;
+    
+    @EJB
+    UtilizadorFacadeLocal ut;
     
     @Override
     public boolean createRanking(String name, int minP){
@@ -47,6 +52,26 @@ public class rankingManagement implements rankingManagementLocal {
             return false;
         }
         
+    }
+
+    @Override
+    public String findRankUser(String email) {
+       try{
+           //verifica o user logado
+           Utilizador u= this.ut.findByEmail(email);
+           if(u==null){
+               return "";
+           }
+           
+           Ranking rank= this.rankL.findByName(u.getIdRank().getNome());
+           if(rank==null){
+               return "";
+           }
+           return rank.getNome();
+       }catch(Exception e){
+           System.out.println(""+e.getMessage());
+           return "";
+       }
     }
     
 }

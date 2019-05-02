@@ -47,5 +47,4 @@ public interface GoalFacadeLocal {
     List<Goal> findRange(int[] range);
 
     int count();
-    
 }
