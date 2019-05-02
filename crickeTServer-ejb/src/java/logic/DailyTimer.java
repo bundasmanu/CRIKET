@@ -288,7 +288,7 @@ public class DailyTimer implements DailyTimerLocal {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date actualDate = formatter.parse(formattedString);
             
-            return actualDate;
+            return actualDate; 
         }
         catch(Exception e){
             System.out.println(e.getMessage());
