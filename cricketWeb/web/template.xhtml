@@ -17,6 +17,7 @@
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="resources/css/mycss.css"></link>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -30,7 +31,7 @@
             <nav class="navbar bg-dark navbar-dark">
 
                 <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
-                
+                <p id="hm">Welcome,#{sessionBean.email}|Rank:#{rankBean.processFindRank()}</p>
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
                     
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -85,7 +86,7 @@
 
                     <div class="container">
                         <h:form rendered="#{sessionBean.isLogged}">
-                            <h3>Email:</h3><h:outputText value = "#{sessionBean.email}"></h:outputText><h3>Rank:</h3><h:outputText value="#{rankBean.processFindRank()}"></h:outputText>
+                            
                                
                          </h:form>
                                            
