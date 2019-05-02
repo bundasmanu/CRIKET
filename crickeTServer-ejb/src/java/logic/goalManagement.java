@@ -23,6 +23,7 @@ import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -43,7 +44,7 @@ import javax.ejb.Singleton;
 public class goalManagement implements goalManagementLocal {
 
     @EJB
-    GoalFacadeLocal goal;
+    GoalFacadeLocal goalFacade;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -190,11 +191,11 @@ public class goalManagement implements goalManagementLocal {
     public boolean editGoal(GoalDTO editGoalDTO) {
 
         try {
-            Goal goalToEdit = this.goal.find(editGoalDTO.getId_goal());
+            Goal goalToEdit = this.goalFacade.find(editGoalDTO.getId_goal());
 
             Category cat = this.ca.find(editGoalDTO.getIdCategory());
 
-            if (goal == null || cat == null) {
+            if (goalFacade == null || cat == null) {
                 return false;
             }
 
@@ -213,7 +214,7 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setFrequency(editGoalDTO.getFrequency());
 
             categoryManagement.save(cat);
-            this.goal.edit(goalToEdit);
+            this.goalFacade.edit(goalToEdit);
 
             return true;
         } catch (Exception e) {
@@ -233,7 +234,7 @@ public class goalManagement implements goalManagementLocal {
             }
 
             //find goal by id
-            Goal g = this.goal.find(id);
+            Goal g = this.goalFacade.find(id);
 
             if (g == null) {
                 return false;
@@ -244,7 +245,7 @@ public class goalManagement implements goalManagementLocal {
             categoryManagement.save(category);
             
             //remove the goal
-            this.goal.remove(g);
+            this.goalFacade.remove(g);
             return true;
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
@@ -301,7 +302,7 @@ public class goalManagement implements goalManagementLocal {
 
     @Override
     public GoalDTO findGoalDTOById(int id) {
-        Goal goalTmp = goal.find(id);
+        Goal goalTmp = goalFacade.find(id);
         
         if(goalTmp == null)
             return null;
@@ -313,7 +314,7 @@ public class goalManagement implements goalManagementLocal {
         
         try{
             
-            Goal goalI=this.goal.find(goal.getId_goal());            
+            Goal goalI=this.goalFacade.find(goal.getId_goal());            
             if(goalI==null){
                 return false;
             }
@@ -321,7 +322,7 @@ public class goalManagement implements goalManagementLocal {
             if(goalI.getCurrentvalue() + 1 <= goalI.getTotalvalue())
             {
                 goalI.setCurrentvalue(goalI.getCurrentvalue()+1);
-                this.goal.edit(goalI);
+                this.goalFacade.edit(goalI);
             }
             
             return true;
@@ -337,7 +338,7 @@ public class goalManagement implements goalManagementLocal {
     public boolean decreaseCurrentValue(GoalDTO goal){
              
         try{
-            Goal goalI=this.goal.find(goal.getId_goal());
+            Goal goalI=this.goalFacade.find(goal.getId_goal());
             
             if(goalI==null){
                 return false;
@@ -346,7 +347,7 @@ public class goalManagement implements goalManagementLocal {
             if(goalI.getCurrentvalue() - 1 >= 0)
             {
                 goalI.setCurrentvalue(goalI.getCurrentvalue()-1);
-                this.goal.edit(goalI);
+                this.goalFacade.edit(goalI);
             }
             return true;
         }
@@ -362,7 +363,7 @@ public class goalManagement implements goalManagementLocal {
         try{
             
             /*VERIFICAR SE O GOAL EXISTE*/
-            Goal gT=this.goal.find(goal.getId_goal());
+            Goal gT=this.goalFacade.find(goal.getId_goal());
             
             /*PARA NAO CONFUNDIR O FALSE, DE NAO EXISTE COM ESTOIRO*/
             if(gT==null){
@@ -417,7 +418,7 @@ public class goalManagement implements goalManagementLocal {
         try{
             
             /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals=this.goal.findAll();
+            List<Goal> listOfGoals=this.goalFacade.findAll();
             
             if(listOfGoals==null){
                 return false;
@@ -432,9 +433,9 @@ public class goalManagement implements goalManagementLocal {
                     Goal increaseGoal=listOfGoals.get(posGoal-1);
                     if(increaseGoal!=null){
                         increaseGoal.setFlagOrder(increaseGoal.getFlagOrder()+1);
-                        this.goal.edit(increaseGoal);
+                        this.goalFacade.edit(increaseGoal);
                     }
-                    this.goal.edit(g);
+                    this.goalFacade.edit(g);
                     return true;
                 }
             }
@@ -455,7 +456,7 @@ public class goalManagement implements goalManagementLocal {
         try {
             
              /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals=this.goal.findAll();
+            List<Goal> listOfGoals=this.goalFacade.findAll();
             
             if(listOfGoals==null){
                 return false;
@@ -470,9 +471,9 @@ public class goalManagement implements goalManagementLocal {
                     Goal decreaseGoal=listOfGoals.get(posGoal+1);
                     if(decreaseGoal!=null){
                         decreaseGoal.setFlagOrder(decreaseGoal.getFlagOrder()-1);
-                        this.goal.edit(decreaseGoal);
+                        this.goalFacade.edit(decreaseGoal);
                     }
-                    this.goal.edit(g);
+                    this.goalFacade.edit(g);
                     return true;
                 }
             }  
@@ -491,7 +492,7 @@ public class goalManagement implements goalManagementLocal {
          
         try{
             
-            Goal goalClick=this.goal.find(goal.getId_goal());            
+            Goal goalClick=this.goalFacade.find(goal.getId_goal());            
             
             if(goalClick==null){
                 return false;
@@ -499,7 +500,7 @@ public class goalManagement implements goalManagementLocal {
             
             goalClick.setFlagClickControl(goalClick.getFlagClickControl()+1);
             
-            this.goal.edit(goalClick); 
+            this.goalFacade.edit(goalClick); 
             
             return true;
         }
@@ -530,7 +531,7 @@ public class goalManagement implements goalManagementLocal {
                 return null;
             }
             
-            List<Goal> getListOfGoalsBetweenDates=this.goal.getGoalsBetweenDates(u,d1, d2);
+            List<Goal> getListOfGoalsBetweenDates=this.goalFacade.getGoalsBetweenDates(u,d1, d2);
             
             if(getListOfGoalsBetweenDates==null){
                 return null;
@@ -609,6 +610,22 @@ public class goalManagement implements goalManagementLocal {
             return null;
         }
         
+    }
+
+    @Override
+    public boolean setGoalAsDone(Goal goalTmp) {
+        
+        if(goalTmp == null)
+            return false;
+        
+        goalTmp.setFlagdone(true);
+        Date logDate = Date.from(Instant.now());
+        goalTmp.setFinaldate(logDate);
+        
+        goalFacade.edit(goalTmp);
+        categoryManagement.save(goalTmp.getIdCategory());
+        
+        return true;
     }
      
 }
