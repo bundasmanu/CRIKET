@@ -21,6 +21,10 @@ public interface goalManagementLocal {
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
+    List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email);
+    
+    List<GoalDTO> selectAllDoneGoalsFromAnUser(String email);
+    
     List<GoalDTO> selectAllGoalsFromUserByClicks(String email);
     
     boolean createGoal(GoalDTO newGoalDTO);
@@ -28,6 +32,8 @@ public interface goalManagementLocal {
     boolean editGoal(GoalDTO editGoalDTO);
     
     boolean removeGoal(String email, Integer id);
+    
+    boolean recoveryDoneGoal(Integer id);
     
     Future<Integer> getNextValueGoal(String email);
     

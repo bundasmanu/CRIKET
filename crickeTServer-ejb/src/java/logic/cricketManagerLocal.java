@@ -34,6 +34,10 @@ public interface cricketManagerLocal {
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
+    List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email);
+    
+    List<GoalDTO> selectAllDoneGoalsFromAnUser(String email);
+        
     List<GoalDTO> selectAllGoalsFromUserByClicks(String email);
     
     @Asynchronous
@@ -50,6 +54,8 @@ public interface cricketManagerLocal {
     boolean editGoal(GoalDTO goalDTO);
     
     boolean removeGoal(String email,Integer id);
+    
+    boolean recoveryDoneGoal(Integer id);
     
     Future<Integer> getNextValueGoal(String email);
     

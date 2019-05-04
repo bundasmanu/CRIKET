@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic;
 
 import cricketdto.GoalDTO;
@@ -80,6 +75,76 @@ public class goalManagement implements goalManagementLocal {
                     for (Goal g : x.getGoalCollection()) {
                         GoalDTO gt = dt.getGoalDTO(g);
                         retorno_goals_user.add(gt);
+                    }
+                }
+            }
+        }
+
+        /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
+        Collections.sort(retorno_goals_user);
+
+        return retorno_goals_user;
+    }
+    
+    @Override
+    public List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email) {
+
+        /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
+            return null;
+        }
+
+        /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
+        Collection<Category> catUser = u.getCategoryCollection();
+
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
+        if (catUser.isEmpty() != true) {
+            for (Category x : catUser) {
+                if (x.getGoalCollection().isEmpty() != true) {
+                    for (Goal g : x.getGoalCollection()) {
+                        if(!g.getFlagdone())
+                        {
+                            GoalDTO gt = dt.getGoalDTO(g);
+                            retorno_goals_user.add(gt);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
+        Collections.sort(retorno_goals_user);
+
+        return retorno_goals_user;
+    }
+    
+    @Override
+    public List<GoalDTO> selectAllDoneGoalsFromAnUser(String email) {
+
+        /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
+            return null;
+        }
+
+        /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
+        Collection<Category> catUser = u.getCategoryCollection();
+
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
+        if (catUser.isEmpty() != true) {
+            for (Category x : catUser) {
+                if (x.getGoalCollection().isEmpty() != true) {
+                    for (Goal g : x.getGoalCollection()) {
+                        if(g.getFlagdone())
+                        {
+                            GoalDTO gt = dt.getGoalDTO(g);
+                            retorno_goals_user.add(gt);
+                        }
                     }
                 }
             }
@@ -227,12 +292,6 @@ public class goalManagement implements goalManagementLocal {
     @Override
     public boolean removeGoal(String email, Integer id) {
         try {
-            //find user
-            Utilizador u = this.ut.findByEmail(email);
-            if (u == null) {
-                return false;
-            }
-
             //find goal by id
             Goal g = this.goalFacade.find(id);
 
@@ -325,6 +384,10 @@ public class goalManagement implements goalManagementLocal {
                 this.goalFacade.edit(goalI);
             }
             
+            //if the goal isn't setted as done... set it as done
+            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue())
+                this.setGoalAsDone(goalI);
+            
             return true;
         }
         catch(Exception e){
@@ -396,7 +459,7 @@ public class goalManagement implements goalManagementLocal {
         
     }
     
-     public static boolean isEnd(Date date1,Date date2){
+    public static boolean isEnd(Date date1,Date date2){
          
         if(date1 == null) //since it can be null (not defined final date)
             return false;
@@ -626,6 +689,35 @@ public class goalManagement implements goalManagementLocal {
         categoryManagement.save(goalTmp.getIdCategory());
         
         return true;
+    }
+
+    @Override
+    public boolean recoveryDoneGoal(Integer id) {
+        
+        try {
+            Goal goalToRecover = this.goalFacade.find(id);
+
+            Category cat = goalToRecover.getIdCategory();
+
+            if (goalFacade == null || cat == null) {
+                return false;
+            }
+
+            goalToRecover.setCurrentvalue(0);
+            goalToRecover.setFinaldate(null);
+            goalToRecover.setFlagdone(false);
+
+            categoryManagement.save(cat);
+            this.goalFacade.edit(goalToRecover);
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Mensagem: " + e.getMessage());
+
+            return false;
+        }
+        
+        
     }
      
 }
