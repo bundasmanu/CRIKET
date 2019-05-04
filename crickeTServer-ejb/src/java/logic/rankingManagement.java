@@ -103,7 +103,7 @@ public class rankingManagement implements rankingManagementLocal {
                         /*DA PONTOS*/
                     }
                     else{
-                        /*RETIRA PONTOS*/
+                        /*RETIRA PONTOS*/ 
                     }
                 }
                 else{/*NEGATIVOS*/
