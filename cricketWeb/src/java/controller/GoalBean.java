@@ -19,7 +19,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import static java.time.temporal.TemporalQueries.localDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,26 +69,25 @@ public class GoalBean implements Serializable {
 
     public GoalBean() {
     }
-    
+
     public List<GoalDTO> getAllNotDoneGoals() {
         try {
-           return this.bridge.getCricket().selectAllNotDoneGoalsFromAnUser(this.su.getEmail());
+            return this.bridge.getCricket().selectAllNotDoneGoalsFromAnUser(this.su.getEmail());
         } catch (Exception ex) {
             return new ArrayList();
         }
     }
-    
+
     public List<GoalDTO> getAllDoneGoals() {
         try {
-           return this.bridge.getCricket().selectAllDoneGoalsFromAnUser(this.su.getEmail());
+            return this.bridge.getCricket().selectAllDoneGoalsFromAnUser(this.su.getEmail());
 
         } catch (Exception ex) {
             return new ArrayList();
         }
     }
-    
-    public String addGoal()
-    {
+
+    public String addGoal() {
         this.goalDTOTemp = new GoalDTO();
         this.finalDateGoalTmp = "";
         return "createGoal";
@@ -100,15 +101,25 @@ public class GoalBean implements Serializable {
             if (!finalDateGoalTmp.isEmpty()) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date finalDateGoal = formatter.parse(this.finalDateGoalTmp);
-                goalDTOTemp.setFinalDate(finalDateGoal);
-            }
-            else{
-                finalDateGoalTmp=null;
+                //actual date
+                LocalDate dateToday = LocalDate.now();
+                java.util.Date dateTodayConverted = new SimpleDateFormat("yyyy-MM-dd").parse(dateToday.toString());
+
+                if (finalDateGoal.compareTo(dateTodayConverted) >= 0) { 
+                    goalDTOTemp.setFinalDate(finalDateGoal);
+                } else {
+                    throw new Exception("Date need to be greater than current date");
+                }
+
+            } else {
+                finalDateGoalTmp = null;
                 goalDTOTemp.setFinalDate(null);
             }
-            
+
             DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
             String formattedString = LocalDate.now().format(formatterLocalDate);
+            //LocalDate actualDate = LocalDate.now();
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date actualDate = formatter.parse(formattedString);
@@ -193,8 +204,7 @@ public class GoalBean implements Serializable {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date finalDateGoal = formatter.parse(finalDateGoalTmp);
                 goalDTOTemp.setFinalDate(finalDateGoal);
-            }
-            else{
+            } else {
                 goalDTOTemp.setFinalDate(null);
             }
 
@@ -232,11 +242,11 @@ public class GoalBean implements Serializable {
         }
         return "dashboard";
     }
-    
-    public String goalWasEnddedSucessfully(GoalDTO goalDTO){
+
+    public String goalWasEnddedSucessfully(GoalDTO goalDTO) {
         boolean result = bridge.getCricket().goalIsEnd(goalDTO);
-        
-        if(result && goalDTO.getStatus().equals(Config.POSITIVE)){
+
+        if (result && goalDTO.getStatus().equals(Config.POSITIVE)) {
             return "background-color: " + Config.BACKGROUND_SUCCESS_COLOR_GOAL + ";";
         } else if (result && goalDTO.getStatus().equals(Config.NEGATIVE)) {
             return "background-color: " + Config.BACKGROUND_UNSUCCESS_COLOR_GOAL + ";";
@@ -265,21 +275,21 @@ public class GoalBean implements Serializable {
     public void setFinalDateGoalTmp(String finalDateGoalTmp) {
         this.finalDateGoalTmp = finalDateGoalTmp;
     }
-    
-    public String processRecoverDoneGoal(int idGoalSelected) throws InterruptedException, ExecutionException{
+
+    public String processRecoverDoneGoal(int idGoalSelected) throws InterruptedException, ExecutionException {
         boolean result = false;
-        
+
         result = bridge.getCricket().recoveryDoneGoal(idGoalSelected);
-        if (result) {           
+        if (result) {
 
             //Utils.throwMessage("Success Adding the New Goal");
             return "/indexHistory?faces-redirect=true?";
-            
+
         } else {
             Utils.throwMessage("Error");
             return "indexHistory";
         }
 
     }
-    
+
 }
