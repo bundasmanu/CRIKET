@@ -105,7 +105,7 @@ public class GoalBean implements Serializable {
                 LocalDate dateToday = LocalDate.now();
                 java.util.Date dateTodayConverted = new SimpleDateFormat("yyyy-MM-dd").parse(dateToday.toString());
 
-                if (finalDateGoal.compareTo(dateTodayConverted) >= 0) {
+                if (finalDateGoal.compareTo(dateTodayConverted) >= 0) { 
                     goalDTOTemp.setFinalDate(finalDateGoal);
                 } else {
                     throw new Exception("Date need to be greater than current date");
