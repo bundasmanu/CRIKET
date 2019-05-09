@@ -102,27 +102,18 @@ public class GoalBean implements Serializable {
                 Date finalDateGoal = formatter.parse(this.finalDateGoalTmp);
                 goalDTOTemp.setFinalDate(finalDateGoal);
             }
-
-            Date logDate = Date.from(Instant.now());
-
-//            DateFormat formatter;
-//            Date date;
-//            formatter = new SimpleDateFormat("dd/mm/yyyy");
-//            date = formatter.parse(finalDateGoalTmp);
+            else{
+                finalDateGoalTmp=null;
+                goalDTOTemp.setFinalDate(null);
+            }
+            
             DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String formattedString = LocalDate.now().format(formatterLocalDate);
 
-            
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date actualDate = formatter.parse(formattedString);
 
-            Date date = formatter.parse(finalDateGoalTmp);
-            logDate = formatter.parse(formattedString);
-
-//            if (date.compareTo(logDate) >= 0) {
-//                Utils.throwMessage("Error.Final date should be greather than the current Date.");
-//                return "createGoal";
-//            }
-            goalDTOTemp.setLogDate(logDate);
+            goalDTOTemp.setLogDate(actualDate);
 
             //define the value of the flag_order
             goalDTOTemp.setFlag_order(nextValueOrderGoal.get());

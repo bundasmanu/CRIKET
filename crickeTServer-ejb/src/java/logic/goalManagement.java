@@ -54,6 +54,9 @@ public class goalManagement implements goalManagementLocal {
 
     @EJB
     CategoryFacadeLocal ca;
+    
+    @EJB
+    rankingManagementLocal rankManagementLocal;
 
     private DTOFactory dt = new DTOFactory();
 
@@ -388,7 +391,7 @@ public class goalManagement implements goalManagementLocal {
             }
             
             //if the goal isn't setted as done... set it as done
-            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue() && goalI.getStatus().equals(Config.NEVER))
+            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue() && goalI.getFrequency().equals(Config.NEVER))
                 this.setGoalAsDone(goalI);
             
             return true;
@@ -443,10 +446,6 @@ public class goalManagement implements goalManagementLocal {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date actualDate = formatter.parse(formattedString);
             
-            System.out.println("\n\n\n atual date: " + actualDate);
-            System.out.println("\n\n\n goal final date: " + gT.getFinaldate());
-
-            
             /*VERIFICAR O CURRENT VALUE, E AS DATA DE CONCLUSAO*/
             if(gT.getCurrentvalue()>=gT.getTotalvalue() || isEnd(gT.getFinaldate(), actualDate)){
                 return true;
@@ -464,7 +463,7 @@ public class goalManagement implements goalManagementLocal {
     
     public static boolean isEnd(Date date1,Date date2){
          
-        if(date1 == null) //since it can be null (not defined final date)
+        if(date1 == null || date2==null) //since it can be null (not defined final date)
             return false;
 
         if(date1.equals(date2)){
@@ -686,7 +685,7 @@ public class goalManagement implements goalManagementLocal {
             if (goalTmp == null) {
                 return false;
             }
-
+            
             goalTmp.setFlagdone(true);
 
             DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -699,6 +698,11 @@ public class goalManagement implements goalManagementLocal {
 
             goalFacade.edit(goalTmp);
             categoryManagement.save(goalTmp.getIdCategory());
+            
+            System.out.println("\nENTROU SET GOAL AS DONE\n");
+            
+            /*DEPOIS DE UM OBJETIVO ESTAR DONE, VAMOS VERIFICAR O RANKING DE UM UTILIZADOR*/
+            rankManagementLocal.getDailyStrike(goalTmp);
 
             return true;
 
@@ -724,7 +728,9 @@ public class goalManagement implements goalManagementLocal {
             goalToRecover.setCurrentvalue(0);
             goalToRecover.setLogfinaldate(null);
             goalToRecover.setFlagdone(false);
-
+            
+            
+            
             categoryManagement.save(cat);
             this.goalFacade.edit(goalToRecover);
 
