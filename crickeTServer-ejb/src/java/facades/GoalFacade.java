@@ -13,6 +13,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import cricketdto.*;
+import Utils.*;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -89,7 +92,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
         try{
             
-            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue<g.totalValue and g.finalDate< to_char( CURRENT_DATE, 'DD/MM/YYYY') as re_format and g.flagdone=TRUE ";
+            String cmdCompleteGoals="select g from Goal g inner join Category c on c=g.idCategory inner join Utilizador u on u=c.idUser where g.currentValue<g.totalValue and g.frequency != 'NEVER' ";
             Query qu=this.em.createQuery(cmdCompleteGoals);
             List<Goal> listCompleteGoals= (List<Goal>) qu.getResultList();
             
@@ -109,7 +112,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
             
             String dailyQuery="select g from Goal g where g.frequency= ?1 and g.flagdone= ?2";
             Query qu=this.em.createQuery(dailyQuery);
-            qu.setParameter(1, "Daily");
+            qu.setParameter(1, Config.DAILY);
             qu.setParameter(2, Boolean.FALSE);
             List<Goal> dailyGoals= (List<Goal>) qu.getResultList();
             
@@ -174,6 +177,25 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
             return yearlyGoals;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
+    @Override
+    public List<Goal> getGoalsWithSameNameAndLogdate(Goal g){
+        
+        try{
+            
+            String goalsQuery = "select g from Goal g where g.nome='"+g.getNome()+"' and g.logdate= :date  order by g.logfinaldate ASC";
+            Query qu = this.em.createQuery(goalsQuery);
+            qu.setParameter("date", g.getLogdate(),TemporalType.TIMESTAMP);
+            List<Goal> goals = (List<Goal>) qu.getResultList();
+            
+            return goals;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
             return null;
         }
         

@@ -6,6 +6,7 @@
 package logic;
 
 import cricketdto.GoalDTO;
+import entities.Goal;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -20,6 +21,10 @@ public interface goalManagementLocal {
     
     List<GoalDTO> selectAllGoalsFromAnUser(String email);
     
+    List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email);
+    
+    List<GoalDTO> selectAllDoneGoalsFromAnUser(String email);
+    
     List<GoalDTO> selectAllGoalsFromUserByClicks(String email);
     
     boolean createGoal(GoalDTO newGoalDTO);
@@ -27,6 +32,8 @@ public interface goalManagementLocal {
     boolean editGoal(GoalDTO editGoalDTO);
     
     boolean removeGoal(String email, Integer id);
+    
+    boolean recoveryDoneGoal(Integer id);
     
     Future<Integer> getNextValueGoal(String email);
     
@@ -49,5 +56,7 @@ public interface goalManagementLocal {
     List<GoalDTO> getGoalsBetweenTwoDates(String email,Date d1, Date d2);
     
     List<GoalDTO> orderGoalsBetweenDate(String email);
+    
+    boolean setGoalAsDone(Goal goal);
     
 }

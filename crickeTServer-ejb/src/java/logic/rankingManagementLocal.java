@@ -5,6 +5,7 @@
  */
 package logic;
 
+import entities.Goal;
 import javax.ejb.Local;
 
 /**
@@ -15,5 +16,6 @@ import javax.ejb.Local;
 public interface rankingManagementLocal {
     
     boolean createRanking(String name, int minP);
-    
+    String findRankUser(String email);
+    boolean getDailyStrike(Goal g);
 }
