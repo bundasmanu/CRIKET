@@ -17,6 +17,7 @@ import entities.Goal;
 import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
@@ -51,6 +54,9 @@ public class goalManagement implements goalManagementLocal {
 
     @EJB
     CategoryFacadeLocal ca;
+    
+    @EJB
+    rankingManagementLocal rankManagementLocal;
 
     private DTOFactory dt = new DTOFactory();
 
@@ -75,6 +81,76 @@ public class goalManagement implements goalManagementLocal {
                     for (Goal g : x.getGoalCollection()) {
                         GoalDTO gt = dt.getGoalDTO(g);
                         retorno_goals_user.add(gt);
+                    }
+                }
+            }
+        }
+
+        /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
+        Collections.sort(retorno_goals_user);
+
+        return retorno_goals_user;
+    }
+    
+    @Override
+    public List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email) {
+
+        /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
+            return null;
+        }
+
+        /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
+        Collection<Category> catUser = u.getCategoryCollection();
+
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
+        if (catUser.isEmpty() != true) {
+            for (Category x : catUser) {
+                if (x.getGoalCollection().isEmpty() != true) {
+                    for (Goal g : x.getGoalCollection()) {
+                        if(!g.getFlagdone())
+                        {
+                            GoalDTO gt = dt.getGoalDTO(g);
+                            retorno_goals_user.add(gt);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*ORDENACAO DOS GOALS CONSOANTE, A FLAG, E DE ACORDO COM O COMPARABLE*/
+        Collections.sort(retorno_goals_user);
+
+        return retorno_goals_user;
+    }
+    
+    @Override
+    public List<GoalDTO> selectAllDoneGoalsFromAnUser(String email) {
+
+        /*VERIFICAR INICIALMENTE SE O USER EXISTE*/
+        Utilizador u = this.ut.findByEmail(email);
+
+        if (u == null) {
+            return null;
+        }
+
+        /*COMO O UTILIZADOR EXISTE BASTA RETORNAR TODOS OS SEUS OBJETIVOS*/
+        Collection<Category> catUser = u.getCategoryCollection();
+
+        List<GoalDTO> retorno_goals_user = new ArrayList<GoalDTO>();
+
+        if (catUser.isEmpty() != true) {
+            for (Category x : catUser) {
+                if (x.getGoalCollection().isEmpty() != true) {
+                    for (Goal g : x.getGoalCollection()) {
+                        if(g.getFlagdone())
+                        {
+                            GoalDTO gt = dt.getGoalDTO(g);
+                            retorno_goals_user.add(gt);
+                        }
                     }
                 }
             }
@@ -222,12 +298,6 @@ public class goalManagement implements goalManagementLocal {
     @Override
     public boolean removeGoal(String email, Integer id) {
         try {
-            //find user
-            Utilizador u = this.ut.findByEmail(email);
-            if (u == null) {
-                return false;
-            }
-
             //find goal by id
             Goal g = this.goalFacade.find(id);
 
@@ -320,6 +390,10 @@ public class goalManagement implements goalManagementLocal {
                 this.goalFacade.edit(goalI);
             }
             
+            //if the goal isn't setted as done... set it as done
+            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue() && goalI.getFrequency().equals(Config.NEVER))
+                this.setGoalAsDone(goalI);
+            
             return true;
         }
         catch(Exception e){
@@ -372,10 +446,6 @@ public class goalManagement implements goalManagementLocal {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
             Date actualDate = formatter.parse(formattedString);
             
-            System.out.println("\n\n\n atual date: " + actualDate);
-            System.out.println("\n\n\n goal final date: " + gT.getFinaldate());
-
-            
             /*VERIFICAR O CURRENT VALUE, E AS DATA DE CONCLUSAO*/
             if(gT.getCurrentvalue()>=gT.getTotalvalue() || isEnd(gT.getFinaldate(), actualDate)){
                 return true;
@@ -391,9 +461,9 @@ public class goalManagement implements goalManagementLocal {
         
     }
     
-     public static boolean isEnd(Date date1,Date date2){
+    public static boolean isEnd(Date date1,Date date2){
          
-        if(date1 == null) //since it can be null (not defined final date)
+        if(date1 == null || date2==null) //since it can be null (not defined final date)
             return false;
 
         if(date1.equals(date2)){
@@ -609,18 +679,69 @@ public class goalManagement implements goalManagementLocal {
 
     @Override
     public boolean setGoalAsDone(Goal goalTmp) {
-        
-        if(goalTmp == null)
+       
+        try {
+
+            if (goalTmp == null) {
+                return false;
+            }
+            
+            goalTmp.setFlagdone(true);
+
+            DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedString = LocalDate.now().format(formatterLocalDate);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date actualDate = formatter.parse(formattedString);
+
+            goalTmp.setLogfinaldate(actualDate);
+
+            goalFacade.edit(goalTmp);
+            categoryManagement.save(goalTmp.getIdCategory());
+            
+            System.out.println("\nENTROU SET GOAL AS DONE\n");
+            
+            /*DEPOIS DE UM OBJETIVO ESTAR DONE, VAMOS VERIFICAR O RANKING DE UM UTILIZADOR*/
+            rankManagementLocal.getDailyStrike(goalTmp);
+
+            return true;
+
+        } catch (ParseException ex) {
+            Logger.getLogger(goalManagement.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+            
+    }
+
+    @Override
+    public boolean recoveryDoneGoal(Integer id) {
         
-        goalTmp.setFlagdone(true);
-        Date logDate = Date.from(Instant.now());
-        goalTmp.setFinaldate(logDate);
+        try {
+            Goal goalToRecover = this.goalFacade.find(id);
+
+            Category cat = goalToRecover.getIdCategory();
+
+            if (goalFacade == null || cat == null) {
+                return false;
+            }
+
+            goalToRecover.setCurrentvalue(0);
+            goalToRecover.setLogfinaldate(null);
+            goalToRecover.setFlagdone(false);
+            
+            
+            
+            categoryManagement.save(cat);
+            this.goalFacade.edit(goalToRecover);
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Mensagem: " + e.getMessage());
+
+            return false;
+        }
         
-        goalFacade.edit(goalTmp);
-        categoryManagement.save(goalTmp.getIdCategory());
         
-        return true;
     }
      
 }

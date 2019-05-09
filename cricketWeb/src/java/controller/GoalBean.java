@@ -67,17 +67,26 @@ public class GoalBean implements Serializable {
 
     public GoalBean() {
     }
-
-    public List<GoalDTO> getAllGoals() {
+    
+    public List<GoalDTO> getAllNotDoneGoals() {
         try {
-            return this.bridge.getCricket().selectAllGoalsFromAnUser(this.su.getEmail());
+           return this.bridge.getCricket().selectAllNotDoneGoalsFromAnUser(this.su.getEmail());
+        } catch (Exception ex) {
+            return new ArrayList();
+        }
+    }
+    
+    public List<GoalDTO> getAllDoneGoals() {
+        try {
+           return this.bridge.getCricket().selectAllDoneGoalsFromAnUser(this.su.getEmail());
 
         } catch (Exception ex) {
             return new ArrayList();
         }
     }
-
-    public String addGoal() {
+    
+    public String addGoal()
+    {
         this.goalDTOTemp = new GoalDTO();
         this.finalDateGoalTmp = "";
         return "createGoal";
@@ -93,27 +102,18 @@ public class GoalBean implements Serializable {
                 Date finalDateGoal = formatter.parse(this.finalDateGoalTmp);
                 goalDTOTemp.setFinalDate(finalDateGoal);
             }
-
-            Date logDate = Date.from(Instant.now());
-
-//            DateFormat formatter;
-//            Date date;
-//            formatter = new SimpleDateFormat("dd/mm/yyyy");
-//            date = formatter.parse(finalDateGoalTmp);
+            else{
+                finalDateGoalTmp=null;
+                goalDTOTemp.setFinalDate(null);
+            }
+            
             DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String formattedString = LocalDate.now().format(formatterLocalDate);
 
-            
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date actualDate = formatter.parse(formattedString);
 
-            Date date = formatter.parse(finalDateGoalTmp);
-            logDate = formatter.parse(formattedString);
-
-//            if (date.compareTo(logDate) >= 0) {
-//                Utils.throwMessage("Error.Final date should be greather than the current Date.");
-//                return "createGoal";
-//            }
-            goalDTOTemp.setLogDate(logDate);
+            goalDTOTemp.setLogDate(actualDate);
 
             //define the value of the flag_order
             goalDTOTemp.setFlag_order(nextValueOrderGoal.get());
@@ -194,6 +194,9 @@ public class GoalBean implements Serializable {
                 Date finalDateGoal = formatter.parse(finalDateGoalTmp);
                 goalDTOTemp.setFinalDate(finalDateGoal);
             }
+            else{
+                goalDTOTemp.setFinalDate(null);
+            }
 
             result = bridge.getCricket().editGoal(goalDTOTemp);
             if (result) {
@@ -229,14 +232,11 @@ public class GoalBean implements Serializable {
         }
         return "dashboard";
     }
-
-    public String goalIsEnd(GoalDTO goalDTO) {
+    
+    public String goalWasEnddedSucessfully(GoalDTO goalDTO){
         boolean result = bridge.getCricket().goalIsEnd(goalDTO);
-
-        System.out.println("\n\n\n\n" + goalDTO);
-        System.out.println("\n\n\n\n goal is ended: " + result);
-
-        if (result && goalDTO.getStatus().equals(Config.POSITIVE)) {
+        
+        if(result && goalDTO.getStatus().equals(Config.POSITIVE)){
             return "background-color: " + Config.BACKGROUND_SUCCESS_COLOR_GOAL + ";";
         } else if (result && goalDTO.getStatus().equals(Config.NEGATIVE)) {
             return "background-color: " + Config.BACKGROUND_UNSUCCESS_COLOR_GOAL + ";";
@@ -265,5 +265,21 @@ public class GoalBean implements Serializable {
     public void setFinalDateGoalTmp(String finalDateGoalTmp) {
         this.finalDateGoalTmp = finalDateGoalTmp;
     }
+    
+    public String processRecoverDoneGoal(int idGoalSelected) throws InterruptedException, ExecutionException{
+        boolean result = false;
+        
+        result = bridge.getCricket().recoveryDoneGoal(idGoalSelected);
+        if (result) {           
 
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/indexHistory?faces-redirect=true?";
+            
+        } else {
+            Utils.throwMessage("Error");
+            return "indexHistory";
+        }
+
+    }
+    
 }

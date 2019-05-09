@@ -13,6 +13,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import cricketdto.*;
+import Utils.*;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -109,7 +112,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
             
             String dailyQuery="select g from Goal g where g.frequency= ?1 and g.flagdone= ?2";
             Query qu=this.em.createQuery(dailyQuery);
-            qu.setParameter(1, "Daily");
+            qu.setParameter(1, Config.DAILY);
             qu.setParameter(2, Boolean.FALSE);
             List<Goal> dailyGoals= (List<Goal>) qu.getResultList();
             
@@ -184,8 +187,9 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
         try{
             
-            String goalsQuery = "select g from Goal g where g.nome='"+g.getNome()+"' and g.logdate='"+g.getLogdate()+"' order by g.logfinaldate";
+            String goalsQuery = "select g from Goal g where g.nome='"+g.getNome()+"' and g.logdate= :date  order by g.logfinaldate ASC";
             Query qu = this.em.createQuery(goalsQuery);
+            qu.setParameter("date", g.getLogdate(),TemporalType.TIMESTAMP);
             List<Goal> goals = (List<Goal>) qu.getResultList();
             
             return goals;
