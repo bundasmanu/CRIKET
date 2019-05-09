@@ -31,8 +31,9 @@
             <nav class="navbar bg-dark navbar-dark">
 
                 <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
-                <p id="hm">Welcome,#{sessionBean.email}|Rank:#{rankBean.processFindRank()}</p>
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
+                <p id="hm">Welcome,#{sessionBean.email}|Rank:#{rankBean.processFindRank()}</p>
+                
                     
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
@@ -44,6 +45,12 @@
                                 <h:link outcome="indexHistory">
                                     #{bundle.History}
                                     <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
+                                </h:link>
+                            </li>
+                            <li class="nav-item">
+                                <h:link outcome="indexTrophy">
+                                    #{bundle.Trophy}
+                                    <img src="https://img.icons8.com/color/48/000000/trophy.png"></img>
                                 </h:link>
                             </li>
                             <li class="nav-item">
