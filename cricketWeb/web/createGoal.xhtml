@@ -44,6 +44,7 @@ and open the template in the editor.
                                 <f:selectItem itemValue="NEGATIVE" itemLabel="Negative" />
                             </h:selectOneRadio>
                             
+                            
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}" required="true" requiredMessage="Category is required" styleClass = "form-control">
                                 <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryDTO"
