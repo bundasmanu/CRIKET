@@ -203,6 +203,9 @@ public class GoalBean implements Serializable {
                 Date finalDateGoal = formatter.parse(finalDateGoalTmp);
                 goalDTOTemp.setFinalDate(finalDateGoal);
             }
+            else{
+                goalDTOTemp.setFinalDate(null);
+            }
 
             result = bridge.getCricket().editGoal(goalDTOTemp);
             if (result) {

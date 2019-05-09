@@ -17,6 +17,7 @@ import entities.Goal;
 import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
@@ -385,7 +388,7 @@ public class goalManagement implements goalManagementLocal {
             }
             
             //if the goal isn't setted as done... set it as done
-            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue())
+            if(!goalI.getFlagdone() && goalI.getCurrentvalue() == goalI.getTotalvalue() && goalI.getStatus().equals(Config.NEVER))
                 this.setGoalAsDone(goalI);
             
             return true;
@@ -677,18 +680,33 @@ public class goalManagement implements goalManagementLocal {
 
     @Override
     public boolean setGoalAsDone(Goal goalTmp) {
-        
-        if(goalTmp == null)
+       
+        try {
+
+            if (goalTmp == null) {
+                return false;
+            }
+
+            goalTmp.setFlagdone(true);
+
+            DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedString = LocalDate.now().format(formatterLocalDate);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date actualDate = formatter.parse(formattedString);
+
+            goalTmp.setLogfinaldate(actualDate);
+
+            goalFacade.edit(goalTmp);
+            categoryManagement.save(goalTmp.getIdCategory());
+
+            return true;
+
+        } catch (ParseException ex) {
+            Logger.getLogger(goalManagement.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        
-        goalTmp.setFlagdone(true);
-        Date logDate = Date.from(Instant.now());
-        goalTmp.setFinaldate(logDate);
-        
-        goalFacade.edit(goalTmp);
-        categoryManagement.save(goalTmp.getIdCategory());
-        
-        return true;
+        }
+            
     }
 
     @Override
@@ -704,7 +722,7 @@ public class goalManagement implements goalManagementLocal {
             }
 
             goalToRecover.setCurrentvalue(0);
-            goalToRecover.setFinaldate(null);
+            goalToRecover.setLogfinaldate(null);
             goalToRecover.setFlagdone(false);
 
             categoryManagement.save(cat);
