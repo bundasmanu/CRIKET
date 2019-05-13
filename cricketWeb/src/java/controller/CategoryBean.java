@@ -59,7 +59,7 @@ public class CategoryBean implements Serializable {
                 return "index.xhtml";
             }
 
-            return "dashboard.xhtml";
+            return "indexCategories.xhtml";
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -83,10 +83,10 @@ public class CategoryBean implements Serializable {
             boolean return_create = this.bridge.getCricket().editCategory(this.s.getEmail(), this.categoryDTO);
             if (return_create) {
                 this.categoryDTO = new CategoryDTO();
-                return "/dashboard?faces-redirect=true?";
+                return "/indexCategories?faces-redirect=true?";
             } else {
                 Utils.throwMessage("Error");
-                return "editCategory";
+                return "indexCategories";
             }
 
         } catch (Exception e) {
