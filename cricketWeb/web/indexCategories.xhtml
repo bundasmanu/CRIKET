@@ -57,6 +57,9 @@ and open the template in the editor.
 
                     <c:if test="#{not empty categoryBean.allCategoriesFromLoggedUser}">
                         <div class="container">
+                            
+                            <h:messages />
+                            
                             <ui:repeat value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryTmp" varStatus="getObj">
                                 <div class="row p-3 mb-2 bg-light text-dark">
                                     <div class="col-1"></div>

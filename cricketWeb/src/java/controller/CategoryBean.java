@@ -86,7 +86,7 @@ public class CategoryBean implements Serializable {
                 return "/indexCategories?faces-redirect=true?";
             } else {
                 Utils.throwMessage("Error");
-                return "indexCategories";
+                return "/indexCategories?faces-redirect=true?";
             }
 
         } catch (Exception e) {
@@ -109,10 +109,10 @@ public class CategoryBean implements Serializable {
         try {
             result = this.bridge.getCricket().removeCategory(this.s.getEmail(), id);
             if (result) {
-                 return "/index?faces-redirect=true?";
+                return "/indexCategories.xhtml?faces-redirect=true?";
             } else {
-                Utils.throwMessage("Error");
-                return "removeCategory";
+                Utils.throwMessage("Error removing the category. The category wasn't found or exist goals using the category.");
+                return "indexCategories.xhtml";
             }
         } catch (Exception e) {
             Utils.throwMessage("Error");
@@ -126,7 +126,7 @@ public class CategoryBean implements Serializable {
         String emailOfLoggedUser = (String) fc.getExternalContext().getSessionMap().get("user");
 
         List<CategoryDTO> list = bridge.getCricket().getAllCategoriesFromLoggedUser(emailOfLoggedUser);
-
+        
         return list;
     }
 
