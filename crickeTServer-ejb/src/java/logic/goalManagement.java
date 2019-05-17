@@ -264,9 +264,9 @@ public class goalManagement implements goalManagementLocal {
         try {
             Goal goalToEdit = this.goalFacade.find(editGoalDTO.getId_goal());
 
-            Category cat = this.ca.find(editGoalDTO.getIdCategory());
+            Category newCat = this.ca.find(editGoalDTO.getIdCategory());
 
-            if (goalFacade == null || cat == null) {
+            if (goalFacade == null || newCat == null) {
                 return false;
             }
 
@@ -281,10 +281,19 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setNome(editGoalDTO.getName());
             goalToEdit.setStatus(editGoalDTO.getStatus());
             goalToEdit.setTotalvalue(editGoalDTO.getTotalValue());
-            goalToEdit.setIdCategory(cat);
             goalToEdit.setFrequency(editGoalDTO.getFrequency());
-
-            categoryManagement.save(cat);
+            
+            //process the category 
+            Category actualCategory = goalToEdit.getIdCategory();
+            if(!actualCategory.getIdCategory().equals(newCat.getIdCategory()))
+            {
+                goalToEdit.setIdCategory(newCat);
+                actualCategory.getGoalCollection().remove(goalToEdit);
+                newCat.getGoalCollection().add(goalToEdit);    
+                categoryManagement.save(actualCategory);
+            }
+            
+            categoryManagement.save(newCat);
             this.goalFacade.edit(goalToEdit);
 
             return true;

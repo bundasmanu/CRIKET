@@ -249,7 +249,7 @@ public class GoalDTO implements Serializable, Comparable<GoalDTO>, Comparator<Go
 
     @Override
     public String toString() {
-        return "GoalDTO{" + "id_goal=" + id_goal + ", name=" + name + ", desc=" + desc + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
+        return "GoalDTO{" + "id_goal=" + id_goal + ", idCategory=" + idCategory + ", name=" + name + ", desc=" + desc + ", status=" + status + ", finalDate=" + finalDate + ", totalValue=" + totalValue + ", currentValue=" + currentValue + ", favorite=" + favorite + ", logDate=" + logDate + ", flagClick=" + flagClick + ", flag_order=" + flag_order + '}';
     }
     
     public static List<GoalDTO> retGoalsOrderByDate(List<GoalDTO> g){

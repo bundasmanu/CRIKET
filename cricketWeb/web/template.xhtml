@@ -32,15 +32,16 @@
 
                 <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
-                <p id="hm">Welcome,#{sessionBean.email}|Rank:#{rankBean.processFindRank()}</p>
                 
+                    <!--
+                    <p id="hm">Welcome,#{sessionBean.email}|Rank:#{rankBean.processFindRank()}</p>
+                    -->
                     
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav float-right">
-                            
                             <li class="nav-item">
                                 <h:link outcome="indexHistory">
                                     #{bundle.History}
@@ -55,11 +56,8 @@
                             </li>
                             <li class="nav-item">
                                 <li>
-
                                     <a class="nav-link" href="/cricketWeb/faces/editProfile.xhtml"><img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png"></img></a>
-
                                 </li>
-                                <a class="nav-link" href="#">Link</a>
                             </li>
                             <li class="nav-item">
                                 <h:link outcome="indexCategories">
