@@ -180,7 +180,7 @@ public class GoalBean implements Serializable {
     public String editGoal(int idGoal) {
 
         goalDTOTemp = bridge.getCricket().findGoalDTOById(idGoal);
-
+        
         if (goalDTOTemp == null) {
             Utils.throwMessage("Error. Couln't find the goal.");
             return "dashboard";
