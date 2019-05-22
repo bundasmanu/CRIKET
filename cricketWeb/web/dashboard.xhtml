@@ -79,7 +79,6 @@ and open the template in the editor.
                                             
                                     <div class="col-2">
                                         <h:commandLink action="#{goalBean.upOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != 0}">
-                                            <p>#{goalBean.allNotDoneGoals.indexOf(goalTmp)}</p>
                                             <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
                                         </h:commandLink>
                                         <h:commandLink action="#{goalBean.downOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != (goalBean.allNotDoneGoals.size()-1)}">
