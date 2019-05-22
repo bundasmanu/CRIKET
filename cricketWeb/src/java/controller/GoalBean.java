@@ -292,4 +292,35 @@ public class GoalBean implements Serializable {
 
     }
 
+    public String upOrderValue(GoalDTO goal)
+    {
+        boolean result = false;
+
+        result = bridge.getCricket().upOrderValue(goal);
+        if (result) {
+
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/dashboard?faces-redirect=true?";
+
+        } else {
+            Utils.throwMessage("Error");
+            return "dashboard";
+        }
+    }
+
+    public String downOrderValue(GoalDTO goal)
+    {
+        boolean result = false;
+
+        result = bridge.getCricket().downOrderValue(goal);
+        if (result) {
+
+            //Utils.throwMessage("Success Adding the New Goal");
+            return "/dashboard?faces-redirect=true?";
+
+        } else {
+            Utils.throwMessage("Error");
+            return "dashboard";
+        }
+    }
 }

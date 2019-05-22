@@ -182,5 +182,15 @@ public class cricketManager implements cricketManagerLocal {
     public boolean recoveryDoneGoal(Integer id) {
         return this.goalManager.recoveryDoneGoal(id);
     }
+
+    @Override
+    public boolean upOrderValue(GoalDTO goal) {
+        return this.goalManager.upOrderValue(goal);
+    }
+
+    @Override
+    public boolean downOrderValue(GoalDTO goal) {
+        return this.goalManager.downOrderValue(goal);
+    }
     
 }
