@@ -28,6 +28,8 @@ public interface GoalFacadeLocal {
 
     Goal findByName(String name_goal);
     
+    List<Goal> findAllAndOrderByFlag();
+        
     List<Goal> getGoalsWithSameNameAndLogdate(Goal g);
     
     List<Goal> getGoalsBetweenDates(Utilizador u, Date d1, Date d2);
