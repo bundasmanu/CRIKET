@@ -25,5 +25,14 @@ public class Config {
     public static String NEVER = "NEVER";
     public static String BACKGROUND_SUCCESS_COLOR_GOAL = "#52BE80";
     public static String BACKGROUND_UNSUCCESS_COLOR_GOAL = "#EC7063";
-
+    
+    public static String TROPHY1 ="NEVER COMPLETE";
+    public static String TROPHY1DESC ="NEVER GOAL ARCHIEVED";
+    public static String TROPHY2 ="DAILY COMPLETE";
+    public static String TROPHY2DESC ="DAILY GOAL ARCHIEVED";
+    public static String TROPHY3 ="STRIKE 2X COMPLETE";
+    public static String TROPHY3DESC ="STRIKE 2X ARCHIEVED";
+    public static String TROPHY4 ="STRIKE 3X COMPLETE";
+    public static String TROPHY4DESC ="STRIKE 3X ARCHIEVED";
+    
 }
