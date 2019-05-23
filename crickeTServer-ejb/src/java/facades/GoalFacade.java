@@ -52,6 +52,22 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
     }
     
     @Override
+    public List<Goal> findAllAndOrderByFlag() {
+        List<Goal> verifica_encontrado=null;
+        try{
+            Query qu= this.em.createQuery("select g from Goal g ORDER BY g.flagOrder");
+            
+            verifica_encontrado=(List<Goal>) qu.getResultList();
+            
+            return verifica_encontrado;
+            
+        }catch(Exception e){
+            System.out.println(""+e.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
     public List<Goal> getGoalsBetweenDates(Utilizador u, Date d1, Date d2){
         
         try{
