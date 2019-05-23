@@ -192,5 +192,10 @@ public class cricketManager implements cricketManagerLocal {
     public boolean downOrderValue(GoalDTO goal) {
         return this.goalManager.downOrderValue(goal);
     }
+
+    @Override
+    public List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate) {
+        return this.goalManager.processGoalsFilter(filterName, filterSinceDate, filterUntilDate);
+    }
     
 }

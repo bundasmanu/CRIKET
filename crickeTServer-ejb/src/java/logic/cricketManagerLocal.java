@@ -82,4 +82,7 @@ public interface cricketManagerLocal {
     boolean upOrderValue(GoalDTO goal);
 
     public boolean downOrderValue(GoalDTO goal);
+    
+    List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
+
 }
