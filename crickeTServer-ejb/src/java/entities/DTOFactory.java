@@ -10,6 +10,7 @@ import cricketdto.GoalDTO;
 import cricketdto.UserDTO;
 import java.util.ArrayList;
 import java.util.List;
+import cricketdto.TrophyDTO;
 
 
 public class DTOFactory{
@@ -111,6 +112,25 @@ public class DTOFactory{
             return null;
         }
 
+    }
+    
+    public static TrophyDTO getTrophyDTO(Trophy t){
+        
+        try{
+            
+            if(t==null){
+                return null;
+            }
+            
+            TrophyDTO tr=new TrophyDTO(t.getNome(), t.getDescript());
+            
+            return tr;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
     }
     
 }

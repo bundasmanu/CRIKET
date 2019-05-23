@@ -16,6 +16,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import Utils.*;
+import cricketdto.*;
 
 /**
  *
@@ -38,6 +39,9 @@ public class rankingManagement implements rankingManagementLocal {
     
     @EJB
     CategoryFacadeLocal cat;
+    
+    @EJB
+    trophyManagementLocal trophys;
     
     @Override
     public boolean createRanking(String name, int minP){
@@ -175,6 +179,9 @@ public class rankingManagement implements rankingManagementLocal {
                 g.getIdCategory().getIdUser().setCurrentpoints(g.getIdCategory().getIdUser().getCurrentpoints()+numberPointsWin);
             }
             
+            /*VERIFICACAO DOS TROFEUS*/
+            this.checkCompleteTrophies(g, strikeValue);
+            
             System.out.println("\nNAO ESTOIROU SET CURRENTS POINTS\n");
             
             this.changeRankOfAnUser(g.getIdCategory().getIdUser());
@@ -242,7 +249,7 @@ public class rankingManagement implements rankingManagementLocal {
                 }
             }
             
-                        System.out.println("\nDENTRO STRIKE VALUE 2\n");
+            System.out.println("\nDENTRO STRIKE VALUE 2\n");
             
             if((length-1)==lastIndex){/*CASO NAO CUMPRA O ULTIMO*/
                 return 0;
@@ -261,6 +268,43 @@ public class rankingManagement implements rankingManagementLocal {
         catch(Exception e){
             System.out.println(e.getMessage());
             return -1;
+        }
+        
+    }
+    
+    public boolean checkCompleteTrophies(Goal g, int strikeValue){
+        
+        try{
+            
+            /*GET ALL TROPHIES FROM AN USER*/
+            List<TrophyDTO> trophiesUser=this.trophys.getAllTrophiesFromUser(g.getIdCategory().getIdUser().getEmail());
+            
+            if(g.getFrequency().equals(Config.NEVER)==true){
+                if(strikeValue==1 && trophiesUser.contains(new TrophyDTO(Config.TROPHY1, Config.TROPHY1DESC))==false)/*override do equals com base no nome*/{
+                    this.trophys.createTrophy(g.getIdCategory().getIdUser().getEmail(), new TrophyDTO(Config.TROPHY1, Config.TROPHY1DESC));
+                }
+            }
+            if(g.getFrequency().equals(Config.DAILY)==true){
+                if(strikeValue==1 && trophiesUser.contains(new TrophyDTO(Config.TROPHY2, Config.TROPHY2DESC))==false)/*override do equals com base no nome*/{
+                    this.trophys.createTrophy(g.getIdCategory().getIdUser().getEmail(), new TrophyDTO(Config.TROPHY2, Config.TROPHY2DESC));
+                }
+            }
+            if(g.getFrequency().equals(Config.NEVER)==false){
+                if(strikeValue==2 && trophiesUser.contains(new TrophyDTO(Config.TROPHY3, Config.TROPHY3DESC))==false)/*override do equals com base no nome*/{
+                    this.trophys.createTrophy(g.getIdCategory().getIdUser().getEmail(), new TrophyDTO(Config.TROPHY3, Config.TROPHY3DESC));
+                }
+            }
+            if(g.getFrequency().equals(Config.NEVER)==false){
+                if(strikeValue==3 && trophiesUser.contains(new TrophyDTO(Config.TROPHY3, Config.TROPHY3DESC))==false)/*override do equals com base no nome*/{
+                    this.trophys.createTrophy(g.getIdCategory().getIdUser().getEmail(), new TrophyDTO(Config.TROPHY3, Config.TROPHY3DESC));
+                }
+            }
+            
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
         }
         
     }
