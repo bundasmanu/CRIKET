@@ -264,9 +264,9 @@ public class goalManagement implements goalManagementLocal {
         try {
             Goal goalToEdit = this.goalFacade.find(editGoalDTO.getId_goal());
 
-            Category cat = this.ca.find(editGoalDTO.getIdCategory());
+            Category newCat = this.ca.find(editGoalDTO.getIdCategory());
 
-            if (goalFacade == null || cat == null) {
+            if (goalFacade == null || newCat == null) {
                 return false;
             }
 
@@ -281,10 +281,19 @@ public class goalManagement implements goalManagementLocal {
             goalToEdit.setNome(editGoalDTO.getName());
             goalToEdit.setStatus(editGoalDTO.getStatus());
             goalToEdit.setTotalvalue(editGoalDTO.getTotalValue());
-            goalToEdit.setIdCategory(cat);
             goalToEdit.setFrequency(editGoalDTO.getFrequency());
-
-            categoryManagement.save(cat);
+            
+            //process the category 
+            Category actualCategory = goalToEdit.getIdCategory();
+            if(!actualCategory.getIdCategory().equals(newCat.getIdCategory()))
+            {
+                goalToEdit.setIdCategory(newCat);
+                actualCategory.getGoalCollection().remove(goalToEdit);
+                newCat.getGoalCollection().add(goalToEdit);    
+                categoryManagement.save(actualCategory);
+            }
+            
+            categoryManagement.save(newCat);
             this.goalFacade.edit(goalToEdit);
 
             return true;
@@ -483,7 +492,7 @@ public class goalManagement implements goalManagementLocal {
         try{
             
             /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals=this.goalFacade.findAll();
+            List<Goal> listOfGoals=this.goalFacade.findAllAndOrderByFlag();
             
             if(listOfGoals==null){
                 return false;
@@ -493,14 +502,17 @@ public class goalManagement implements goalManagementLocal {
             for(Goal g : listOfGoals){
                 if(g.getIdGoal().equals(goal.getId_goal())==true){
                     /*TROCAR O VALOR DO ORDER DESTE ELEMENTO COM O ELEMENTO QUE ESTAVA ATRAS*/
-                    g.setFlagOrder(g.getFlagOrder()-1);
+                    
                     int posGoal=listOfGoals.indexOf(g);
-                    Goal increaseGoal=listOfGoals.get(posGoal-1);
+                    Goal increaseGoal=listOfGoals.get(posGoal+1);
                     if(increaseGoal!=null){
-                        increaseGoal.setFlagOrder(increaseGoal.getFlagOrder()+1);
+                        int tmp = g.getFlagOrder();
+                        g.setFlagOrder(increaseGoal.getFlagOrder());
+                        increaseGoal.setFlagOrder(tmp);
                         this.goalFacade.edit(increaseGoal);
+                        this.goalFacade.edit(g);
+
                     }
-                    this.goalFacade.edit(g);
                     return true;
                 }
             }
@@ -521,7 +533,7 @@ public class goalManagement implements goalManagementLocal {
         try {
             
              /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals=this.goalFacade.findAll();
+            List<Goal> listOfGoals=this.goalFacade.findAllAndOrderByFlag();
             
             if(listOfGoals==null){
                 return false;
@@ -531,14 +543,16 @@ public class goalManagement implements goalManagementLocal {
             for(Goal g : listOfGoals){
                 if(g.getIdGoal().equals(goal.getId_goal())==true){
                     /*TROCAR O VALOR DO ORDER DESTE ELEMENTO COM O ELEMENTO QUE ESTA À FRENTE*/
-                    g.setFlagOrder(g.getFlagOrder()+1);
                     int posGoal=listOfGoals.indexOf(g);
-                    Goal decreaseGoal=listOfGoals.get(posGoal+1);
+                    Goal decreaseGoal=listOfGoals.get(posGoal-1);
                     if(decreaseGoal!=null){
-                        decreaseGoal.setFlagOrder(decreaseGoal.getFlagOrder()-1);
+                        int tmp = g.getFlagOrder();
+                        g.setFlagOrder(decreaseGoal.getFlagOrder());
+                        decreaseGoal.setFlagOrder(tmp);
                         this.goalFacade.edit(decreaseGoal);
+                        this.goalFacade.edit(g);
                     }
-                    this.goalFacade.edit(g);
+                    
                     return true;
                 }
             }  

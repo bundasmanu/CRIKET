@@ -93,6 +93,10 @@ public class categoryManagement implements categoryManagementLocal {
                 return false;
             }
             
+            //if exist goals which use this category
+            if(!c.getGoalCollection().isEmpty())
+                return false;
+            
             /*ATUALIZACAO DO UTILIZADOR, DAS SUAS CATEGORIAS*/
             a.getCategoryCollection().remove(c);
             

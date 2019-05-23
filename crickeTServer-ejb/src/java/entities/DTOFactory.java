@@ -63,6 +63,7 @@ public class DTOFactory{
             
             goalDTO.setName(goal.getNome());
             goalDTO.setDesc(goal.getDescript());
+            goalDTO.setIdCategory(goal.getIdCategory().getIdCategory());
             goalDTO.setFavorite(goal.getFavorite());
             goalDTO.setFinalDate(goal.getFinaldate());
             goalDTO.setTotalValue(goal.getTotalvalue());

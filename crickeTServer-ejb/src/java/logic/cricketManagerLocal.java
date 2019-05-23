@@ -79,4 +79,7 @@ public interface cricketManagerLocal {
     
     String findRankUser(String email);
     
+    boolean upOrderValue(GoalDTO goal);
+
+    public boolean downOrderValue(GoalDTO goal);
 }

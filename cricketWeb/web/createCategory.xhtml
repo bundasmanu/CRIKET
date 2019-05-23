@@ -19,8 +19,8 @@ and open the template in the editor.
             
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
-                <h3>#{bundle.CreateGoalTitle}</h3>
-                <p> #{bundle.CreateGoalDesc}</p>
+                <h3>#{bundle.CreateCategoryTitle}</h3>
+                <p> #{bundle.CreateCategoryDesc}</p>
             </ui:define>
 
 
@@ -33,10 +33,10 @@ and open the template in the editor.
                             <h:messages />
 
                             <h:outputText value="#{bundle.CategoryName}"/><br/>
-                            <h:inputText value="#{categoryBean.categoryDTO.nome}" required="true" styleClass = "form-control"/><br/>
+                            <h:inputText value="#{categoryBean.categoryDTO.nome}" required="true" requiredMessage="Name is required" styleClass = "form-control"/><br/>
                             
                             <h:outputText value="#{bundle.CategoryDesc}"/><br/>
-                            <h:inputText value="#{categoryBean.categoryDTO.descript}" required="true" styleClass = "form-control"/><br/>
+                            <h:inputText value="#{categoryBean.categoryDTO.descript}" required="true" requiredMessage="Description is required" styleClass = "form-control"/><br/>
                             
                             <br/>
                             <br/>
