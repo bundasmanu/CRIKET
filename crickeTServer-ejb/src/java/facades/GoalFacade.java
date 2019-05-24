@@ -233,39 +233,39 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         //Constructing list of parameters
         List<Predicate> predicates = new ArrayList<Predicate>();
         
-        
         //Adding predicates in case of parameter not being null
-        if (filterName != null) {
-            predicates.add(
-                    cb.like(goal.get("nome"), filterName));
-        }
-        
-        //Adding predicates in case of parameter not being null
-        if (filterSinceDate != null) {
+        if (filterSinceDate != null && !filterSinceDate.isEmpty()) {
             
             try{
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date sinceDateGoal = formatter.parse(filterSinceDate);
+                
                 predicates.add(cb.greaterThanOrEqualTo(goal.<Date>get("logdate"), sinceDateGoal));
+                
             }catch(Exception e){
-                System.out.println("Error parsing data");
+                System.out.println("Error parsing data. Error: " + e);
             }
-            
-            
         }
     
-                //Adding predicates in case of parameter not being null
-        if (filterUntilDate != null) {
+        //Adding predicates in case of parameter not being null
+        if (filterUntilDate != null && !filterUntilDate.isEmpty()) {
             
             try{
+
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date untilDateGoal = formatter.parse(filterUntilDate);
+                
+                        
                 predicates.add(cb.lessThanOrEqualTo(goal.<Date>get("logdate"), untilDateGoal));
             }catch(Exception e){
-                System.out.println("Error parsing data");
-            }
-            
-            
+                System.out.println("Error parsing data. Error: " + e);
+            }   
+        }
+        
+        //Adding predicates in case of parameter not being null
+        if (filterName != null && !filterName.isEmpty()) {
+            predicates.add(
+                    cb.like(goal.get("nome"), filterName));
         }
           
         //query itself
