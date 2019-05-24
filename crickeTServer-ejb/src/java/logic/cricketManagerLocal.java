@@ -69,7 +69,7 @@ public interface cricketManagerLocal {
     
     boolean increaseClickFlag(GoalDTO goal);
     
-    boolean editUser(String email,  String password);
+    boolean editUser(String email,  String password, String clientName, String gender, String birthTmp);
     
     List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2);
     
@@ -82,4 +82,9 @@ public interface cricketManagerLocal {
     boolean upOrderValue(GoalDTO goal);
 
     public boolean downOrderValue(GoalDTO goal);
+    
+    List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
+
+    public UserDTO findUserbyEmail(String email);
+
 }

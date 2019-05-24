@@ -32,41 +32,46 @@
 
                 <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
-                
+
                     <p id="hm">Welcome,#{sessionBean.email}|Rank:#{rankBean.processFindRank()}</p>
-                    
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav float-right">
+
+                            <li class="nav-item">
+                                <h:commandLink action="#{sessionBean.editUser(sessionBean.email)}">
+                                    #{bundle.User}
+                                    <img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png"></img>
+                                </h:commandLink>
+                            </li>
+
                             <li class="nav-item">
                                 <h:link outcome="indexHistory">
                                     #{bundle.History}
                                     <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
                                 </h:link>
                             </li>
+
                             <li class="nav-item">
                                 <h:link outcome="indexTrophy">
                                     #{bundle.Trophy}
                                     <img src="https://img.icons8.com/color/48/000000/trophy.png"></img>
                                 </h:link>
                             </li>
-                            <!--
-                            <li class="nav-item">
-                                <li>
-                                    <a class="nav-link" href="/cricketWeb/faces/editProfile.xhtml"><img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png"></img></a>
-                                </li>
-                            </li>
-                            -->
+
+
+
                             <li class="nav-item">
                                 <h:link outcome="indexCategories">
                                     #{bundle.Categories}
                                     <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
                                 </h:link>
                             </li>
-                            
-                          
+
+
                             <li class="nav-item">
                                 <li>
                                     <h:commandLink action="#{sessionBean.processLogout}">
@@ -91,10 +96,10 @@
                 <div class="col-8">
                     <div class="container">
                         <h:form rendered="#{sessionBean.isLogged}">
-                            
-                               
-                         </h:form>         
-                       
+
+
+                        </h:form>         
+
                         <header class="section-header">
                             <div class="jumbotron">
                                 <ui:insert name="containerTitle">Default Title</ui:insert>   
@@ -114,9 +119,9 @@
                 </div>
                 <div class="col-2"></div>
             </div>
-            
-            
-            
+
+
+
             <div class="row">
                 <div class="col-12">
                     <div class="container">

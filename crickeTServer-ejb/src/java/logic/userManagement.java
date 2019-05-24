@@ -15,6 +15,7 @@ import facades.*;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import entities.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,8 +43,6 @@ public class userManagement implements userManagementLocal {
 
     @EJB
     categoryManagementLocal cat;
-    
-    
 
     @Override
     public boolean signUp(String username, String pass, String email, String gender, Date birth) {
@@ -146,7 +145,7 @@ public class userManagement implements userManagementLocal {
     }
 
     @Override
-    public boolean editUser(String email, String password) {
+    public boolean editUser(String email, String password, String clientName, String gender, String birthTmp) {
 
         try {
             Utilizador us = this.user.findByEmail(email);
@@ -154,7 +153,13 @@ public class userManagement implements userManagementLocal {
                 return false;
             }
 
+            us.setEmail(email);
             us.setPassword(password);
+            us.setNome(clientName);
+            us.setGenre(gender);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date birth = formatter.parse(birthTmp);
+            us.setAge(birth);
 
             this.user.edit(us);
 
@@ -172,6 +177,16 @@ public class userManagement implements userManagementLocal {
         Utilizador userTmp = user.find(id);
 
         if (userTmp == null) {
+            return null;
+        }
+        return DTOFactory.getUserDTO(userTmp);
+    }
+
+    @Override
+    public UserDTO findUserByEmail(String email) {
+        Utilizador userTmp = user.findByEmail(email);
+        
+        if(userTmp == null){
             return null;
         }
         return DTOFactory.getUserDTO(userTmp);

@@ -7,7 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
+import javax.persistence.Basic; 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,6 +52,7 @@ public class Category implements Serializable {
     @ManyToOne(optional = false)
     private Utilizador idUser;
 
+    
     public Category() {
     }
 
