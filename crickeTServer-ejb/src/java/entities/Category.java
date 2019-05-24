@@ -52,6 +52,7 @@ public class Category implements Serializable {
     @ManyToOne(optional = false)
     private Utilizador idUser;
 
+    
     public Category() {
     }
 
