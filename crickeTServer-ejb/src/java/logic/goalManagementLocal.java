@@ -59,4 +59,6 @@ public interface goalManagementLocal {
     
     boolean setGoalAsDone(Goal goal);
     
+    List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
+
 }

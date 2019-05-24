@@ -62,9 +62,18 @@ public class GoalBean implements Serializable {
 
     String finalDateGoalTmp;
 
+    
+    //vars for filters
+    private String filterName;
+    private String filterSinceDate;
+    private String filterUntilDate;
+    private List<GoalDTO>filteredGoals;
+    
+    
     @PostConstruct
     private void init() {
         this.goalDTOTemp = new GoalDTO();
+        this.filteredGoals = null;
     }
 
     public GoalBean() {
@@ -323,4 +332,76 @@ public class GoalBean implements Serializable {
             return "dashboard";
         }
     }
+
+    
+    public String processGoalsFilter(){
+
+        try
+        {
+            if(getIsFiltering())
+            {
+                System.out.println("\n\n\n\n getIsFiltering: " + getIsFiltering());
+
+                this.filteredGoals = bridge.getCricket().processGoalsFilter(filterName, filterSinceDate, filterUntilDate);
+
+            }
+            else
+            {
+                this.filteredGoals = null;
+            }
+            
+            System.out.println("\n\n\n\n reesult: " + this.filteredGoals);
+            
+            return "dashboard";
+
+        }catch(Exception e){
+            Utils.throwMessage("Error");
+            return "dashboard";
+        }
+    }
+    
+    public String getFilterName() {
+        return filterName;
+    }
+
+    public void setFilterName(String filterName) {
+        this.filterName = filterName;
+    }
+
+    public String getFilterSinceDate() {
+        return filterSinceDate;
+    }
+
+    public void setFilterSinceDate(String filterSinceDate) {
+        this.filterSinceDate = filterSinceDate;
+    }
+
+    public String getFilterUntilDate() {
+        return filterUntilDate;
+    }
+
+    public void setFilterUntilDate(String filterUntilDate) {
+        this.filterUntilDate = filterUntilDate;
+    }
+
+    public List<GoalDTO> getFilteredGoals() {
+        return filteredGoals;
+    }
+
+    public void setFilteredGoals(List<GoalDTO> filteredGoals) {
+        this.filteredGoals = filteredGoals;
+    }
+
+    public boolean getIsFiltering() {
+        
+        if(filterName != null && !filterName.isEmpty())
+            return true;
+        if(filterSinceDate != null && !filterSinceDate.isEmpty())
+            return true;
+        if(filterUntilDate != null && !filterUntilDate.isEmpty())
+            return true;
+        
+        return false;
+    }
+    
 }
