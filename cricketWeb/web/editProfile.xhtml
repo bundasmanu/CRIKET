@@ -35,22 +35,22 @@ and open the template in the editor.
 
 
                         <h:outputText value="#{bundle.UserFullName}" /><br/>
-                        <h:inputText id="name" value="#{sessionBean.clientName}"></h:inputText><br/>
+                        <h:inputText id="name" value="#{sessionBean.user.name}"></h:inputText><br/>
 
                         <h:outputText value="#{bundle.UserEmail}" /><br/>
-                        <h:inputText id="email" value="#{sessionBean.email}"></h:inputText><br/>
+                        <h:inputText id="email" value="#{sessionBean.user.email}"></h:inputText><br/>
 
                         <h:outputText value="#{bundle.Age}" /><br/>
-                        <h:inputText id="age" value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" ></h:inputText>
+                        <h:inputText id="age" value="#{sessionBean.user.age}" styleClass = "form-control datepicker" ></h:inputText>
 
                         <h:outputText value="#{bundle.UserGender}"/><br/>
-                        <h:selectOneRadio value="#{sessionBean.gender}" class="radio">
+                        <h:selectOneRadio value="#{sessionBean.user.gender}" class="radio">
                             <f:selectItem itemValue="MALE" itemLabel="Male" />
                             <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
                         </h:selectOneRadio>
 
                         <h:outputText value="#{bundle.UserPass}" /><br/>
-                        <h:inputSecret id="password" value="#{sessionBean.password}"></h:inputSecret><br/>
+                        <h:inputSecret id="password" value="#{sessionBean.user.password}"></h:inputSecret><br/>
 
                         <br></br>
 

@@ -197,5 +197,10 @@ public class cricketManager implements cricketManagerLocal {
     public List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate) {
         return this.goalManager.processGoalsFilter(filterName, filterSinceDate, filterUntilDate);
     }
+
+    @Override
+    public UserDTO findUserbyEmail(String email) {
+        return this.userManager.findUserByEmail(email);
+    }
     
 }

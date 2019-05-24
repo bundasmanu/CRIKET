@@ -85,4 +85,6 @@ public interface cricketManagerLocal {
     
     List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
 
+    public UserDTO findUserbyEmail(String email);
+
 }

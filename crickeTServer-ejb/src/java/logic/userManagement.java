@@ -182,4 +182,14 @@ public class userManagement implements userManagementLocal {
         return DTOFactory.getUserDTO(userTmp);
     }
 
+    @Override
+    public UserDTO findUserByEmail(String email) {
+        Utilizador userTmp = user.findByEmail(email);
+        
+        if(userTmp == null){
+            return null;
+        }
+        return DTOFactory.getUserDTO(userTmp);
+    }
+
 }

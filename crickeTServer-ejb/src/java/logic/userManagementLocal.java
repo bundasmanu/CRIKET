@@ -31,5 +31,7 @@ public interface userManagementLocal {
     public Future<Integer> getNextValueFromGoalOrder(String email);
 
     public UserDTO findUserById(Integer id);
+
+    public UserDTO findUserByEmail(String email);
     
 }
