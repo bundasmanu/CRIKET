@@ -17,25 +17,42 @@ and open the template in the editor.
     <h:body>
         <ui:composition template = "template.xhtml">
 
-       
+
 
 
             <ui:define name = "containerContent">
 
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
 
-                    <h3>Edit Profile</h3>
+                     <h3>#{bundle.H3EditProfile}</h3>
+                    
+                    
+                    
                     <h:form>
 
+                   
                         <h:messages></h:messages>
 
 
-                        <h:outputText value="#{bundle.UserEmail}:" />#{sessionBean.email}<br/>
-  
-                        <br></br>
+                        <h:outputText value="#{bundle.UserFullName}" /><br/>
+                        <h:inputText id="name" value="#{sessionBean.clientName}"></h:inputText><br/>
+
+                        <h:outputText value="#{bundle.UserEmail}" /><br/>
+                        <h:inputText id="email" value="#{sessionBean.email}"></h:inputText><br/>
+
+                        <h:outputText value="#{bundle.Age}" /><br/>
+                        <h:inputText id="age" value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" ></h:inputText>
+
+                        <h:outputText value="#{bundle.UserGender}"/><br/>
+                        <h:selectOneRadio value="#{sessionBean.gender}" class="radio">
+                            <f:selectItem itemValue="MALE" itemLabel="Male" />
+                            <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
+                        </h:selectOneRadio>
 
                         <h:outputText value="#{bundle.UserPass}" /><br/>
                         <h:inputSecret id="password" value="#{sessionBean.password}"></h:inputSecret><br/>
+
+                        <br></br>
 
                         <h:commandButton class ="btn btn-info" action="#{sessionBean.process_EditUser}" value="#{bundle.EditProfile}"/>  
                     </h:form>

@@ -64,6 +64,12 @@ public class Trophy implements Serializable {
         this.descript = descript;
         this.valor = valor;
     }
+    
+    public Trophy(String nome, String descript) {
+        this.nome = nome;
+        this.descript = descript;
+        this.valor = 0;
+    }
 
     public Integer getIdTrophy() {
         return idTrophy;

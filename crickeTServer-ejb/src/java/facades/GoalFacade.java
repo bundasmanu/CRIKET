@@ -78,7 +78,7 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
         
         try{
             
-            String cmdDate="select g from Goal g inner join Category c on (c=g.idCategory) inner join Utilizador u on (u= c.idUser) where g.finaldate> d1 and g.finaldate<d2";
+            String cmdDate="select g from Goal g inner join Category c on (c=g.idCategory) inner join Utilizador u on (u= c.idUser) where g.finaldate> d1 and g.finaldate<d2 order by g.flagOrder";
             Query qu= this.em.createQuery(cmdDate);
             List<Goal> listGoals= (List<Goal>) qu.getResultList();
             

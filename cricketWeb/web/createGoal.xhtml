@@ -31,6 +31,7 @@ and open the template in the editor.
                     <div class="col-10">
                         <h:form>
                             <h:messages />
+                            
 
                             <h:outputText value="#{bundle.GoalName}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.name}" required="true" requiredMessage="Name is required" styleClass = "form-control"/><br/>
@@ -43,6 +44,7 @@ and open the template in the editor.
                                 <f:selectItem  itemValue="POSITIVE" itemLabel="Positive" />
                                 <f:selectItem itemValue="NEGATIVE" itemLabel="Negative" />
                             </h:selectOneRadio>
+                            
                             
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}" required="true" requiredMessage="Category is required" styleClass = "form-control">
