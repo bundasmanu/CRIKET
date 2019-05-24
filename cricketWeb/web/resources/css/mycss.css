@@ -60,5 +60,19 @@ and open the template in the editor.
     width: 100%;
     color: black;
  }
+ 
+ .rank{
+     width: 30px;
+     height: 30px;
+ }
+ 
+ .info{
+     width: 35px;
+    height: 38px;
+ }
 
+ 
+ .col-1{
+     margin:inherit;
+ }
 
