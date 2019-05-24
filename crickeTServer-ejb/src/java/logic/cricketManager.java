@@ -139,8 +139,8 @@ public class cricketManager implements cricketManagerLocal {
     }
     
      @Override
-    public boolean editUser(String email, String password) {
-        return this.userManager.editUser(email, password);
+    public boolean editUser(String email,  String password, String clientName, String gender, String birthTmp) {
+        return this.userManager.editUser(email, password, clientName, gender, birthTmp);
     }
 
     @Override
