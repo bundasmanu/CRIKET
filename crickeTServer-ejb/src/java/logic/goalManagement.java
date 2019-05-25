@@ -757,5 +757,20 @@ public class goalManagement implements goalManagementLocal {
         
         
     }
+
+    @Override
+    public List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate) {
+        List<Goal> filteredGoals = goalFacade.findAllNotDonePurchasesOfUser(filterName, filterSinceDate, filterUntilDate);
+        List<GoalDTO> goalDTOList;
+        if(filteredGoals == null)
+            return null;
+        goalDTOList = new ArrayList();
+        
+        for(Goal g : filteredGoals){
+            GoalDTO gt = dt.getGoalDTO(g);
+            goalDTOList.add(gt);
+        }
+        return goalDTOList;
+    }
      
 }

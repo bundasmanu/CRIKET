@@ -15,7 +15,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import cricketdto.*;
 import Utils.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.persistence.TemporalType;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -214,6 +220,59 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
             System.out.println(e.getMessage());
             return null;
         }
+        
+    }
+
+    @Override
+    public List<Goal> findAllNotDonePurchasesOfUser(String filterName, String filterSinceDate, String filterUntilDate) {
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        
+        Root<Goal> goal = cq.from(Goal.class);
+        
+        //Constructing list of parameters
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        
+        //Adding predicates in case of parameter not being null
+        if (filterSinceDate != null && !filterSinceDate.isEmpty()) {
+            
+            try{
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date sinceDateGoal = formatter.parse(filterSinceDate);
+                
+                predicates.add(cb.greaterThanOrEqualTo(goal.<Date>get("logdate"), sinceDateGoal));
+                
+            }catch(Exception e){
+                System.out.println("Error parsing data. Error: " + e);
+            }
+        }
+    
+        //Adding predicates in case of parameter not being null
+        if (filterUntilDate != null && !filterUntilDate.isEmpty()) {
+            
+            try{
+
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date untilDateGoal = formatter.parse(filterUntilDate);
+                
+                        
+                predicates.add(cb.lessThanOrEqualTo(goal.<Date>get("logdate"), untilDateGoal));
+            }catch(Exception e){
+                System.out.println("Error parsing data. Error: " + e);
+            }   
+        }
+        
+        //Adding predicates in case of parameter not being null
+        if (filterName != null && !filterName.isEmpty()) {
+            predicates.add(
+                    cb.like(goal.get("nome"), filterName));
+        }
+          
+        //query itself
+        cq.select(goal)
+                .where(predicates.toArray(new Predicate[]{}));
+        //execute query and do something with result
+        return em.createQuery(cq).getResultList();
         
     }
     

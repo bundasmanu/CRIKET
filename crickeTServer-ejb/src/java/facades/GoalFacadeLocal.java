@@ -51,4 +51,6 @@ public interface GoalFacadeLocal {
     List<Goal> findRange(int[] range);
 
     int count();
+    
+    List<Goal> findAllNotDonePurchasesOfUser(String filterName, String filterSinceDate, String filterUntilDate);
 }

@@ -11,6 +11,8 @@ import cricketdto.UserDTO;
 import java.util.ArrayList;
 import java.util.List;
 import cricketdto.TrophyDTO;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 
 public class DTOFactory{
@@ -100,9 +102,16 @@ public class DTOFactory{
                 return null;
             }
             
+            String pattern = "dd/MM/yyyy";
+            DateFormat df = new SimpleDateFormat(pattern);
+            String dateAsString = df.format(utilizador.getAge());
+            
             userDTO.setEmail(utilizador.getEmail());
             userDTO.setName(utilizador.getNome());
+            userDTO.setAge(dateAsString);
+            userDTO.setGender(utilizador.getGenre());
             userDTO.setCurrentPoints(utilizador.getCurrentpoints());
+            userDTO.setPassword(utilizador.getPassword());
             
             return userDTO;
             

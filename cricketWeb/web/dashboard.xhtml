@@ -14,7 +14,7 @@ and open the template in the editor.
     <head>
         <ui:define name="title">TODO supply a title </ui:define>
     </head>
-    <body>
+    <body> 
         <ui:composition template = "template.xhtml">
 
             
@@ -40,9 +40,23 @@ and open the template in the editor.
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><img src="https://img.icons8.com/color/24/000000/search.png"></img></span>
                             </div>
-                            <h:inputText class="form-control" a:placeholder="#{bundle.FilterGoalName}"></h:inputText>
+                            <h:inputText class="form-control" a:placeholder="#{bundle.FilterGoalName}" value="#{goalBean.filterName}"></h:inputText>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><img src="https://img.icons8.com/office/16/000000/calendar-15.png"></img></span>
+                            </div>
+                            <h:inputText value="#{goalBean.filterSinceDate}" a:placeholder="Since" styleClass = "form-control datepicker"></h:inputText><br/>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><img src="https://img.icons8.com/office/16/000000/calendar-15.png"></img></span>
+                            </div>
+                            <h:inputText value="#{goalBean.filterUntilDate}" a:placeholder="Until" styleClass = "form-control datepicker"></h:inputText><br/>
                         </div>
                         <br></br>
+                        <h:commandButton class ="btn btn-success" action="#{goalBean.processGoalsFilter}" value="#{bundle.Filter}"/>  
+
                     </h:form>           
                 </div>
             </ui:define>
@@ -73,18 +87,23 @@ and open the template in the editor.
 
                     <c:if test="#{not empty goalBean.allNotDoneGoals}">
                         <div class="container">
-                            <ui:repeat value="#{goalBean.allNotDoneGoals}" var="goalTmp" varStatus="getObj">
-
+                            <!-- <ui:repeat value="#{goalBean.allNotDoneGoals}" var="goalTmp" varStatus="getObj">-->
+                            <ui:repeat value="#{goalBean.isFiltering? goalBean.filteredGoals : goalBean.allNotDoneGoals}" var="goalTmp" varStatus="getObj">
+                                
                                 <!-- panel group just to define the background color -->
                                 <h:panelGroup class="row" >
 
                                     <div class="col-2">
-                                        <h:commandLink action="#{goalBean.upOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != 0}">
-                                            <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
-                                        </h:commandLink>
-                                        <h:commandLink action="#{goalBean.downOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != (goalBean.allNotDoneGoals.size()-1)}">
-                                            <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
-                                        </h:commandLink>
+                                        
+                                        <h:panelGroup rendered="#{not goalBean.isFiltering}">
+                                            <h:commandLink action="#{goalBean.upOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != 0}">
+                                                <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
+                                            </h:commandLink>
+                                            <h:commandLink action="#{goalBean.downOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != (goalBean.allNotDoneGoals.size()-1)}">
+                                                <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                        
                                     </div>
                                     <div class="col-4" style="font-weight: bold;">
                                         #{goalTmp.name}

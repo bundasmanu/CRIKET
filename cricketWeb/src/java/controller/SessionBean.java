@@ -109,10 +109,23 @@ public class SessionBean implements Serializable {
         }
     }
 
+    public String editUser(String email){
+        
+        user = bridge.getCricket().findUserbyEmail(email);
+           
+        if(user == null){
+            Utils.throwMessage("Error, Could´t find the user.");
+            return "dashboard";
+        }
+        
+                
+        return "editProfile";
+    }
+    
     public String process_EditUser() {
         boolean result = false;
 
-        result = bridge.getCricket().editUser(this.getEmail(), password);
+        result = bridge.getCricket().editUser(this.getEmail(), user.getPassword(), user.getName(), user.getGender(), user.getAge()); 
         if (result) {
             return "dashboard?faces-redirect=true";
         } else {
@@ -226,4 +239,13 @@ public class SessionBean implements Serializable {
         this.birthTmp = birthTmp;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    
 }

@@ -25,11 +25,13 @@ public interface userManagementLocal {
     
     boolean signUp(String username, String pass, String email, String gender, Date birth);
     boolean validateLogin(String email, String pass);
-    boolean editUser(String email, String password);
+    boolean editUser(String email,  String password, String clientName, String gender, String birthTmp);
     
     @Asynchronous
     public Future<Integer> getNextValueFromGoalOrder(String email);
 
     public UserDTO findUserById(Integer id);
+
+    public UserDTO findUserByEmail(String email);
     
 }
