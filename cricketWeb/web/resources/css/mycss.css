@@ -75,3 +75,20 @@ and open the template in the editor.
  .col-1{
      margin:inherit;
  }
+ 
+ #j_idt35 {
+
+    padding-top: 30px;
+
+}
+ 
+ .grow{
+     height: 300px;
+     width: 380px;
+ }
+
+ .grow:hover{
+     -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        transform: scale(1.3)
+ }
