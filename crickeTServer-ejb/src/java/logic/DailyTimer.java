@@ -77,7 +77,7 @@ public class DailyTimer implements DailyTimerLocal {
         }
     }
     
-    @Schedule( hour = "0", dayOfWeek ="*"  , info="RunsEveryDay")
+    @Schedule( hour = "0", minute = "0", dayOfWeek ="*"  , info="RunsEveryDay")
     public void timeoutEveryDay() { 
         /*CALL TIMEOUT METHODS FOR GOALS DIFFERENT NEVER*/
         System.err.println("\nENTREI NO TIMER\n");
