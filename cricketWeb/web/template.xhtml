@@ -30,7 +30,7 @@
         <h:form>
             <nav class="navbar bg-dark navbar-dark">
 
-                <h:link class="navbar-brand" outcome="dashboard">CrickeT</h:link>
+                <h:link class="navbar-brand" outcome="dashboard"><img class="grow" src="#{resource['images/cricket.png']}" style="height: 50px;width:65px;"  /></h:link>
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
                 
                     <p id="hm">Welcome,#{sessionBean.email}|<img class="rank" src="https://img.icons8.com/color/48/000000/rating.png"></img>:#{rankBean.processFindRank()}</p>
@@ -42,21 +42,21 @@
                         <ul class="navbar-nav float-right">
 
                             <li class="nav-item">
-                                <h:commandLink action="#{sessionBean.editUser(sessionBean.email)}">
+                                <h:commandLink action="#{sessionBean.editUser(sessionBean.email)}" style="color:white;">
                                     #{bundle.User}
                                     <img src="https://img.icons8.com/color/48/000000/gender-neutral-user.png"></img>
                                 </h:commandLink>
                             </li>
 
                             <li class="nav-item">
-                                <h:link outcome="indexHistory">
+                                <h:link outcome="indexHistory" style="color:white;">
                                     #{bundle.History}
                                     <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
                                 </h:link>
                             </li>
 
                             <li class="nav-item">
-                                <h:link outcome="indexTrophy">
+                                <h:link outcome="indexTrophy" style="color:white;">
                                     #{bundle.Trophy}
                                     <img src="https://img.icons8.com/color/48/000000/trophy.png"></img>
                                 </h:link>
@@ -65,7 +65,7 @@
 
 
                             <li class="nav-item">
-                                <h:link outcome="indexCategories">
+                                <h:link outcome="indexCategories" style="color:white;">
                                     #{bundle.Categories}
                                     <img src="https://img.icons8.com/office/40/000000/opened-folder.png"></img>
                                 </h:link>

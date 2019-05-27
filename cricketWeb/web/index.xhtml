@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
 
         <ui:define name="title">TODO supply a title </ui:define>
@@ -28,7 +29,7 @@ and open the template in the editor.
 
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
 
-                    <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>
+<!--                    <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>-->
                     <div class="container">
                         <div class="image-container">
                             <img class="grow" src="#{resource['images/cricket.png']}"  />
@@ -38,12 +39,24 @@ and open the template in the editor.
 
                         <h:messages></h:messages>
 
-                        <h:outputText value="#{bundle.UserEmail}" style="font-weight: bold;"/><br/>
-                        <h:inputText id="username" value="#{sessionBean.email}" required="true" requiredMessage="Username is required"></h:inputText><br/>
-                        <br></br>
+                        <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>
 
-                        <h:outputText value="#{bundle.UserPassword}" style="font-weight: bold;"/><br/>
-                        <h:inputSecret id="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputSecret><br/>
+<!--                        <h:outputText value="#{bundle.UserEmail}" style="font-weight: bold; padding-left: 50px" />-->
+                        <h:panelGrid id = "email" columns = "2" >
+                            <img src="https://img.icons8.com/office/40/000000/gender-neutral-user.png"></img>
+                            <h:inputText id="username" a:placeholder="username" value="#{sessionBean.email}" required="true" requiredMessage="Username is required"></h:inputText>
+
+                        </h:panelGrid>
+
+
+<!--                        <h:outputText value="#{bundle.UserPassword}" style="font-weight: bold;"/>-->
+                        <h:panelGrid id = "pass" columns = "2" >
+                            <img src="https://img.icons8.com/office/40/000000/lock-2.png"></img>
+                            <h:inputSecret id="password" a:placeholder="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputSecret><br/>
+
+                        </h:panelGrid>
+
+
 
                         <br/>
 
