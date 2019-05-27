@@ -57,16 +57,16 @@ and open the template in the editor.
 
                     <c:if test="#{not empty categoryBean.allCategoriesFromLoggedUser}">
                         <div class="container">
-                            
+
                             <h:messages />
-                            
+
                             <ui:repeat value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryTmp" varStatus="getObj">
                                 <div class="row p-3 mb-2 bg-light text-dark">
                                     <div class="col-1"></div>
                                     <div class="col-10">
                                         <div class="row">
-                                            
-                                            <div class="col-8">
+
+                                            <div class="col-8" style="font-weight: bold;">
                                                 #{categoryTmp.nome}
                                             </div>                     
                                             <div class="col-3">
@@ -74,43 +74,42 @@ and open the template in the editor.
                                             </div>
                                             <div class="col-1">
                                                 <h:commandLink action="#{categoryBean.editCategory(categoryTmp.idCategory)}">
-                                                    <img src="https://img.icons8.com/bubbles/50/000000/maintenance.png"></img>
-                                                </h:commandLink>
+                                                    <img class="edit" src="https://img.icons8.com/color/48/000000/edit.png"></img>                                                </h:commandLink>
                                                 <a data-toggle="modal" data-target="#removeCategoryModal#{categoryTmp.idCategory}" data-id="#{categoryTmp.idCategory}">
-                                                    <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
+                                                    <img class="remove" src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-1"></div>
                                 </div>
-                                
+
                                 <!-- not efficient at all! Is rendering a modal to each goal. -->
                                 <!-- The Modal -->
                                 <div class="modal" id="removeCategoryModal#{categoryTmp.idCategory}">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
 
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                              <h4 class="modal-title">#{bundle.RemoveCategory}</h4>
-                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">#{bundle.RemoveCategory}</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
 
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                          #{bundle.RemoveCategoryDesc} <br></br> Goal which will be removed: #{categoryTmp.nome}
-                                        </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                #{bundle.RemoveCategoryDesc} <br></br> Goal which will be removed: #{categoryTmp.nome}
+                                            </div>
 
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                            <h:commandLink id="goalId" action="#{categoryBean.processRemoveCategory(categoryTmp.idCategory)}">
-                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
-                                            </h:commandLink>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <h:commandLink id="goalId" action="#{categoryBean.processRemoveCategory(categoryTmp.idCategory)}">
+                                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                                </h:commandLink>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            </div>
                                         </div>
                                     </div>
-                                  </div>
                                 </div>
                             </ui:repeat>
                         </div>
