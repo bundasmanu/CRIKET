@@ -16,23 +16,28 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <ui:composition template = "template.xhtml">
-            
+
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfUserIsLogged}" type="preRenderView" />
                 <h3>#{bundle.SignInSignUp}</h3>
                 <p> #{bundle.SignInSignUpDesc}</p>
             </ui:define>
- 
+
 
             <ui:define name = "containerContent">
-                
+
                 <h3>#{bundle.SignIn}</h3>
                 <h:form>
 
                     <h:messages></h:messages>
 
                     <h:outputText value="#{bundle.UserEmail}" /><br/>
-                    <h:inputText id="username" value="#{sessionBean.email}"></h:inputText><br/>
+                    <h:panelGrid id = "pass" columns = "2" >
+                        <img src="https://img.icons8.com/office/40/000000/gender-neutral-user.png"></img>
+                        <h:inputText id="username" value="#{sessionBean.email}"></h:inputText><br/>
+
+                    </h:panelGrid>
+
                     <br></br>
 
                     <h:outputText value="#{bundle.UserPassword}" /><br/>
@@ -44,7 +49,7 @@ and open the template in the editor.
 
                     <h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/>  
                 </h:form>
-                
+
             </ui:define>
         </ui:composition>
     </h:body>

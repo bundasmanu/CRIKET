@@ -14,7 +14,7 @@ import logic.cricketManagerLocal;
  *
  * @author gustavo
  */
-@Stateless
+@Singleton
 public class Bridge implements BridgeLocal {
 
     // Add business logic below. (Right-click in editor and choose
