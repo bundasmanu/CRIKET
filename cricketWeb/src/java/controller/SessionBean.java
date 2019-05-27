@@ -87,7 +87,7 @@ public class SessionBean implements Serializable {
         if (result) {
             context.getExternalContext().getSessionMap().put("user", email);
 
-            setOrderFlag(context);
+            setOrderFlag(context);  
 
             return "dashboard?faces-redirect=true";
         } else {
