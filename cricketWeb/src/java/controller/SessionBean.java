@@ -80,8 +80,6 @@ public class SessionBean implements Serializable {
 
         FacesContext context = FacesContext.getCurrentInstance();
         
-        //Process p=Runtime.getRuntime().exec(new String[]{"sudo -s date","--set","2019-12-07 01:20:15.962"});
-        
         boolean result = this.bridge.getCricket().validateLogin(email, password);
  
         if (result) {
