@@ -24,33 +24,64 @@ and open the template in the editor.
 
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
 
-                     <h3>#{bundle.H3EditProfile}</h3>
-                    
-                    
-                    
+                    <h3>#{bundle.H3EditProfile}</h3>
+
+
+
                     <h:form>
 
-                   
+
                         <h:messages></h:messages>
 
 
-                        <h:outputText value="#{bundle.UserFullName}" /><br/>
-                        <h:inputText id="name" value="#{sessionBean.user.name}"></h:inputText><br/>
+<!--                        <h:outputText value="#{bundle.UserFullName}" style="padding-left:50px"/>-->
+                        <h:panelGrid id = "nome" columns = "2" >
+                            <img src="https://img.icons8.com/color/48/000000/name.png"></img>
+                            <h:inputText value="#{sessionBean.user.name}"></h:inputText>
 
-                        <h:outputText value="#{bundle.UserEmail}" /><br/>
-                        <h:inputText id="email" value="#{sessionBean.user.email}"></h:inputText><br/>
+                        </h:panelGrid>
 
-                        <h:outputText value="#{bundle.Age}" /><br/>
-                        <h:inputText id="age" value="#{sessionBean.user.age}" styleClass = "form-control datepicker" ></h:inputText>
 
-                        <h:outputText value="#{bundle.UserGender}"/><br/>
-                        <h:selectOneRadio value="#{sessionBean.user.gender}" class="radio">
-                            <f:selectItem itemValue="MALE" itemLabel="Male" />
-                            <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
-                        </h:selectOneRadio>
+<!--                        <h:outputText value="#{bundle.UserEmail}" style="padding-left:50px"/>-->
+                        <h:panelGrid id = "Email" columns = "2" >
+                            <img src="https://img.icons8.com/bubbles/50/000000/new-post.png"></img>
+                            <h:inputText id="email" value="#{sessionBean.user.email}"></h:inputText>
 
-                        <h:outputText value="#{bundle.UserPass}" /><br/>
-                        <h:inputSecret id="password" value="#{sessionBean.user.password}"></h:inputSecret><br/>
+                        </h:panelGrid>
+
+
+
+
+<!--                        <h:outputText value="#{bundle.Age}" style="padding-left:50px"/>-->
+                        <h:panelGrid id = "Age" columns = "2" >
+                            <img src="https://img.icons8.com/office/40/000000/birthday.png"></img>
+                            <h:inputText id="age" value="#{sessionBean.user.age}" styleClass = "form-control datepicker"></h:inputText>
+
+                        </h:panelGrid>
+
+
+
+<!--                        <h:outputText value="#{bundle.UserGender}" style="padding-left:50px"/>-->
+                        <h:panelGrid id = "Gender" columns = "2" >
+                            <img src="https://img.icons8.com/color/48/000000/gender.png"></img>
+                            <h:selectOneRadio value="#{sessionBean.user.gender}" class="radio" >
+                                <f:selectItem itemValue="MALE" itemLabel="Male" />
+                                <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
+                            </h:selectOneRadio>
+
+                        </h:panelGrid>
+
+
+<!--                        <h:outputText value="#{bundle.UserPass}" style="padding-left:50px"/>-->
+                        <h:panelGrid id = "pass" columns = "2" >
+                            <img src="https://img.icons8.com/color/48/000000/forgot-password.png"></img>
+                            <h:inputSecret id="password" value="#{sessionBean.user.password}" required="true" requiredMessage="Password is required"></h:inputSecret>
+
+                        </h:panelGrid>
+
+
+
+
 
                         <br></br>
 
