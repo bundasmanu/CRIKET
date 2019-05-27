@@ -28,54 +28,54 @@ and open the template in the editor.
 
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
 
-                    <h3>#{bundle.SignIn}</h3>
+                    <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>
                     <div class="container">
                         <div class="image-container">
-                            <img class="" src="#{resource['images/cricket.png']}"/>
+                            <img class="grow" src="#{resource['images/cricket.png']}"  />
                         </div>
                     </div>
                     <h:form>
 
                         <h:messages></h:messages>
 
-                        <h:outputText value="#{bundle.UserEmail}" /><br/>
+                        <h:outputText value="#{bundle.UserEmail}" style="font-weight: bold;"/><br/>
                         <h:inputText id="username" value="#{sessionBean.email}" required="true" requiredMessage="Username is required"></h:inputText><br/>
                         <br></br>
 
-                        <h:outputText value="#{bundle.UserPassword}" /><br/>
+                        <h:outputText value="#{bundle.UserPassword}" style="font-weight: bold;"/><br/>
                         <h:inputSecret id="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputSecret><br/>
 
                         <br/>
 
-                        <h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/>  
+                        <center><h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/></center>
                     </h:form>
 
                     <hr/>
 
-                    <h3>#{bundle.SignUp}</h3>
+                    <h3 style="font-weight: bold;text-align: center;">#{bundle.SignUp}</h3>
                     <h:form>
 
                         <h:messages />
 
-                        <h:outputText value="#{bundle.UserEmail}"/><br/>
+                        <h:outputText value="#{bundle.UserEmail}" style="font-weight: bold;"/><br/>
                         <h:inputText value="#{sessionBean.email}" required="true" requiredMessage="Email is required"/><br/>
-                        <h:outputText value="#{bundle.UserFullName}"/><br/>
+                        <h:outputText value="#{bundle.UserFullName}" style="font-weight: bold;"/><br/>
                         <h:inputText value="#{sessionBean.clientName}" required="true" requiredMessage="Name is required"/><br/>
-                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                        <h:inputText value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" required="true" requiredMessage="Birthday is required"></h:inputText><br/>
-                        <h:outputText value="#{bundle.UserPassword}"/><br/>
-                        <h:inputSecret value="#{sessionBean.password}" required="true" requiredMessage="Password is required"/><br/>
-                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
-                        <h:inputSecret value="#{sessionBean.passwordConfirmation}" required="true" requiredMessage="Password confirmation is required"/><br/>
-                        <h:outputText value="#{bundle.UserGender}"/><br/>
+                        <h:outputText value="#{bundle.UserBirthDate}" style="font-weight: bold;"/><br/>
+                        <h:inputText value="#{sessionBean.birthTmp}"  styleClass = "form-control datepicker" required="true" requiredMessage="Birthday is required"></h:inputText><br/>
+                        <h:outputText value="#{bundle.UserPassword}" style="font-weight: bold;" /><br/>
+                        <h:inputSecret value="#{sessionBean.password}"  required="true" requiredMessage="Password is required"/><br/>
+                        <h:outputText value="#{bundle.UserRetypePassword}" style="font-weight: bold;" /><br/>
+                        <h:inputSecret value="#{sessionBean.passwordConfirmation}" style="font-weight: bold;" required="true" requiredMessage="Password confirmation is required"/><br/>
+                        <h:outputText value="#{bundle.UserGender}" style="font-weight: bold;"/><br/>
 
-                        <h:selectOneRadio value="#{sessionBean.gender}" required="true"  requiredMessage="Gender is required" class="radio">
+                        <h:selectOneRadio value="#{sessionBean.gender}"  required="true"  requiredMessage="Gender is required" class="radio">
                             <f:selectItem itemValue="MALE" itemLabel="Male" />
                             <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
                         </h:selectOneRadio>
                         <br/>
                         <br/>
-                        <h:commandButton class ="btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                        <center><h:commandButton class ="btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton></center>
                     </h:form>
 
                 </div>
