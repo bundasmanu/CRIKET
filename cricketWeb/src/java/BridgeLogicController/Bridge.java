@@ -7,13 +7,14 @@ package BridgeLogicController;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import logic.cricketManagerLocal;
 
 /**
  *
  * @author gustavo
  */
-@Singleton
+@Stateless
 public class Bridge implements BridgeLocal {
 
     // Add business logic below. (Right-click in editor and choose

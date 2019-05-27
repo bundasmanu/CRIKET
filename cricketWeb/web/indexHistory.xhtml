@@ -26,10 +26,10 @@ and open the template in the editor.
 
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
-                
+
                 <h3>#{bundle.GoalDoneListTitle}</h3>
                 <p> #{bundle.GoalDoneListDesc}</p>
-                
+
             </ui:define>
 
             <ui:define name = "containerContent">
@@ -49,20 +49,20 @@ and open the template in the editor.
                 </c:if>
 
                 <h:form>
-                    
+
                     <c:if test="#{not empty goalBean.allDoneGoals}">
                         <div class="container">
                             <ui:repeat value="#{goalBean.allDoneGoals}" var="goalTmp" varStatus="getObj">
-                                
+
                                 <!-- panel group just to define the background color -->
-                                <h:panelGroup class="row" style="#{goalBean.goalWasEnddedSucessfully(goalTmp)}">
-                                            
-                                    
-                                    <div class="col-6">
+                                <h:panelGroup class="row" >
+
+
+                                    <div class="col-6" style="font-weight:bold;">
                                         #{goalTmp.name}
                                     </div>                                
                                     <div class="col-3">
-                                        <div class="progress">
+                                        <div class="progress" style="#{goalBean.goalWasEnddedSucessfully(goalTmp)}">
                                             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 }%">
                                                 #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 } %
                                             </div>
@@ -73,35 +73,35 @@ and open the template in the editor.
                                             <img src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
                                         </a>
                                     </div>
-                                            
+                                    <hr style="width: 100%; color: black; height: 1px; background-color:#dae6f1;" /> 
                                 </h:panelGroup>
 
                                 <!-- not efficient at all! Is rendering a modal to each goal. -->
                                 <!-- The Modal -->
                                 <div class="modal" id="recoveryDoneGoalModal#{goalTmp.id_goal}">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
 
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                              <h4 class="modal-title">#{bundle.RecoveryDoneGoal}</h4>
-                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">#{bundle.RecoveryDoneGoal}</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
 
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                          #{bundle.RecoveryDoneGoalDesc} <br></br> Goal which will be recovered: #{goalTmp.name}
-                                        </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                #{bundle.RecoveryDoneGoalDesc} <br></br> Goal which will be recovered: #{goalTmp.name}
+                                            </div>
 
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                            <h:commandLink id="goalId" action="#{goalBean.processRecoverDoneGoal(goalTmp.id_goal)}">
-                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
-                                            </h:commandLink>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <h:commandLink id="goalId" action="#{goalBean.processRecoverDoneGoal(goalTmp.id_goal)}">
+                                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                                </h:commandLink>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            </div>
                                         </div>
                                     </div>
-                                  </div>
                                 </div>
                             </ui:repeat>
                         </div>
@@ -109,6 +109,6 @@ and open the template in the editor.
                 </h:form>
             </ui:define>
         </ui:composition>
-        
+
     </body>
 </html>

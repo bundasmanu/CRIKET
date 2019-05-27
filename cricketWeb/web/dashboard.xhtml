@@ -18,6 +18,7 @@ and open the template in the editor.
         <ui:composition template = "template.xhtml">
 
             
+
             <ui:define name = "introTitle">                                
                 <h2>Hi <span>#username!</span></h2>
                 <div>
@@ -27,10 +28,10 @@ and open the template in the editor.
 
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
-                
+
                 <h3>#{bundle.GoalListTitle}</h3>
                 <p> #{bundle.GoalListDesc}</p>
-                
+
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#filters">#{bundle.GoalListFiltersButton}</button>
                 <div id="filters" class="collapse panel panel-default">
                     <h:form>
@@ -91,7 +92,7 @@ and open the template in the editor.
                                 
                                 <!-- panel group just to define the background color -->
                                 <h:panelGroup class="row" >
-                                            
+
                                     <div class="col-2">
                                         
                                         <h:panelGroup rendered="#{not goalBean.isFiltering}">
@@ -106,7 +107,15 @@ and open the template in the editor.
                                     </div>
                                     <div class="col-4" style="font-weight: bold;">
                                         #{goalTmp.name}
-                                    </div>                                
+                                           &#160;
+                                           &#160;
+                                           
+                                               <img class="info" src="https://img.icons8.com/color/48/000000/about.png"><span class="badge badge-light">5pts</span></img>
+                                           
+                                     
+
+                                    </div> 
+
                                     <div class="col-3">
                                         <div class="progress" style="#{goalBean.goalWasEnddedSucessfully(goalTmp)};padding-top:5px;">
                                             <div class="progress-bar"  role="progressbar" aria-valuemin="0" aria-valuemax="100"  style="width: #{ (goalTmp.currentValue / goalTmp.totalValue) * 100 }%;color:black; ">
@@ -121,52 +130,77 @@ and open the template in the editor.
                                         <h:commandLink action="#{goalBean.decreaseCurrentValue(goalTmp)}">
                                             <img class="decr" src="https://img.icons8.com/ultraviolet/30/000000/minus-2-math.png"></img>
                                         </h:commandLink>    
+
                                     </div>
-                                    <div class="col-1">
+                                    <div class="col-1" >
                                         <h:commandLink action="#{goalBean.editGoal(goalTmp.id_goal)}">
                                             <img class="edit" src="https://img.icons8.com/color/48/000000/edit.png"></img>
                                         </h:commandLink>
                                         <a data-toggle="modal" data-target="#removeGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
                                             <img class="remove" src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
                                         </a>
+                                        
                                     </div>
 
                                     <hr style="width: 100%; color: black; height: 1px; background-color:#dae6f1;" />
                                 </h:panelGroup>
-                                
+
                                 <!-- not efficient at all! Is rendering a modal to each goal. -->
                                 <!-- The Modal -->
                                 <div class="modal" id="removeGoalModal#{goalTmp.id_goal}">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
 
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                              <h4 class="modal-title">#{bundle.RemoveGoal}</h4>
-                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">#{bundle.RemoveGoal}</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
 
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                          #{bundle.RemoveGoalDesc} <br></br> Goal which will be removed: #{goalTmp.name}
-                                        </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                #{bundle.RemoveGoalDesc} <br></br> Goal which will be removed: #{goalTmp.name}
+                                            </div>
 
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                            <h:commandLink id="goalId" action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}">
-                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
-                                            </h:commandLink>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <h:commandLink id="goalId" action="#{goalBean.processRemoveGoal(goalTmp.id_goal)}">
+                                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Yes</button>
+                                                </h:commandLink>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            </div>
                                         </div>
                                     </div>
-                                  </div>
                                 </div>
+
+
+                                <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title" style="text-align: center;">Score information</h4>
+                                                <img src="https://img.icons8.com/cool-color/96/000000/test-failed.png"></img>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>If you achieve this goal, you win 9 points.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </ui:repeat>
                         </div>
                     </c:if>
                 </h:form>
             </ui:define>
         </ui:composition>
-        
+
     </body>
 </html>
