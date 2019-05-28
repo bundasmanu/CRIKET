@@ -33,7 +33,8 @@
                 <h:link class="navbar-brand" outcome="dashboard"><img class="grow" src="#{resource['images/cricket.png']}" style="height: 50px;width:65px;"  /></h:link>
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
                 
-                    <p id="hm">Welcome,#{sessionBean.email}|<img class="rank" src="https://img.icons8.com/color/48/000000/rating.png"></img>:#{rankBean.processFindRank()}</p>
+                    
+                    <p id="hm">Welcome,#{sessionBean.email}|<h:graphicImage value="#{rankBean.processFindRank()}"></h:graphicImage>:#{rankBean.returnTypeOfRank()}</p>
                     
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
