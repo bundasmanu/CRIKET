@@ -8,6 +8,7 @@ package controller;
 import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import cricketdto.UserDTO;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -75,16 +76,16 @@ public class SessionBean implements Serializable {
         this.gg.nextValueOrderGoal = this.bridge.getCricket().getNextValueFromGoalOrder(email);
     }
 
-    public String processSignIn() {
+    public String processSignIn() throws IOException {
 
         FacesContext context = FacesContext.getCurrentInstance();
-
+        
         boolean result = this.bridge.getCricket().validateLogin(email, password);
-
+ 
         if (result) {
             context.getExternalContext().getSessionMap().put("user", email);
 
-            setOrderFlag(context);
+            setOrderFlag(context);  
 
             return "dashboard?faces-redirect=true";
         } else {
