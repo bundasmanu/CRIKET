@@ -11,6 +11,7 @@ import facades.CategoryFacadeLocal;
 import facades.GoalFacadeLocal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collection;
@@ -24,6 +25,7 @@ import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.SessionContext;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
@@ -33,17 +35,16 @@ import javax.ejb.TimerService;
  * @author gustavo
  */
 @Singleton
+@Startup
 public class DailyTimer implements DailyTimerLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    
     
     @Resource
-    private SessionContext cont;
-    
-    private TimerService t;
-    
-    String dailyTimer="Daily"; /*VARIAVEL QUE CONTROLA O TIMER ESPECIFICO*/
+    private TimerService timerService;
+    private int date;
+    static String timerName = "IntervalTimer_Info";
     
     @EJB
     GoalFacadeLocal goals;
@@ -55,37 +56,39 @@ public class DailyTimer implements DailyTimerLocal {
     goalManagementLocal goalM;
     
     @PostConstruct
-    public void startCrono(){
-        CancelTimers();
-        t= cont.getTimerService();
+    private void init() {
+        this.date = 0;
+        timerService.createTimer(1000, secondsToMiliSeconds(60), timerName);
     }
     
-    @PreDestroy
-    public void para(){
-        CancelTimers();
-    }
-    
-    @Override
-    public void CancelTimers(){
-        TimerService timers_em_execucao= this.cont.getTimerService();
-        Collection<Timer> cronos= timers_em_execucao.getTimers();
-        /*APAGAR TODOS OS TIMERS*/
-        for(Timer x : cronos){
-            if(x.getInfo().equals(this.dailyTimer)==true){
-                x.cancel();
-            }
+    @Timeout
+    public void incrementDate(Timer timer) {
+        date++;
+        System.out.println("DATE: " + date);
+        
+        
+        LocalTime atualTime = LocalTime.now();
+        LocalTime minTime = LocalTime.of(00, 00, 00, 00000);
+        LocalTime maxTime = LocalTime.of(00, 01, 00, 00000);
+
+        
+        System.out.println("\n\n strDate: " + atualTime);
+        if(atualTime.isAfter(minTime) && atualTime.isBefore(maxTime))
+        {
+            System.err.println("\nENTREI NO TIMER\n");
+            this.testDailyGoals();
+            this.testWeeklyGoals();
+            this.testMonthlyGoals();
+            this.testYearGoals();
         }
     }
     
-    @Schedule( hour = "0", minute = "0", dayOfWeek ="*"  , info="RunsEveryDay")
-    public void timeoutEveryDay() { 
-        /*CALL TIMEOUT METHODS FOR GOALS DIFFERENT NEVER*/
-        System.err.println("\nENTREI NO TIMER\n");
-        this.testDailyGoals();
-        this.testWeeklyGoals();
-        this.testMonthlyGoals();
-        this.testYearGoals();
+    
+    private long secondsToMiliSeconds(long seconds){
+        return seconds * 1000;
     }
+
+    
     
     /*METODOS CHAMADOS NO TIMEOUT*/
     
@@ -346,5 +349,10 @@ public class DailyTimer implements DailyTimerLocal {
         } 
         
     }
-    
+
+    @Override
+    public void CancelTimers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   
 }
