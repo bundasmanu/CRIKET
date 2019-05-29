@@ -26,12 +26,12 @@ and open the template in the editor.
 
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
-                
+
                 <h3>#{bundle.TrophyDoneListName}</h3>
                 <h3>#{bundle.TrophyDoneListDesc}</h3>
                 <h3>#{bundle.TrophyDoneListValue}</h3>
-                
-                
+
+
             </ui:define>
 
             <ui:define name = "containerContent">
@@ -51,20 +51,38 @@ and open the template in the editor.
                 </c:if>
 
                 <h:form>
-                    
+
                     <c:if test="#{not empty trophyBean.allDoneTrophies}">
                         <div class="container">
-                            <ui:repeat value="#{trophyBean.allDoneTrophies}" var="goalTmp" varStatus="getObj">
-                                
-                               
+                            <ui:repeat value="#{trophyBean.allDoneTrophies}" var="trophyTmp" varStatus="getObj">
 
-                                
+                                <div class="row p-3 mb-2 bg-light text-dark">
+                                    <div class="col-1"></div>
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="col-8" style="font-weight: bold;">
+                                                #{trophyTmp.nome}
+                                            </div>    
+
+                                            <div class="col-3">
+                                                #{trophyTmp.desc}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+
                             </ui:repeat>
                         </div>
                     </c:if>
                 </h:form>
             </ui:define>
         </ui:composition>
-        
+
     </body>
 </html>

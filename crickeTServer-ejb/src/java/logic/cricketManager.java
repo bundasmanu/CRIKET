@@ -7,6 +7,7 @@ package logic;
 
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
+import cricketdto.TrophyDTO;
 import cricketdto.UserDTO;
 import java.time.LocalDate;
 import java.util.Date;
@@ -37,9 +38,12 @@ public class cricketManager implements cricketManagerLocal {
 
     @EJB
     categoryManagementLocal categoryManager;
-    
+
     @EJB
     rankingManagementLocal rankManager;
+    
+    @EJB
+    trophyManagementLocal trophyManager;
 
     @Override
     public boolean validateLogin(String email, String pass) {
@@ -57,8 +61,8 @@ public class cricketManager implements cricketManagerLocal {
     }
 
     @Override
-    public boolean removeCategory(String email, Integer id){
-        return this.categoryManager.removeCategory(email,id);
+    public boolean removeCategory(String email, Integer id) {
+        return this.categoryManager.removeCategory(email, id);
     }
 
     @Override
@@ -67,12 +71,17 @@ public class cricketManager implements cricketManagerLocal {
     }
 
     @Override
+    public List<TrophyDTO> allDoneTrophies(String emailOfLoggedUser) {
+        return this.trophyManager.getAllTrophiesFromUser(emailOfLoggedUser);
+    }
+
+    @Override
     public List<GoalDTO> selectAllGoalsFromAnUser(String email) {
         return this.goalManager.selectAllGoalsFromAnUser(email);
     }
-    
+
     @Override
-    public List<GoalDTO> selectAllGoalsFromUserByClicks(String email){
+    public List<GoalDTO> selectAllGoalsFromUserByClicks(String email) {
         return this.goalManager.selectAllGoalsFromUserByClicks(email);
     }
 
@@ -96,15 +105,15 @@ public class cricketManager implements cricketManagerLocal {
     public boolean editGoal(GoalDTO goalDTO) {
         return this.goalManager.editGoal(goalDTO);
     }
-    
+
     @Override
     public boolean removeGoal(String email, Integer id) {
         return this.goalManager.removeGoal(email, id);
     }
-    
+
     @Asynchronous
     @Override
-    public Future<Integer> getNextValueGoal(String email){
+    public Future<Integer> getNextValueGoal(String email) {
         return this.goalManager.getNextValueGoal(email);
     }
 
@@ -112,24 +121,24 @@ public class cricketManager implements cricketManagerLocal {
     public GoalDTO findGoalDTOById(int id) {
         return goalManager.findGoalDTOById(id);
     }
-    
+
     @Override
-    public boolean increaseCurrentValue(GoalDTO goal){
+    public boolean increaseCurrentValue(GoalDTO goal) {
         return this.goalManager.increaseCurrentValue(goal);
     }
-    
+
     @Override
-    public boolean decreaseCurrentValue(GoalDTO goal){
+    public boolean decreaseCurrentValue(GoalDTO goal) {
         return this.goalManager.decreaseCurrentValue(goal);
     }
-     
+
     @Override
-    public boolean goalIsEnd(GoalDTO goal){
+    public boolean goalIsEnd(GoalDTO goal) {
         return this.goalManager.goalIsEnd(goal);
     }
-    
+
     @Override
-    public boolean increaseClickFlag(GoalDTO goal){
+    public boolean increaseClickFlag(GoalDTO goal) {
         return this.goalManager.increaseClickFlag(goal);
     }
 
@@ -137,29 +146,29 @@ public class cricketManager implements cricketManagerLocal {
     public boolean editCategory(String email, CategoryDTO c) {
         return this.categoryManager.editCategory(email, c);
     }
-    
-     @Override
-    public boolean editUser(String email,  String password, String clientName, String gender, String birthTmp) {
+
+    @Override
+    public boolean editUser(String email, String password, String clientName, String gender, String birthTmp) {
         return this.userManager.editUser(email, password, clientName, gender, birthTmp);
     }
 
     @Override
     public UserDTO findUserById(Integer id) {
-       return this.userManager.findUserById(id);   
+        return this.userManager.findUserById(id);
     }
-    
+
     @Override
-    public List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2){
+    public List<GoalDTO> getGoalsBetweenTwoDates(String email, Date d1, Date d2) {
         return this.goalManager.getGoalsBetweenTwoDates(email, d1, d2);
     }
-    
+
     @Override
-    public List<CategoryDTO> getCategorysFromUserOrderedByName(String email){
+    public List<CategoryDTO> getCategorysFromUserOrderedByName(String email) {
         return this.categoryManager.getCategorysFromUserOrderedByName(email);
     }
-    
+
     @Override
-    public List<GoalDTO> orderGoalsBetweenDate(String email){
+    public List<GoalDTO> orderGoalsBetweenDate(String email) {
         return this.goalManager.orderGoalsBetweenDate(email);
     }
 
@@ -202,5 +211,5 @@ public class cricketManager implements cricketManagerLocal {
     public UserDTO findUserbyEmail(String email) {
         return this.userManager.findUserByEmail(email);
     }
-    
+
 }

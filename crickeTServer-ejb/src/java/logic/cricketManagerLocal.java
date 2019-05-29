@@ -7,6 +7,7 @@ package logic;
 
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
+import cricketdto.TrophyDTO;
 import cricketdto.UserDTO;
 import java.time.LocalDate;
 import java.util.Date;
@@ -44,6 +45,8 @@ public interface cricketManagerLocal {
     Future<Integer> getNextValueFromGoalOrder(String email);
     
     List<CategoryDTO> getAllCategoriesFromLoggedUser(String emailOfLoggedUser);
+     
+    List<TrophyDTO> allDoneTrophies(String emailOfLoggedUser);
     
     CategoryDTO findCategoryDTOById(Integer id);
     
