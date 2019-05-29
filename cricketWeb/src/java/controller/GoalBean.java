@@ -107,7 +107,7 @@ public class GoalBean implements Serializable {
 
             if (goalDTOTemp.getTotalValue() <= 0) {
                 Utils.throwMessage("Total value must be greater than 0");
-                return "createGoal";
+                return "createGoal"; 
             }
             //convert the selected date from user (if he defined)
             if (!finalDateGoalTmp.isEmpty()) {
