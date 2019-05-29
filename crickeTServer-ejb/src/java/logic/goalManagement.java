@@ -758,6 +758,8 @@ public class goalManagement implements goalManagementLocal {
                 //this.goalFacade.remove(goalToRecover);
                 cat.getGoalCollection().remove(goalToRecover);
                 categoryManagement.save(cat);
+                this.goalFacade.remove(goalToRecover);
+
             }
             
             return true;
