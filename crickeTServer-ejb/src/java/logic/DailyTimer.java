@@ -38,12 +38,8 @@ import javax.ejb.TimerService;
 @Startup
 public class DailyTimer implements DailyTimerLocal {
 
-    
-    
-    
     @Resource
     private TimerService timerService;
-    private int date;
     static String timerName = "IntervalTimer_Info";
     
     @EJB
@@ -57,22 +53,18 @@ public class DailyTimer implements DailyTimerLocal {
     
     @PostConstruct
     private void init() {
-        this.date = 0;
         timerService.createTimer(1000, secondsToMiliSeconds(60), timerName);
     }
     
     @Timeout
     public void incrementDate(Timer timer) {
-        date++;
-        System.out.println("DATE: " + date);
-        
         
         LocalTime atualTime = LocalTime.now();
         LocalTime minTime = LocalTime.of(00, 00, 00, 00000);
         LocalTime maxTime = LocalTime.of(00, 01, 00, 00000);
 
         
-        System.out.println("\n\n strDate: " + atualTime);
+        System.out.println("\n\n Date: " + atualTime);
         if(atualTime.isAfter(minTime) && atualTime.isBefore(maxTime))
         {
             System.err.println("\nENTREI NO TIMER\n");

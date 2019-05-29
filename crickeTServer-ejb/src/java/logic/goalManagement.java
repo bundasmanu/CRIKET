@@ -738,16 +738,25 @@ public class goalManagement implements goalManagementLocal {
             if (goalFacade == null || cat == null) {
                 return false;
             }
+            
+            if(!isAlreadyInDash(goalToRecover, cat.getIdUser()))
+            {
+                goalToRecover.setCurrentvalue(0);
+                goalToRecover.setLogfinaldate(null);
+                goalToRecover.setFlagdone(false);
 
-            goalToRecover.setCurrentvalue(0);
-            goalToRecover.setLogfinaldate(null);
-            goalToRecover.setFlagdone(false);
+                categoryManagement.save(cat);
+                this.goalFacade.edit(goalToRecover);
+            }
+            else
+            {
+                //remove the goal... since it already has been showing in the dashboard
+                //categoryManagement.save(cat);
+                //this.goalFacade.remove(goalToRecover);
+                cat.getGoalCollection().remove(goalToRecover);
+                categoryManagement.save(cat);
+            }
             
-            
-            
-            categoryManagement.save(cat);
-            this.goalFacade.edit(goalToRecover);
-
             return true;
         } catch (Exception e) {
             System.out.println("Mensagem: " + e.getMessage());
@@ -758,6 +767,17 @@ public class goalManagement implements goalManagementLocal {
         
     }
 
+    private boolean isAlreadyInDash(Goal goalToRecover, Utilizador user) {
+        List<GoalDTO> allNotDoneGoalsFromUser = selectAllNotDoneGoalsFromAnUser(user.getEmail());
+        
+        for(GoalDTO goalDTO: allNotDoneGoalsFromUser)
+        {
+            if(goalDTO.getName().equals(goalToRecover.getNome()))
+                return true;
+        }
+        return false;
+    }
+    
     @Override
     public List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate) {
         List<Goal> filteredGoals = goalFacade.findAllNotDonePurchasesOfUser(filterName, filterSinceDate, filterUntilDate);
@@ -772,5 +792,7 @@ public class goalManagement implements goalManagementLocal {
         }
         return goalDTOList;
     }
+
+    
      
 }
