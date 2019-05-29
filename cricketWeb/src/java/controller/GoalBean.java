@@ -62,14 +62,12 @@ public class GoalBean implements Serializable {
 
     String finalDateGoalTmp;
 
-    
     //vars for filters
     private String filterName;
     private String filterSinceDate;
     private String filterUntilDate;
-    private List<GoalDTO>filteredGoals;
-    
-    
+    private List<GoalDTO> filteredGoals;
+
     @PostConstruct
     private void init() {
         this.goalDTOTemp = new GoalDTO();
@@ -106,6 +104,11 @@ public class GoalBean implements Serializable {
         boolean result = false;
 
         try {
+
+            if (goalDTOTemp.getTotalValue() <= 0) {
+                Utils.throwMessage("Total value must be greater than 0");
+                return "createGoal"; 
+            }
             //convert the selected date from user (if he defined)
             if (!finalDateGoalTmp.isEmpty()) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -114,7 +117,7 @@ public class GoalBean implements Serializable {
                 LocalDate dateToday = LocalDate.now();
                 java.util.Date dateTodayConverted = new SimpleDateFormat("yyyy-MM-dd").parse(dateToday.toString());
 
-                if (finalDateGoal.compareTo(dateTodayConverted) >= 0) { 
+                if (finalDateGoal.compareTo(dateTodayConverted) >= 0) {
                     goalDTOTemp.setFinalDate(finalDateGoal);
                 } else {
                     throw new Exception("Date need to be greater than current date");
@@ -189,7 +192,7 @@ public class GoalBean implements Serializable {
     public String editGoal(int idGoal) {
 
         goalDTOTemp = bridge.getCricket().findGoalDTOById(idGoal);
-        
+
         if (goalDTOTemp == null) {
             Utils.throwMessage("Error. Couln't find the goal.");
             return "dashboard";
@@ -202,9 +205,7 @@ public class GoalBean implements Serializable {
 
         return "editGoal";
     }
-    
-       
- 
+
     public String processEditGoal() {
 
         boolean result = false;
@@ -303,8 +304,7 @@ public class GoalBean implements Serializable {
 
     }
 
-    public String upOrderValue(GoalDTO goal)
-    {
+    public String upOrderValue(GoalDTO goal) {
         boolean result = false;
 
         result = bridge.getCricket().upOrderValue(goal);
@@ -319,8 +319,7 @@ public class GoalBean implements Serializable {
         }
     }
 
-    public String downOrderValue(GoalDTO goal)
-    {
+    public String downOrderValue(GoalDTO goal) {
         boolean result = false;
 
         result = bridge.getCricket().downOrderValue(goal);
@@ -335,33 +334,28 @@ public class GoalBean implements Serializable {
         }
     }
 
-    
-    public String processGoalsFilter(){
+    public String processGoalsFilter() {
 
-        try
-        {
-            if(getIsFiltering())
-            {
+        try {
+            if (getIsFiltering()) {
                 System.out.println("\n\n\n\n getIsFiltering: " + getIsFiltering());
 
                 this.filteredGoals = bridge.getCricket().processGoalsFilter(filterName, filterSinceDate, filterUntilDate);
 
-            }
-            else
-            {
+            } else {
                 this.filteredGoals = null;
             }
-            
+
             System.out.println("\n\n\n\n reesult: " + this.filteredGoals);
-            
+
             return "dashboard";
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Utils.throwMessage("Error");
             return "dashboard";
         }
     }
-    
+
     public String getFilterName() {
         return filterName;
     }
@@ -395,15 +389,18 @@ public class GoalBean implements Serializable {
     }
 
     public boolean getIsFiltering() {
-        
-        if(filterName != null && !filterName.isEmpty())
+
+        if (filterName != null && !filterName.isEmpty()) {
             return true;
-        if(filterSinceDate != null && !filterSinceDate.isEmpty())
+        }
+        if (filterSinceDate != null && !filterSinceDate.isEmpty()) {
             return true;
-        if(filterUntilDate != null && !filterUntilDate.isEmpty())
+        }
+        if (filterUntilDate != null && !filterUntilDate.isEmpty()) {
             return true;
-        
+        }
+
         return false;
     }
-    
+
 }

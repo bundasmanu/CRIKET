@@ -16,7 +16,7 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <ui:composition template = "template.xhtml">
-            
+
             <ui:define name = "containerTitle">
                 <f:event listener="#{sessionBean.validateIfLoggedUser}" type="preRenderView" />
                 <h3>#{bundle.CreateGoalTitle} </h3>
@@ -25,27 +25,27 @@ and open the template in the editor.
 
 
             <ui:define name = "containerContent">
-                
+
                 <div class="row p-3 mb-2 bg-light text-dark">
                     <div class="col-1"></div>
                     <div class="col-10">
                         <h:form>
                             <h:messages />
-                            
+
 
                             <h:outputText value="#{bundle.GoalName}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.name}" required="true" requiredMessage="Name is required" styleClass = "form-control"/><br/>
-                            
+
                             <h:outputText value="#{bundle.GoalDescription}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.desc}" required="true" requiredMessage="Description is required" styleClass = "form-control" /><br/>
-                            
+
                             <h:outputText value="#{bundle.GoalStatus}"/><br/>
                             <h:selectOneRadio value="#{goalBean.goalDTOTemp.status}" required="true" requiredMessage="Status is required" class="radio">
                                 <f:selectItem  itemValue="POSITIVE" itemLabel="Positive" />
                                 <f:selectItem itemValue="NEGATIVE" itemLabel="Negative" />
                             </h:selectOneRadio>
-                            
-                            
+
+
                             <h:outputText value="#{bundle.GoalCategory}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.idCategory}" required="true" requiredMessage="Category is required" styleClass = "form-control">
                                 <f:selectItems value="#{categoryBean.allCategoriesFromLoggedUser}" var="categoryDTO"
@@ -53,7 +53,7 @@ and open the template in the editor.
                                                itemLabel="#{categoryDTO.nome}"/>
                             </h:selectOneMenu>
                             <br/>
-                            
+
                             <h:outputText value="#{bundle.GoalFrequency}"/><br/>
                             <h:selectOneMenu value="#{goalBean.goalDTOTemp.frequency}" styleClass = "form-control">
                                 <f:selectItem  itemValue="NEVER" itemLabel="Never" />
@@ -63,13 +63,13 @@ and open the template in the editor.
                                 <f:selectItem  itemValue="YEARLY" itemLabel="Yearly" />
                             </h:selectOneMenu>
                             <br/>
-                            
+
                             <h:outputText value="#{bundle.GoalFinalDate}"/><br/>           
                             <h:inputText  value="#{goalBean.finalDateGoalTmp}" styleClass = "form-control datepicker"></h:inputText><br/>
-                            
+
                             <h:outputText value="#{bundle.GoalTotalValue}"/><br/>
                             <h:inputText value="#{goalBean.goalDTOTemp.totalValue}" required="true" requiredMessage="Total Value is required" styleClass = "form-control"></h:inputText><br/>
-                       
+
                             <br/>
                             <br/>
                             <h:commandButton class ="btn btn-info" action="#{goalBean.processAddGoal}" value="#{bundle.AddGoal}"></h:commandButton>
