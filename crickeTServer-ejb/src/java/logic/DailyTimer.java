@@ -128,21 +128,21 @@ public class DailyTimer implements DailyTimerLocal {
             /*OBTENCAO DOS OBJETIVOS WEEEKLY*/
             List<Goal> listWeeklyGoals = this.goals.getWeeklyGoals();
 
+                        
             if (listWeeklyGoals == null) {/*HOUVE ERRO*/
                 return false;
             }
 
-            if (listWeeklyGoals.isEmpty() == true) {/*ESTA VAZIA, MAS ESTA TUDO BEM*/
+            if (listWeeklyGoals.isEmpty()) {/*ESTA VAZIA, MAS ESTA TUDO BEM*/
                 return true;
             }
-
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listWeeklyGoals) {
-                if (Boolean.TRUE == g.getFlagdone()) {
+                if (g.getFlagdone()) {
                     continue;
                 }
-                if (this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogfinaldate()) == 7) {
-                    /*VERIFICAR SE JÁ PASSARAM 7 DIAS DESDE A SUA DATA DE CRIACAO*/
+                /*VERIFICAR SE JÁ PASSARAM 7 DIAS DESDE A SUA DATA DE CRIACAO*/
+                if (this.getDaysBetweenDates(this.getDateTimeNow(),g.getLogdate())%7 == 0) {
                     if ((g.getFinaldate() != null) && this.getDateTimeNow().before(g.getFinaldate()) || (g.getFinaldate() == null)) {
                         this.createCloneGoal(g);
                     }
@@ -175,16 +175,16 @@ public class DailyTimer implements DailyTimerLocal {
 
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listMonthlyGoals) {
-                if (g.getFlagdone() == Boolean.FALSE && g.getCurrentvalue() >= g.getTotalvalue()) {
-                    /*COMPARAR COM O MES ATUAL, VISTO QUE IMAGINE SE QUE FOI SUBMETIDO O OBJETIVO EM DEZEMBRO, E JA ESTAMOS NO ANO A SEGUIR A COMPARAR*/
-                    int daysDistance = this.getDaysOnAMonth(g.getLogdate());
-                    if (this.getDaysBetweenDates(g.getLogfinaldate(), this.getDateTimeNow()) == daysDistance) {
-                        if (this.getDateTimeNow().before(g.getFinaldate())) {
-                            this.createCloneGoal(g);
-                        }
-                        this.goalM.setGoalAsDone(g);
+                if (g.getFlagdone()) {
+                    continue;
+                }
+                /*VERIFICAR SE JÁ PASSARAM 7 DIAS DESDE A SUA DATA DE CRIACAO*/
+                int daysDistance = this.getDaysOnAMonth(g.getLogdate());
+                if (this.getDaysBetweenDates(this.getDateTimeNow(),g.getLogdate())%daysDistance == 0) {
+                    if ((g.getFinaldate() != null) && this.getDateTimeNow().before(g.getFinaldate()) || (g.getFinaldate() == null)) {
+                        this.createCloneGoal(g);
                     }
-
+                    this.goalM.setGoalAsDone(g);
                 }
             }
 
@@ -214,7 +214,7 @@ public class DailyTimer implements DailyTimerLocal {
 
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listYearlyGoals) {
-                if (g.getFlagdone() == Boolean.FALSE && g.getCurrentvalue() >= g.getTotalvalue()) {
+                if (g.getFlagdone()== false && g.getCurrentvalue() >= g.getTotalvalue()) {
                     /*COMPARAR COM O MES ATUAL, VISTO QUE IMAGINE SE QUE FOI SUBMETIDO O OBJETIVO EM DEZEMBRO, E JA ESTAMOS NO ANO A SEGUIR A COMPARAR*/
                     if ((this.isLeapYear(this.getDateTimeNow()) == true && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogfinaldate()) == 366) || (this.isLeapYear(this.getDateTimeNow()) == false && this.getDaysBetweenDates(this.getDateTimeNow(), g.getLogdate()) == 365)) {
                         if (this.getDateTimeNow().before(g.getFinaldate())) {
@@ -264,20 +264,16 @@ public class DailyTimer implements DailyTimerLocal {
     public int getDaysBetweenDates(Date d1, Date d2){
         
         try{
-            
             long timeDiff=d1.getTime()-d2.getTime();
-            
             long daysDiff=TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
-            
             int convertDaysDiff= (int) daysDiff;
-            
+            System.out.println("\n\n daysDiff: " + daysDiff);
             return convertDaysDiff;
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("ERROR: " + e.toString());
             return -1;
         }
-        
     }
     
     public Date getDateTimeNow(){
