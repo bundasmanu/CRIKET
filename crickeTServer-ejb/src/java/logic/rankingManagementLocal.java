@@ -6,6 +6,7 @@
 package logic;
 
 import entities.Goal;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -20,4 +21,5 @@ public interface rankingManagementLocal {
     boolean getDailyStrike(Goal g);
     String verifyRank(String email,String rank);
     int definePont(Goal g, int value);
+    int getStrikeValue(List<Goal> goals);
 }

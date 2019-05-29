@@ -61,5 +61,9 @@ public interface goalManagementLocal {
     
     List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
 
+    public List<Goal> getSameGoals(Goal g);
+
+    public Goal getGoalByDtoID(int id_goal);
+
 
 }

@@ -223,7 +223,22 @@ public class cricketManager implements cricketManagerLocal {
     public int definePont(Goal g, int value) {
         return this.rankManager.definePont(g,value);
     }
-    
-    
+
+    @Override
+    public List<Goal> getListSameGoals(Goal g) {
+        return this.goalManager.getSameGoals(g);
+    }
+
+    @Override
+    public int getStrike(List<Goal> similarGoalsList) {
+        return this.rankManager.getStrikeValue(similarGoalsList);
+    }
+
+    @Override
+    public Goal getGoalByDtoID(int id_goal) {
+        return this.goalManager.getGoalByDtoID(id_goal);
+    }
+
+   
 
 }

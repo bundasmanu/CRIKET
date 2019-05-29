@@ -7,6 +7,7 @@ package controller;
 
 import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
+import cricketdto.GoalDTO;
 import cricketdto.RankDTO;
 import cricketdto.UserDTO;
 import entities.Goal;
@@ -47,7 +48,6 @@ public class RankBean implements Serializable {
 
     private static final long serialVersionUID = 1094801825228386363L;
 
-    
     private String nome;
     private String descript;
     private String minPoints;
@@ -57,12 +57,12 @@ public class RankBean implements Serializable {
 
     @EJB
     private BridgeLocal bridge;
-    
+
     private RankDTO rankDTOTemp;
 
     @Inject
     GoalBean gg;
-    
+
     @Inject
     SessionBean s;
 
@@ -70,41 +70,53 @@ public class RankBean implements Serializable {
         // do nothing
     }
 
-    public String processFindRank(){
-        String str="";
-        String nova_string="";
-        try{
-            str= bridge.getCricket().findRankUser(this.s.getEmail());
-            if(str.equals("Beginner")){
+    public String processFindRank() {
+        String str = "";
+        String nova_string = "";
+        try {
+            str = bridge.getCricket().findRankUser(this.s.getEmail());
+            if (str.equals("Beginner")) {
                 return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
-                
-            }
-            else if(str.equals("Amador")){
+
+            } else if (str.equals("Amador")) {
                 return "https://img.icons8.com/color/48/000000/hummerstein.png";
-            }else if(str.equals("Intermedio")){
+            } else if (str.equals("Intermedio")) {
                 return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
-            }else if(str.equals("Expert")){
+            } else if (str.equals("Expert")) {
                 return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
             }
-            
+
             return "";
-        }catch(Exception ex){
+        } catch (Exception ex) {
             Utils.throwMessage("Error");
             return "error";
         }
-        
+
     }
-    
-    public String returnTypeOfRank(){
-        String str="";
-        try{
-            str=bridge.getCricket().findRankUser(this.s.getEmail());
+
+    public String returnTypeOfRank() {
+        String str = "";
+        try {
+            str = bridge.getCricket().findRankUser(this.s.getEmail());
             return str;
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             Utils.throwMessage("Error");
             return "error";
         }
     }
-    
+
+    public int getPointsForGoal(GoalDTO g) {
+
+        Goal goal = bridge.getCricket().getGoalByDtoID(g.getId_goal());
+
+        List<Goal> similarGoalsList = bridge.getCricket().getListSameGoals(goal);
+        
+        int strikValue = this.bridge.getCricket().getStrike(similarGoalsList);
+
+        int point = bridge.getCricket().definePont(goal, strikValue);
+
+        
+        return point;
+    }
+
 }

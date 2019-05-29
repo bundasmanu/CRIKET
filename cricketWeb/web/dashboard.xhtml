@@ -17,7 +17,7 @@ and open the template in the editor.
     <body> 
         <ui:composition template = "template.xhtml">
 
-            
+
 
             <ui:define name = "introTitle">                                
                 <h2>Hi <span>#username!</span></h2>
@@ -79,9 +79,9 @@ and open the template in the editor.
 
                 <h:form>
                     <center>
-                    <h:commandLink action="#{goalBean.addGoal}">
-                        <img src="https://img.icons8.com/office/80/000000/plus-2-math.png"></img>
-                    </h:commandLink>
+                        <h:commandLink action="#{goalBean.addGoal}">
+                            <img src="https://img.icons8.com/office/80/000000/plus-2-math.png"></img>
+                        </h:commandLink>
                     </center>
                     <br></br>
                     <br></br>
@@ -90,12 +90,12 @@ and open the template in the editor.
                         <div class="container">
                             <!-- <ui:repeat value="#{goalBean.allNotDoneGoals}" var="goalTmp" varStatus="getObj">-->
                             <ui:repeat value="#{goalBean.isFiltering? goalBean.filteredGoals : goalBean.allNotDoneGoals}" var="goalTmp" varStatus="getObj">
-                                
+
                                 <!-- panel group just to define the background color -->
                                 <h:panelGroup class="row" >
 
                                     <div class="col-2">
-                                        
+
                                         <h:panelGroup rendered="#{not goalBean.isFiltering}">
                                             <h:commandLink action="#{goalBean.upOrderValue(goalTmp)}" rendered="#{goalBean.allNotDoneGoals.indexOf(goalTmp) != 0}">
                                                 <img src="https://img.icons8.com/plasticine/35/000000/sort-up.png"></img>
@@ -104,16 +104,14 @@ and open the template in the editor.
                                                 <img src="https://img.icons8.com/plasticine/35/000000/sort-down.png"></img>
                                             </h:commandLink>
                                         </h:panelGroup>
-                                        
+
                                     </div>
                                     <div class="col-4" style="font-weight: bold;">
                                         #{goalTmp.name}
-                                           &#160;
-                                           &#160;
-                                           
-                                               <img class="info" src="https://img.icons8.com/color/48/000000/about.png"><span class="badge badge-light">5pts</span></img>
-                                           
-                                     
+                                        &#160;
+                                        &#160;
+
+                                        <img class="info" src="https://img.icons8.com/color/48/000000/about.png">#{rankBean.getPointsForGoal(goalTmp)}<span class="badge badge-light"></span></img>
 
                                     </div> 
 
@@ -140,7 +138,7 @@ and open the template in the editor.
                                         <a data-toggle="modal" data-target="#removeGoalModal#{goalTmp.id_goal}" data-id="#{goalTmp.id_goal}">
                                             <img class="remove" src="https://img.icons8.com/office/30/000000/delete-sign.png"></img>
                                         </a>
-                                        
+
                                     </div>
 
                                     <hr style="width: 100%; color: black; height: 1px; background-color:#dae6f1;" />
