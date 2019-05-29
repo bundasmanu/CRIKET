@@ -9,6 +9,7 @@ import BridgeLogicController.BridgeLocal;
 import cricketdto.CategoryDTO;
 import cricketdto.TrophyDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -52,4 +53,16 @@ public class TrophyBean implements Serializable {
         this.trophyDTO = trophyDTO;
     }
 
+    public List<String> catch3Trophies(){
+        List<TrophyDTO> lista_trofeus= this.getAllDoneTrophies();
+        List<String> lista_auxiliar= new ArrayList<String>();
+        for(int i=0;i<lista_trofeus.size();i++){
+            if(i==3){
+                return lista_auxiliar;
+            }
+            String url="https://img.icons8.com/color/48/000000/gold-medal.png";
+            lista_auxiliar.add(url);
+        }
+        return lista_auxiliar;
+    }
 }

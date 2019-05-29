@@ -34,8 +34,11 @@
                 <h:panelGroup rendered="#{sessionBean.isLogged}">
                 
                     
-                    <p id="hm">Welcome,#{sessionBean.email}|<h:graphicImage value="#{rankBean.processFindRank()}"></h:graphicImage>:#{rankBean.returnTypeOfRank()}</p>
-                    
+                    <p id="hm">Welcome,#{sessionBean.email}|<h:graphicImage value="#{rankBean.processFindRank()}"></h:graphicImage>:#{rankBean.returnTypeOfRank()}|Won Trophies:
+                        <ui:repeat value="#{trophyBean.catch3Trophies()}" var="trophyTmp" varStatus="getObj">
+                            <h:graphicImage value="#{trophyTmp}"></h:graphicImage>
+                        </ui:repeat>
+                    </p>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>

@@ -76,14 +76,17 @@ public class RankBean implements Serializable {
         try {
             str = bridge.getCricket().findRankUser(this.s.getEmail());
             if (str.equals("Beginner")) {
-                return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
+                return "https://img.icons8.com/color/48/000000/1-circle.png";
 
             } else if (str.equals("Amador")) {
-                return "https://img.icons8.com/color/48/000000/hummerstein.png";
+                return "https://img.icons8.com/color/48/000000/2.png";
             } else if (str.equals("Intermedio")) {
-                return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
-            } else if (str.equals("Expert")) {
-                return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
+                return "https://img.icons8.com/color/48/000000/3.png";
+            } else if (str.equals("Profissional")) {
+                return "https://img.icons8.com/color/48/000000/4-circle-c.png";
+            }
+            else if(str.equals("Expert")){
+                return "https://img.icons8.com/color/48/000000/5-c.png";
             }
 
             return "";
@@ -110,12 +113,11 @@ public class RankBean implements Serializable {
         Goal goal = bridge.getCricket().getGoalByDtoID(g.getId_goal());
 
         List<Goal> similarGoalsList = bridge.getCricket().getListSameGoals(goal);
-        
+
         int strikValue = this.bridge.getCricket().getStrike(similarGoalsList);
 
         int point = bridge.getCricket().definePont(goal, strikValue);
 
-        
         return point;
     }
 
