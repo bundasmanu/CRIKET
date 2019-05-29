@@ -9,6 +9,7 @@ import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
 import cricketdto.TrophyDTO;
 import cricketdto.UserDTO;
+import entities.Goal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -211,5 +212,18 @@ public class cricketManager implements cricketManagerLocal {
     public UserDTO findUserbyEmail(String email) {
         return this.userManager.findUserByEmail(email);
     }
+
+
+    @Override
+    public String verifyRank(String email, String rank) {
+       return this.rankManager.verifyRank(email, rank);
+    }
+
+    @Override
+    public int definePont(Goal g, int value) {
+        return this.rankManager.definePont(g,value);
+    }
+    
+    
 
 }

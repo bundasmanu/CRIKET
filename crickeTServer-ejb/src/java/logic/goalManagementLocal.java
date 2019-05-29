@@ -61,4 +61,5 @@ public interface goalManagementLocal {
     
     List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
 
+
 }

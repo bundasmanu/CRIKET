@@ -9,6 +9,7 @@ import BridgeLogicController.BridgeLocal;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import cricketdto.RankDTO;
 import cricketdto.UserDTO;
+import entities.Goal;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -71,15 +72,39 @@ public class RankBean implements Serializable {
 
     public String processFindRank(){
         String str="";
-        
+        String nova_string="";
         try{
             str= bridge.getCricket().findRankUser(this.s.getEmail());
-            return str;
-        
+            if(str.equals("Beginner")){
+                return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
+                
+            }
+            else if(str.equals("Amador")){
+                return "https://img.icons8.com/color/48/000000/hummerstein.png";
+            }else if(str.equals("Intermedio")){
+                return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
+            }else if(str.equals("Expert")){
+                return "https://img.icons8.com/metro/26/000000/numerical-sorting-21.png";
+            }
+            
+            return "";
         }catch(Exception ex){
             Utils.throwMessage("Error");
             return "error";
         }
         
     }
+    
+    public String returnTypeOfRank(){
+        String str="";
+        try{
+            str=bridge.getCricket().findRankUser(this.s.getEmail());
+            return str;
+        }
+        catch(Exception ex){
+            Utils.throwMessage("Error");
+            return "error";
+        }
+    }
+    
 }
