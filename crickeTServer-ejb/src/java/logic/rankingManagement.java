@@ -309,4 +309,32 @@ public class rankingManagement implements rankingManagementLocal {
         
     }
     
+    @Override
+    public String verifyRank(String email,String rank) {
+        String nome_rank="";
+        Utilizador u= this.ut.findByEmail(email);
+        if(u==null){
+            return null;
+        }
+        
+        Ranking r= this.rankL.findByName(rank);
+        if(r==null){
+            return "erro";
+        }
+        
+        if(r.getNome().equals("Begginer")){
+            nome_rank="<img src=\"https://img.icons8.com/metro/26/000000/numerical-sorting-21.png\"/>:Begginer";
+        }else if(r.getNome().equals("Amador")){
+            nome_rank="<img src=\"https://img.icons8.com/color/48/000000/numerical-sorting-21.png\"/>Amador";
+        }
+        else if(r.getNome().equals("Intermedio")){
+           nome_rank="Intermedio";
+        }
+        else if(r.getNome().equals("Expert")){
+            nome_rank="Expert";
+        }
+        
+        return nome_rank;
+    }
+    
 }

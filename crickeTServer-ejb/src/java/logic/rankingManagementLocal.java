@@ -18,4 +18,6 @@ public interface rankingManagementLocal {
     boolean createRanking(String name, int minP);
     String findRankUser(String email);
     boolean getDailyStrike(Goal g);
+    String verifyRank(String email,String rank);
+    int definePont(Goal g, int value);
 }

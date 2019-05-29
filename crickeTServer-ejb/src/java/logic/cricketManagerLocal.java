@@ -8,6 +8,7 @@ package logic;
 import cricketdto.CategoryDTO;
 import cricketdto.GoalDTO;
 import cricketdto.UserDTO;
+import entities.Goal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -86,5 +87,8 @@ public interface cricketManagerLocal {
     List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
 
     public UserDTO findUserbyEmail(String email);
-
+    
+    String verifyRank(String email,String rank);
+    
+     int definePont(Goal g, int value);
 }

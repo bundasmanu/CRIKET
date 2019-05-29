@@ -92,6 +92,9 @@ public class goalManagement implements goalManagementLocal {
         return retorno_goals_user;
     }
     
+    
+     
+    
     @Override
     public List<GoalDTO> selectAllNotDoneGoalsFromAnUser(String email) {
 
