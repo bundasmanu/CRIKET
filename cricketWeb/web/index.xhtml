@@ -30,16 +30,16 @@ and open the template in the editor.
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
 
 <!--                    <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>-->
-                    <div class="container">
-                        <div class="image-container">
-                            <img class="grow" src="#{resource['images/cricket.png']}"  />
-                        </div>
-                    </div>
+                    
                     <h:form>
 
                         <h:messages></h:messages>
-
-                        <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>
+                        <div class="container">
+                            <div class="imglogin image-container">
+                             <img class="grow" src="#{resource['images/enter.svg']}"  />
+                            <h3 class="textologin">#{bundle.SignIn}</h3>
+                            </div>
+                        </div>
 
 <!--                        <h:outputText value="#{bundle.UserEmail}" style="font-weight: bold; padding-left: 50px" />-->
                         <h:panelGrid id = "email" columns = "2" >
@@ -60,7 +60,7 @@ and open the template in the editor.
 
                         <br/>
 
-                        <center><h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/></center>
+                        <center><h:commandButton class ="meubotao btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/></center>
                     </h:form>
 
                     <hr/>
@@ -108,7 +108,7 @@ and open the template in the editor.
 
 
                         <br/>
-                        <center><h:commandButton class ="btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton></center>
+                        <center><h:commandButton class ="meubotao btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton></center>
                     </h:form>
 
                 </div>
