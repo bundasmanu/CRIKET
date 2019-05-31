@@ -1,56 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
 
-        <ui:define name="title" >Sign-in</ui:define>
+        <title>Login crIckeT</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="resouces/images/icons/cricket.ico" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resouces/vendor/bootstrap/css/bootstrap.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resouces/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resouces/vendor/animate/animate.css" />
+        <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="resources/vendor/css-hamburgers/hamburgers.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/vendor/select2/select2.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/css/util.css" />
+        <link rel="stylesheet" type="text/css" href="resources/css/mycss.css" />
+        <!--===============================================================================================-->
     </h:head>
+    
     <h:body>
-        <ui:composition template = "template.xhtml">
 
-            <ui:define name = "containerTitle">
-                <f:event listener="#{sessionBean.validateIfUserIsLogged}" type="preRenderView" />
-                <h3>#{bundle.SignInSignUp}</h3>
-                <p> #{bundle.SignInSignUpDesc}</p>
-            </ui:define>
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+                    <div class="login100-pic js-tilt" data-tilt="">
+                        <img src="resources/images/cricket.png" alt="IMG" />
+                    </div>
+                    <h:form class="login100-form validate-form">
+                        <span class="login100-form-title">
+                            Member Login
+                        </span>
+
+                            <div class="wrap-input100 validate-input" data-validate="Valid email is required">
+                                <h:inputText class="input100" id="username" a:placeholder="e-mail" value="#{sessionBean.email}" required="true" requiredMessage="Username is required"></h:inputText>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-envelope" aria-hidden="true" />
+                                    </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                <h:inputText class="input100" id="password" a:placeholder="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputText>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-lock" aria-hidden="true" />
+                                    </span>
+                            </div>
 
 
-            <ui:define name = "containerContent">
+                            <div class="container-login100-form-btn">
+                                <h:commandButton class="login100-form-btn" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"></h:commandButton>
+                            </div>
 
-                <h3>#{bundle.SignIn}</h3>
-                <h:form>
+                            <div class="text-center p-t-12">
+                                <span class="txt1">
+                                    Forgot
+                                </span>
+                                <a class="txt2" href="#">
+                                    Username / Password?
+                                </a>
+                            </div>
 
-                    <h:messages></h:messages>
+                            <div class="text-center p-t-136">
+                                <a class="txt2" href="#">
+                                    Create your Account
+                                    <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true" />
+                                </a>
+                            </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
 
-                    <h:outputText value="#{bundle.UserEmail}" /><br/>
-                    <h:panelGrid id = "pass" columns = "2" >
-                        <img src="https://img.icons8.com/office/40/000000/gender-neutral-user.png"></img>
-                        <h:inputText id="username" value="#{sessionBean.email}"></h:inputText><br/>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/bootstrap/js/popper.js"></script>
+        <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/tilt/tilt.jquery.min.js"></script>
 
-                    </h:panelGrid>
-
-                    <br></br>
-
-                    <h:outputText value="#{bundle.UserPassword}" /><br/>
-                    <h:inputSecret id="password" value="#{sessionBean.password}"></h:inputSecret><br/>
-
-                    <br/>
-                    <a href="/cricketWeb/faces/registerUser.xhtml">Not registered?Please login or register.</a>
-                    <br/>
-
-                    <h:commandButton class ="btn btn-info" action="#{sessionBean.processSignIn}" value="#{bundle.SignIn}"/>  
-                </h:form>
-
-            </ui:define>
-        </ui:composition>
+        <script>
+            $('.js-tilt').tilt({
+                scale: 1.1
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="resources/js/main.js"></script>
     </h:body>
 </html>

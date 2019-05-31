@@ -12,8 +12,7 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
-
-        <ui:define name="title">TODO supply a title </ui:define>
+        <ui:define name="title">crIckeT Login</ui:define>
     </h:head>
     <h:body>
         <ui:composition template = "template.xhtml">
@@ -55,8 +54,6 @@ and open the template in the editor.
                             <h:inputSecret id="password" a:placeholder="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputSecret>
 
                         </h:panelGrid>
-
-
 
                         <br/>
 
@@ -110,7 +107,6 @@ and open the template in the editor.
                         <br/>
                         <center><h:commandButton class ="meubotao btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton></center>
                     </h:form>
-
                 </div>
             </ui:define>
         </ui:composition>
