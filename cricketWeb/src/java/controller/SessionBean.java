@@ -90,7 +90,7 @@ public class SessionBean implements Serializable {
             return "dashboard?faces-redirect=true";
         } else {
             Utils.throwMessage("Wrong e-mail or password.");
-            return "index";
+            return "login";
         }
     }
 
@@ -106,7 +106,7 @@ public class SessionBean implements Serializable {
             return "dashboard?faces-redirect=true";
         } else {
             Utils.throwMessage("This user already exists.");
-            return "index";
+            return "login";
         }
     }
 
@@ -118,8 +118,6 @@ public class SessionBean implements Serializable {
             Utils.throwMessage("Error, Could´t find the user.");
             return "dashboard";
         }
-        
-                
         return "editProfile";
     }
     
@@ -130,7 +128,7 @@ public class SessionBean implements Serializable {
         if (result) {
             return "dashboard?faces-redirect=true";
         } else {
-            return "index";
+            return "login";
         }
 
     }
@@ -157,7 +155,7 @@ public class SessionBean implements Serializable {
             ConfigurableNavigationHandler nav
                     = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
 
-            nav.performNavigation("/index");
+            nav.performNavigation("/login");
         }
     }
 
@@ -189,7 +187,16 @@ public class SessionBean implements Serializable {
 
     public String processLogout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "index?faces-redirect=true";
+        return "login?faces-redirect=true";
+    }
+    
+    
+    public void redirectSignUp() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("registerUser.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(SessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getPassword() {
@@ -247,6 +254,5 @@ public class SessionBean implements Serializable {
     public void setUser(UserDTO user) {
         this.user = user;
     }
-
     
 }
