@@ -1,59 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
 
-        <ui:define name="title" >Sign-up</ui:define>
+        <title>Become a Jimmy</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="resources/images/icons/cricket.ico" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/vendor/animate/animate.css" />
+        <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="resources/vendor/css-hamburgers/hamburgers.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/vendor/select2/select2.min.css" />
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="resources/css/util.css" />
+        <link rel="stylesheet" type="text/css" href="resources/css/mycss.css" />
+        <!--===============================================================================================-->
     </h:head>
+    
     <h:body>
-        <ui:composition template = "template.xhtml">
-            
-   
 
-            <ui:define name = "containerContent">
-                
-                <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-                
-                    <h3>#{bundle.SignUp}</h3>
-                    <h:form>
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+                    <div class="login100-pic js-tilt" data-tilt="">
+                        <img src="resources/images/cricket.png" alt="IMG" />
+                    </div>
+                    <h:form class="login100-form validate-form">
+                        <span class="login100-form-title">
+                            Become a Jimmy
+                        </span>
                         
-                        <h:messages />
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required">
+                                <h:inputText class="input100" id="name2" a:placeholder="name" value="#{sessionBean.clientName}" required="true" requiredMessage="Name is required"></h:inputText>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-user-o" aria-hidden="true" />
+                                    </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Valid email is required">
+                                <h:inputText class="input100" id="username" a:placeholder="e-mail" value="#{sessionBean.email}" required="true" requiredMessage="Username is required"></h:inputText>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-envelope" aria-hidden="true" />
+                                    </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                <h:inputSecret class="input100" id="password" a:placeholder="password" value="#{sessionBean.password}" required="true" requiredMessage="Password is required"></h:inputSecret>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-lock" aria-hidden="true" />
+                                    </span>
+                            </div>
                         
-                        <h:outputText value="#{bundle.UserEmail}"/><br/>
-                        <h:inputText value="#{sessionBean.email}" required="true" requiredMessage="Email is required"/><br/>
-                        <h:outputText value="#{bundle.UserFullName}"/><br/>
-                        <h:inputText value="#{sessionBean.clientName}" required="true" requiredMessage="Name is required"/><br/>
-                        <h:outputText value="#{bundle.UserBirthDate}"/><br/>
-                        <h:inputText value="#{sessionBean.birthTmp}" styleClass = "form-control datepicker" required="true" requiredMessage="Birthday is required"></h:inputText><br/>
-                        <h:outputText value="#{bundle.UserPassword}"/><br/>
-                        <h:inputSecret value="#{sessionBean.password}" required="true" requiredMessage="Pasword is required"/><br/>
-                        <h:outputText value="#{bundle.UserRetypePassword}"/><br/>
-                        <h:inputSecret value="#{sessionBean.passwordConfirmation}" required="true" requiredMessage="Password confirmation is required"/><br/>
-                        <h:outputText value="#{bundle.UserGender}"/><br/>
+                            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                <h:inputSecret class="input100" id="confirmPassword" a:placeholder="Confirm your password" value="#{sessionBean.passwordConfirmation}" required="true" requiredMessage="Retype your password"></h:inputSecret>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-lock" aria-hidden="true" />
+                                    </span>
+                            </div>
                         
-                        <h:selectOneRadio value="#{sessionBean.gender}" required="true" requiredMessage="Gender is required" class="radio">
-                                <f:selectItem itemValue="MALE" itemLabel="Male" />
-                                <f:selectItem itemValue="WOMAN" itemLabel="Woman" />
-                        </h:selectOneRadio>
-                        <br/>
-                        <br/>
-                        <h:commandButton class ="btn btn-info" action="#{sessionBean.process_SignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                            <div class="wrap-input100 validate-input" data-validate="Birthday is required">
+                                <h:inputText class="input100" id="birthday" a:placeholder="DD/mm/AAAA" value="#{sessionBean.birthTmp}" required="true" requiredMessage="Birthday is required"></h:inputText>
+                                    <span class="focus-input100" />
+                                    <span class="symbol-input100">
+                                        <i class="fa fa-calendar" aria-hidden="true" />
+                                    </span>
+                            </div>
+                            
+                            <div>
+                                <h:panelGrid id = "gender2" columns = "2"  style="margin-left: 100px" cellpadding="5">
+                                    <h:selectOneRadio value="#{sessionBean.gender}"  required="true"  requiredMessage="Gender is required" class="radio">
+                                        <f:selectItem itemValue="MALE" itemLabel="Male" />
+                                        <f:selectItem itemValue="WOMAN" itemLabel="Female" />
+                                    </h:selectOneRadio>
+                                </h:panelGrid>
+                            </div>
+                        
+                            <div class="container-login100-form-btn">
+                                <h:commandButton class="login100-form-btn" action="#{sessionBean.processSignUp}" value="#{bundle.SignUp}"></h:commandButton>
+                            </div>
+
+                            <div class="text-center p-t-136">
+                                <a href="/cricketWeb/faces/login.xhtml">I'm already a Jimmy</a>
+                                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true" />
+                            </div>
                     </h:form>
-                    
-                    <hr/>
-                  
-                    
                 </div>
-            </ui:define>
-        </ui:composition>
+            </div>
+        </div>
+
+        <!--===============================================================================================-->
+        <script src="resources/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/bootstrap/js/popper.js"></script>
+        <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="resources/vendor/tilt/tilt.jquery.min.js"></script>
+
+        <script>
+            $('.js-tilt').tilt({
+                scale: 1.1
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="resources/js/main.js"></script>
     </h:body>
 </html>
