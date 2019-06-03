@@ -16,9 +16,17 @@ and open the template in the editor.
         <ui:define name="title">TODO supply a title </ui:define>
     </h:head>
     <h:body>
+        
         <ui:composition template = "template.xhtml">
-
+    
             <ui:define name = "containerTitle">
+                
+                <div align="center">
+                    <img class="grow" src="#{resource['images/cricket.png']}"></img>
+                </div>
+                
+                
+
                 <f:event listener="#{sessionBean.validateIfUserIsLogged}" type="preRenderView" />
                 <h3>#{bundle.SignInSignUp}</h3>
                 <p> #{bundle.SignInSignUpDesc}</p>
@@ -30,11 +38,7 @@ and open the template in the editor.
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
 
 <!--                    <h3 style="font-weight: bold;text-align: center;">#{bundle.SignIn}</h3>-->
-                    <div class="container">
-                        <div class="image-container">
-                            <img class="grow" src="#{resource['images/cricket.png']}"  />
-                        </div>
-                    </div>
+                    
                     <h:form>
 
                         <h:messages></h:messages>

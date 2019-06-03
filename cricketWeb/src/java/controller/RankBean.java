@@ -6,6 +6,7 @@
 package controller;
 
 import BridgeLogicController.BridgeLocal;
+import Utils.Config;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import cricketdto.GoalDTO;
 import cricketdto.RankDTO;
@@ -121,6 +122,9 @@ public class RankBean implements Serializable {
         
         int point = bridge.getCricket().definePont(goal, strikValue);
 
+        if(goal.getStatus().equals(Config.NEGATIVE))
+            point *= -1;
+        
         return point;
     }
 
