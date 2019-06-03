@@ -267,7 +267,11 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
             predicates.add(
                     cb.like(goal.get("nome"), filterName));
         }
-          
+        
+        //just show the goals which are not setted as done. A done goal is listed only when we want see the history
+        predicates.add(
+                  cb.equal(goal.get("flagdone"), false));
+
         //query itself
         cq.select(goal)
                 .where(predicates.toArray(new Predicate[]{}));

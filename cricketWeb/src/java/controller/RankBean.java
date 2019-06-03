@@ -116,6 +116,9 @@ public class RankBean implements Serializable {
 
         int strikValue = this.bridge.getCricket().getStrike(similarGoalsList);
 
+        if(strikValue == 0)
+            strikValue = 1;
+        
         int point = bridge.getCricket().definePont(goal, strikValue);
 
         return point;
