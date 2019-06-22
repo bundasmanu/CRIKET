@@ -28,7 +28,7 @@ public interface GoalFacadeLocal {
 
     Goal findByName(String name_goal);
     
-    List<Goal> findAllAndOrderByFlag();
+    List<Goal> findAllAndOrderByFlag(String email);
         
     List<Goal> getGoalsWithSameNameAndLogdate(Goal g);
     

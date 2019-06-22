@@ -194,13 +194,13 @@ public class cricketManager implements cricketManagerLocal {
     }
 
     @Override
-    public boolean upOrderValue(GoalDTO goal) {
-        return this.goalManager.upOrderValue(goal);
+    public boolean upOrderValue(GoalDTO goal, String email) {
+        return this.goalManager.upOrderValue(goal, email);
     }
 
     @Override
-    public boolean downOrderValue(GoalDTO goal) {
-        return this.goalManager.downOrderValue(goal);
+    public boolean downOrderValue(GoalDTO goal, String email) {
+        return this.goalManager.downOrderValue(goal,email);
     }
 
     @Override

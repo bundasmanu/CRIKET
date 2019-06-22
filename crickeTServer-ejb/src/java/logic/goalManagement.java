@@ -478,12 +478,12 @@ public class goalManagement implements goalManagementLocal {
     }
 
     @Override
-    public boolean downOrderValue(GoalDTO goal) {
+    public boolean downOrderValue(GoalDTO goal, String email) {
 
         try {
 
             /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals = this.goalFacade.findAllAndOrderByFlag();
+            List<Goal> listOfGoals = this.goalFacade.findAllAndOrderByFlag(email);
 
             if (listOfGoals == null) {
                 return false;
@@ -517,13 +517,15 @@ public class goalManagement implements goalManagementLocal {
     }
 
     @Override
-    public boolean upOrderValue(GoalDTO goal) {
+    public boolean upOrderValue(GoalDTO goal, String email) {
 
         try {
 
             /*VERIFICAR, SE O GOAL EXISTE--> NAO ERA NECESSARIO, MAS PRONTO*/
-            List<Goal> listOfGoals = this.goalFacade.findAllAndOrderByFlag();
-
+            List<Goal> listOfGoals = this.goalFacade.findAllAndOrderByFlag(email);
+            
+            System.out.println("ListOfGoals: " + listOfGoals);
+            
             if (listOfGoals == null) {
                 return false;
             }

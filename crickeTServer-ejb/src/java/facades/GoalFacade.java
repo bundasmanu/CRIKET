@@ -58,19 +58,29 @@ public class GoalFacade extends AbstractFacade<Goal> implements GoalFacadeLocal 
     }
     
     @Override
-    public List<Goal> findAllAndOrderByFlag() {
-        List<Goal> verifica_encontrado=null;
-        try{
-            Query qu= this.em.createQuery("select g from Goal g ORDER BY g.flagOrder");
-            
-            verifica_encontrado=(List<Goal>) qu.getResultList();
-            
-            return verifica_encontrado;
-            
-        }catch(Exception e){
-            System.out.println(""+e.getMessage());
-            return null;
-        }
+    public List<Goal> findAllAndOrderByFlag(String email) {
+        
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        
+        Root<Goal> goal = cq.from(Goal.class);
+        
+        //Constructing list of parameters
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        
+        //Adding predicates in case of parameter not being null
+        predicates.add(cb.like(goal.get("idCategory").get("idUser").get("email"), email));
+        //just show the goals which are not setted as done. A done goal is listed only when we want see the history
+        predicates.add(
+                  cb.equal(goal.get("flagdone"), false));
+        
+        cq.orderBy(cb.asc(goal.get("flagOrder")));
+
+        //query itself
+        cq.select(goal)
+                .where(predicates.toArray(new Predicate[]{}));
+        //execute query and do something with result
+        return em.createQuery(cq).getResultList();
     }
     
     @Override

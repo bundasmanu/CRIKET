@@ -83,9 +83,9 @@ public interface cricketManagerLocal {
 
     String findRankUser(String email);
 
-    boolean upOrderValue(GoalDTO goal);
+    boolean upOrderValue(GoalDTO goal, String email);
 
-    public boolean downOrderValue(GoalDTO goal);
+    public boolean downOrderValue(GoalDTO goal, String email);
 
     List<GoalDTO> processGoalsFilter(String filterName, String filterSinceDate, String filterUntilDate);
 

@@ -307,7 +307,7 @@ public class GoalBean implements Serializable {
     public String upOrderValue(GoalDTO goal) {
         boolean result = false;
 
-        result = bridge.getCricket().upOrderValue(goal);
+        result = bridge.getCricket().upOrderValue(goal,this.su.getEmail());
         if (result) {
 
             //Utils.throwMessage("Success Adding the New Goal");
@@ -322,7 +322,7 @@ public class GoalBean implements Serializable {
     public String downOrderValue(GoalDTO goal) {
         boolean result = false;
 
-        result = bridge.getCricket().downOrderValue(goal);
+        result = bridge.getCricket().downOrderValue(goal,this.su.getEmail());
         if (result) {
 
             //Utils.throwMessage("Success Adding the New Goal");

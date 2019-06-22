@@ -46,10 +46,10 @@ public interface goalManagementLocal {
     boolean goalIsEnd(GoalDTO goal);
     
     /*APLICADO QUANDO É CLICADA A SETA PARA CIMA*/
-    boolean downOrderValue(GoalDTO goal);
+    boolean downOrderValue(GoalDTO goal, String email);
     
     /*APLICADO QUANDO É CLICADA A SETA PARA BAIXO*/
-    boolean upOrderValue(GoalDTO goal);
+    boolean upOrderValue(GoalDTO goal, String email);
     
     boolean increaseClickFlag(GoalDTO goal);
     
