@@ -73,12 +73,10 @@ public class RankBean implements Serializable {
 
     public String processFindRank() {
         String str = "";
-        String nova_string = "";
         try {
             str = bridge.getCricket().findRankUser(this.s.getEmail());
             if (str.equals("Beginner")) {
                 return "https://img.icons8.com/color/48/000000/1-circle.png";
-
             } else if (str.equals("Amador")) {
                 return "https://img.icons8.com/color/48/000000/2.png";
             } else if (str.equals("Intermedio")) {

@@ -101,7 +101,7 @@ public class rankingManagement implements rankingManagementLocal {
             
             Ranking userRank=u.getIdRank();
             
-            for(int i=allRank.size()-1;i>=0;--i){
+            for(int i=allRank.size()-1;i>=0;i--){
                 if(u.getCurrentpoints()>=allRank.get(i).getMinpoints() &&  allRank.get(i)!=userRank){
                     u.setIdRank(allRank.get(i));
                     return true;
@@ -145,12 +145,8 @@ public class rankingManagement implements rankingManagementLocal {
                 return false;
             }
             
-            System.out.println("\nENTRADA GET DAILY STRIKE\n");
-            
             /*VAI BUSCAR TODOS OS GOALS, IGUAIS A ESTE*/
             List<Goal> similarGoals=this.goal.getGoalsWithSameNameAndLogdate(g);
-            
-            System.out.println("\nNAO ESTOIROU PEDIDO BD\n");
             
             if(similarGoals==null){
                 return false;
@@ -161,9 +157,9 @@ public class rankingManagement implements rankingManagementLocal {
             /*OBTEM VALOR DE STRIKE*/
             strikeValue=this.getStrikeValue(similarGoals);
             
-            System.out.println("\nNAO ESTOIROU GET STRIKE VALUE\n");
-            
             int numberPointsWin;
+            
+            System.out.println("Strike value: " + strikeValue);
             
             if(strikeValue==0){/*NAO CUMPRIU*/
                 if(g.getStatus().equals(Config.POSITIVE)==true){
@@ -182,11 +178,7 @@ public class rankingManagement implements rankingManagementLocal {
             /*VERIFICACAO DOS TROFEUS*/
             this.checkCompleteTrophies(g, strikeValue);
             
-            System.out.println("\nNAO ESTOIROU SET CURRENTS POINTS\n");
-            
             this.changeRankOfAnUser(g.getIdCategory().getIdUser());
-            
-            System.out.println("\nNAO ESTOIROU ALTERACAO RANK BD\n");
             
             /*EDICAO DAS VARIAS ENTIDADES*/
             
@@ -241,6 +233,7 @@ public class rankingManagement implements rankingManagementLocal {
             System.out.println("\nDENTRO STRIKE VALUE 1\n");
             
             for(int i=length-1;i>=0; i--){
+                
                 if(goals.get(i).getCurrentvalue()< goals.get(i).getTotalvalue() && goals.get(i).getStatus().equals(Config.POSITIVE)){/*ULTIMA VEZ QUE NAO CUMPRIU*/        
                     lastIndex=i;
                 }
@@ -252,8 +245,11 @@ public class rankingManagement implements rankingManagementLocal {
             System.out.println("\nDENTRO STRIKE VALUE 2\n");
             
             if((length-1)==lastIndex){/*CASO NAO CUMPRA O ULTIMO*/
-                return 0;
+                return -1;
             }
+            
+            System.out.println("\nDENTRO STRIKE VALUE 2.2\n");
+
             
             int pointsBetweenLastIndex=length-lastIndex;
             

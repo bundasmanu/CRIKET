@@ -102,12 +102,14 @@ public class DailyTimer implements DailyTimerLocal {
             /*VERIFICAR PARA ESTE GOALS, SE O OBJETIVO FOI OU NAO CUMPRIDO, E É NECESSÁRIO CRIAR OUTRO, COM OS MSM DADOS DESTE*/
             for (Goal g : listDailyGoals) {
                 if (g.getFlagdone() == Boolean.FALSE) {
+                    
+                    /*TERMINA OBJETIVO*/
+                    this.goalM.setGoalAsDone(g);
+                    
                     /*APENAS CRIA CLONE, CASO O FINAL DATE SEJA NULL, OU CASO ESTE NAO SEJA NULL, A SUA DATA FINAL, SEJA SUPERIOR A DATA ATUAL*/
                     if ((g.getFinaldate() != null) && this.getDateTimeNow().before(g.getFinaldate()) || (g.getFinaldate() == null)) { 
                         this.createCloneGoal(g);
                     }
-                    /*TERMINA OBJETIVO*/
-                    this.goalM.setGoalAsDone(g);
                 }
             }
 

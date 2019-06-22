@@ -700,8 +700,6 @@ public class goalManagement implements goalManagementLocal {
             goalFacade.edit(goalTmp);
             categoryManagement.save(goalTmp.getIdCategory());
 
-            System.out.println("\nENTROU SET GOAL AS DONE\n");
-
             /*DEPOIS DE UM OBJETIVO ESTAR DONE, VAMOS VERIFICAR O RANKING DE UM UTILIZADOR*/
             rankManagementLocal.getDailyStrike(goalTmp);
 
